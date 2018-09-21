@@ -1,0 +1,15 @@
+{
+  "expo": {
+    "sdkVersion": "30.0.0",
+    "assetBundlePatterns": [
+      "assets/images/*",
+      "assets/fonts/*"
+    ],
+    "name": "Kiddie Kredit",
+    "slug": "kiddiekredit",
+    "scheme": "kiddiekredit",
+    "privacy": "unlisted",
+    "description": "Kidde Kredit App for Leaping Harts",
+    "orientation": "portrait"
+  }
+}
