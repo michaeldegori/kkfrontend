@@ -9,13 +9,13 @@ import {Link} from 'react-router-native';
 import {fountainBlue, shuttleGrey} from "../colors";
 import Text from './KKText';
 
-const Touchable = ({to, style, children}) =>
+const Touchable = ({to, style, children, ...props}) =>
     typeof to === 'undefined' ?
-        <TouchableOpacity style={style}>{children}</TouchableOpacity> :
+        <TouchableOpacity style={style} {...props}>{children}</TouchableOpacity> :
         <Link style={style} to={to}>{children}</Link>
 
-const KKButton = ({children, style, type, to}) => (
-    <Touchable style={[styles.mainContainer, style, styles[type]]} to={to}>
+const KKButton = ({children, style, type, to, ...props}) => (
+    <Touchable style={[styles.mainContainer, style, styles[type]]} to={to} {...props}>
         <Text style={styles.label} semiBold={true} bold={false}>
             {children.toUpperCase()}
         </Text>

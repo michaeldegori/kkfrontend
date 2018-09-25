@@ -9,6 +9,8 @@ import ChoreBoard from './ChoreBoard';
 import KreditDashboard from './KreditDashboard';
 import RewardsFeed from './RewardsFeed';
 import Settings from './Settings';
+import AddFamilyUnitMember from "./AddFamilyUnitMember";
+import AccountManager from "./AccountManager";
 
 const icons = [
     color=> <EvilIcons color={color} name="bell" size={32}/>,
@@ -34,6 +36,8 @@ const MainTabScreen = ({match, location:{pathname}}) => (
             <Route path="/maintabscreen/rewardsfeed" component={RewardsFeed} />
             <Route path="/maintabscreen/settings" component={Settings} />
             <Route path="/maintabscreen/kreditdashboard" component={KreditDashboard} />
+            <Route path="/maintabscreen/accountmanager" component={AccountManager} />
+            <Route path="/maintabscreen/addfamilyunitmember" component={AddFamilyUnitMember} />
         </Switch>
         <View style={styles.bottomBar}>
             {

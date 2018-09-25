@@ -10,6 +10,10 @@
     "scheme": "kiddiekredit",
     "privacy": "unlisted",
     "description": "Kidde Kredit App for Leaping Harts",
-    "orientation": "portrait"
+    "orientation": "portrait",
+    "androidStatusBar": {
+      "barStyle": "dark-content",
+      "backgroundColor": "#ffffff"
+    }
   }
 }

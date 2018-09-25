@@ -25,19 +25,6 @@ class App extends React.Component {
         });
         this.setState({resourcesLoaded: true});
     }
-    // render() {
-    //     if (!this.state.resourcesLoaded) return <Expo.AppLoading/>
-    //     return (
-    //         <Provider routing={routingStore}>
-    //             <Router history={history}>
-    //                 <Switch>
-    //                     <Route path='/maintabscreen' component={MainTabScreen} />
-    //                     <Route path='/' component={NonAuthStackNavigator} />
-    //                 </Switch>
-    //             </Router>
-    //         </Provider>
-    //     )
-    // }
     render() {
         if (!this.state.resourcesLoaded) return <Expo.AppLoading/>
         return (

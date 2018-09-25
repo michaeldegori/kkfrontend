@@ -12,7 +12,7 @@ import KKButton from "../../common/KKButton";
 import KKTextInput from "../../common/KKTextInput";
 
 const {width, height} = Dimensions.get("window");
-const LoginView = props => (
+const LoginView = ({loginWithAuth0, ...props}) => (
     <KeyboardAvoidingView style={{flex: 1, alignSelf: 'stretch'}} behavior={'padding'}>
         <ImageBackground
             height={height}
@@ -27,7 +27,7 @@ const LoginView = props => (
             <KKTextInput placeholder={'Email'} style={styles.input}/>
             <KKTextInput placeholder={'Password'} style={styles.input} secureTextEntry={true}/>
             <View style={styles.buttonContainer}>
-                <KKButton type="primary" to="/maintabscreen/kreditdashboard">Login</KKButton>
+                <KKButton type="primary" onPress={loginWithAuth0}>Login</KKButton>
             </View>
         </ImageBackground>
     </KeyboardAvoidingView>
