@@ -12,7 +12,7 @@ import Header from "../../common/Header";
 import Text from '../../common/KKText';
 import {fountainBlue, shuttleGrey} from "../../colors";
 import {globalFontFamilyBold} from "../../configuration";
-import {loginWithAuth0} from "../../services/Authorization";
+import {loginWithAuth0, registerWithAuth0} from "../../services/Authorization";
 
 
 const {width, height} = Dimensions.get("window");
@@ -20,7 +20,7 @@ const ChooseParentChild = () => (
     <FullPage>
         <Header/>
         <ScrollView contentContainerStyle={{alignSelf: 'stretch', justifyContent: 'center', flex: 1}}>
-            <TouchableOpacity style={styles.card} onPress={() => loginWithAuth0('signUp')}>
+            <TouchableOpacity style={styles.card} onPress={() => registerWithAuth0()}>
                 <View style={styles.cardSlice}>
                     <Image source={require('../../../assets/images/reg_icon_parent.png')} style={styles.cardIcon}/>
                 </View>

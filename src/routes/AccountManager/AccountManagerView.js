@@ -14,9 +14,10 @@ import {fountainBlue, shuttleGrey} from "../../colors";
 import {Link} from "react-router-native";
 
 const {width, height} = Dimensions.get("window");
-const AccountManagerView = (props) => (
+const AccountManagerView = ({history, ...props}) => (
     <FullPage>
-        <Header/>
+        {console.log("#########AccountMgr", props)}
+        <Header history={history} rightAction="logout"/>
         <View style={styles.iconRow}>
             <View style={styles.badge}>
                 <View style={styles.largeCircle}></View>

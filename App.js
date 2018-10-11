@@ -28,12 +28,12 @@ class App extends React.Component {
     render() {
         if (!this.state.resourcesLoaded) return <Expo.AppLoading/>
         return (
-            <Router history={memoryHistory}>
+            <NativeRouter>
                 <Switch>
                     <Route path='/maintabscreen' component={MainTabScreen} />
                     <Route path='/' component={NonAuthStackNavigator} />
                 </Switch>
-            </Router>
+            </NativeRouter>
         )
     }
 }

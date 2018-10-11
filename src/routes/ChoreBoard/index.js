@@ -1,13 +1,22 @@
 import React from "react";
-import {
-    View
-} from 'react-native';
-import Text from '../../common/KKText';
+import {observer} from 'mobx-react';
+import ChoredBoardView from './ChoreBoardView'
+import userRepository from "../../stores/UserDataStore";
+import familyUnitRepository from "../../stores/FamilyUnitDataStore";
+import choresRepository from "../../stores/DefaultChoresStore";
 
-const ChoreBoardContainer = ({match:{path}}) => (
-    <View style={{flex: 1, alignSelf: 'stretch', justifyContent: 'center', alignItems: 'center'}}>
-        <Text>{path.split("/")[path.split("/").length - 1]} Screen</Text>
-    </View>
-);
+@observer
+class ChoredBoardContainer extends React.Component{
+    render(){
+        return(
+            <ChoredBoardView
+                {...this.props}
+                chores={familyUnitRepository.existingChores}
+                defaultChores={choresRepository.chores}
+                avatar={userRepository.avatar}
+            />
+        );
+    }
+}
 
-export default ChoreBoardContainer;
+export default ChoredBoardContainer;

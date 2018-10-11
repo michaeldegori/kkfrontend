@@ -12,7 +12,7 @@ const ChildRegistrationMessage = props => (
         <Header/>
         <FullPage style={{justifyContent: 'center'}}>
             <Text style={{textAlign: 'center', margin: 20}}>
-                You must get your parent to register and sign in before you can use the Kiddie Kredit app.
+                You must get your parent or guardian to register and sign in before you can use the Kiddie Kredit app.
             </Text>
         </FullPage>
     </FullPage>
