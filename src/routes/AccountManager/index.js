@@ -1,11 +1,15 @@
 import React from 'react';
 import AccountManagerView from './AccountManagerView';
+import familyUnitRepository from "../../stores/FamilyUnitDataStore";
+import {observer} from "mobx-react";
 
-export default class AccountManager extends React.Component{
+@observer
+class AccountManager extends React.Component{
     render() {
         return (
-            <AccountManagerView {...this.props} />
+            <AccountManagerView {...this.props} kidsList={familyUnitRepository.kidsList} />
         );
     }
 }
 
+export default AccountManager;

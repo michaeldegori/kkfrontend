@@ -7,6 +7,7 @@ import MainTabScreen from './src/routes/MainTabScreen';
 
 // import { RouterStore, syncHistoryWithStore } from 'mobx-react-router';
 import createMemoryHistory from 'history/createMemoryHistory';
+import userRepository from "./src/stores/UserDataStore";
 // import { Provider } from 'mobx-react';
 //
 const memoryHistory = createMemoryHistory();
@@ -23,6 +24,7 @@ class App extends React.Component {
             "Poppins SemiBold": require("./assets/fonts/poppins-semibold.ttf"),
             "Poppins Bold": require("./assets/fonts/poppins-bold.ttf"),
         });
+        await userRepository.checkIfLoggedIn();
         this.setState({resourcesLoaded: true});
     }
     render() {

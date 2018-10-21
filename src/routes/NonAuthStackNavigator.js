@@ -15,7 +15,6 @@ import Expo from "expo";
 @observer
 class NonAuthStackNavigator extends Component{
     componentDidMount(){
-        userRepository.checkIfLoggedIn();
         this.redirecting = false;
     }
     render(){

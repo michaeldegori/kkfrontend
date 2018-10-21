@@ -12,9 +12,10 @@ import Header from "../../common/Header";
 import Text from "../../common/KKText";
 import {fountainBlue, shuttleGrey} from "../../colors";
 import {Link} from "react-router-native";
+import KidAvatar from "../../common/KidAvatar";
 
 const {width, height} = Dimensions.get("window");
-const AccountManagerView = ({history, ...props}) => (
+const AccountManagerView = ({history, kidsList=[], ...props}) => (
     <FullPage>
         {console.log("#########AccountMgr", props)}
         <Header history={history} rightAction="logout"/>
@@ -27,7 +28,9 @@ const AccountManagerView = ({history, ...props}) => (
         </View>
         <View style={styles.iconRow}>
             {
-                Array.isArray(props.kids) && props.kids.map((kid, idx) => <KidBadge kid={kid} key={idx} /> )
+                kidsList.map(kid => (
+                    <KidAvatar {...kid} key={kid._id} />
+                ))
             }
             <Link style={styles.badge} to={"/maintabscreen/addfamilyunitmember"}>
                 <React.Fragment>

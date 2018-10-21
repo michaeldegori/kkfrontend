@@ -19,6 +19,8 @@ import Settings from './Settings';
 import AddFamilyUnitMember from "./AddFamilyUnitMember";
 import AccountManager from "./AccountManager";
 import CreateChoreContainer from "./ChoreBoard/CreateChoreContainer";
+import CreateRewardContainer from "./RewardsFeed/CreateRewardContainer";
+import EditChoreContainer from "./ChoreBoard/EditChoreContainer";
 
 const icons = [
     color=> <EvilIcons color={color} name="bell" size={32}/>,
@@ -33,6 +35,10 @@ const links = [
     "/maintabscreen/choreboard",
     "/maintabscreen/rewardsfeed",
     "/maintabscreen/settings"
+];
+
+const keyboardHiddenPaths  = [
+    "/maintabscreen/createchore"
 ];
 
 
@@ -57,6 +63,13 @@ class MainTabScreen extends React.Component{
     _keyboardDidHide = () => {
         this.setState(() => ({keyboardShown: false}));
     }
+    shouldShowTabBar = () => {
+        const {match, location:{pathname}} = this.props;
+        if (this.state.keyboardShown) return false;
+        console.log(pathname);
+        return keyboardHiddenPaths.indexOf(pathname) === -1;
+
+    }
     render() {
         const {match, location:{pathname}} = this.props;
         return (
@@ -70,20 +83,25 @@ class MainTabScreen extends React.Component{
                     <Route path="/maintabscreen/accountmanager" component={AccountManager} />
                     <Route path="/maintabscreen/addfamilyunitmember" component={AddFamilyUnitMember} />
                     <Route path="/maintabscreen/createchore" component={CreateChoreContainer} />
+                    <Route path="/maintabscreen/editchore/:choreid" component={EditChoreContainer} />
+                    <Route path="/maintabscreen/createreward" component={CreateRewardContainer} />
                 </Switch>
 
                 {
-                    !this.state.keyboardShown &&
-                    <View style={styles.bottomBar}>
-                        {
-                            icons.map((icon, iconIndex) =>
-                                <TabButton
-                                    key={iconIndex}
-                                    to={links[iconIndex]}>
-                                    {icon(pathname===links[iconIndex] ? fountainBlue : lightGrey )}
-                                </TabButton>)
-                        }
-                    </View>
+                    this.shouldShowTabBar() &&
+                    <React.Fragment>
+                        <View style={styles.bottomSpacer}/>
+                        <View style={styles.bottomBar}>
+                            {
+                                icons.map((icon, iconIndex) =>
+                                    <TabButton
+                                        key={iconIndex}
+                                        to={links[iconIndex]}>
+                                        {icon(pathname===links[iconIndex] ? fountainBlue : lightGrey )}
+                                    </TabButton>)
+                            }
+                        </View>
+                    </React.Fragment>
                 }
             </View>
         );
@@ -114,7 +132,8 @@ const styles = StyleSheet.create({
         left: 0,
         width,
         height: height * 0.1,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        backgroundColor: 'white'
     },
     navItem: {
         flex:1,

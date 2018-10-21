@@ -25,7 +25,7 @@ const KKButton = ({children, style, type, to, ...props}) => (
 KKButton.propTypes = {
     children: PropTypes.any.isRequired,
     style: PropTypes.string,
-    type: PropTypes.string.isRequired
+    type: PropTypes.string.isRequired //primary or secondary
 };
 
 const {width, height} = Dimensions.get("window");

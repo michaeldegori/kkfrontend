@@ -4,21 +4,55 @@ import {
 } from 'react-native';
 import CreateChoreView from './CreateChoreView';
 import {observer} from "mobx-react";
+import RRule, {rrulestr} from 'rrule';
 import familyUnitRepository from "../../stores/FamilyUnitDataStore";
 import userRepository from "../../stores/UserDataStore";
+import choresRepository from "../../stores/DefaultChoresStore";
 
 @observer
-class CreateChoreContainer extends React.Component{
+class EditChoreContainer extends React.Component{
     state = {
+        choreId: null,
         choreName: "",
         choreDays: [false, false, false, false, false, false, false],
         choreFrequency: "weekly",
-        monthlyChoreInterval: null,
+        monthlyChoreInterval: "",
         chorePriority: 2,
         choreAppliedTo: [],
         submitting: false,
         modalVisible: false,
         modalText: "Success"
+    }
+    componentDidMount() {
+        const {match: {params: {choreid}}} = this.props;
+        // console.log(choreid);
+        if (choreid.indexOf("default") !== -1) {
+            const choreId = choreid.split("-")[1];
+            this.loadChore(
+                choresRepository.chores.find(c => c._id === choreId)
+            )
+        }
+        else {
+            this.loadChore(
+                familyUnitRepository.existingChores.find(c => c._id === choreid)
+            );
+        }
+    }
+    loadChore(chore){
+        const repRule = rrulestr(chore.repetitionRule);
+        //reprule.byweekday: [0,2,4] freq=1 is monthly, 2 is weekly
+        const choreFrequency = repRule.options.freq === 1 ? 'monthly' : 'weekly';
+        console.log('############################',repRule, choreFrequency);
+        const choreDays = [false, false, false, false, false, false, false].map((e, i) => ((repRule.options || {byweekday:[]}).byweekday).includes(i));
+        this.setState(state => ({
+            choreId: chore._id,
+            choreName: chore.name,
+            choreDays,
+            choreFrequency,
+            monthlyChoreInterval: (repRule.options.bysetpos && repRule.options.bysetpos[0] === -1) ? 1 : 0,
+            chorePriority: Number(chore.priority),
+            choreAppliedTo: familyUnitRepository.kidsList.filter(kid => kid.assignedChores.includes(chore._id)).map(kid => kid._id),
+        }))
     }
     updateForm = (field, newVal) => this.setState({ [field]: newVal } )
     toggleKidSelection = (kidId) => {
@@ -34,6 +68,7 @@ class CreateChoreContainer extends React.Component{
     submitChore = async () => {
         this.setState(state=> ({submitting: true}));
         const {
+            choreId,
             choreName,
             choreDays,
             choreFrequency,
@@ -60,7 +95,7 @@ class CreateChoreContainer extends React.Component{
         if (error) return this.setState(state => ({submitting: false}));
 
         try {
-            await familyUnitRepository.addChore({ choreName, choreDays, choreFrequency, chorePriority, choreAppliedTo, monthlyChoreInterval}, userRepository.idToken);
+            await familyUnitRepository.putChore({ choreId, choreName, choreDays, choreFrequency, chorePriority, choreAppliedTo, monthlyChoreInterval}, userRepository.idToken);
             this.showModal("Success");
         }
         catch(err){
@@ -85,4 +120,4 @@ class CreateChoreContainer extends React.Component{
 }
 
 
-export default CreateChoreContainer;
+export default EditChoreContainer;

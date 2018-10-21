@@ -1,13 +1,12 @@
 import React from "react";
-import {
-    View
-} from 'react-native';
-import Text from '../../common/KKText';
+import SettingsView from './SettingsView';
 
-const SettingsContainer = ({match:{path}}) => (
-    <View style={{flex: 1, alignSelf: 'stretch', justifyContent: 'center', alignItems: 'center'}}>
-        <Text>{path.split("/")[path.split("/").length - 1]} Screen</Text>
-    </View>
-);
+class SettingsContainer extends React.Component {
+    render() {
+        return (
+            <SettingsView {...this.props} />
+        );
+    }
+}
 
 export default SettingsContainer;

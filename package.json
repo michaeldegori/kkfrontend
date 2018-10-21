@@ -30,6 +30,7 @@
     "mobx-react-router": "^4.0.5",
     "react": "16.3.1",
     "react-native": "~0.55.2",
-    "react-router-native": "^4.3.0"
+    "react-router-native": "^4.3.0",
+    "rrule": "^2.5.6"
   }
 }

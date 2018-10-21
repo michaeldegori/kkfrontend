@@ -1,13 +1,17 @@
 import React from "react";
-import {
-    View
-} from 'react-native';
-import Text from '../../common/KKText';
+import RewardsFeedView from './RewardsFeedView';
+import familyUnitRepository from "../../stores/FamilyUnitDataStore";
+import rewardsRepository from "../../stores/DefaultRewardsStore";
 
-const RewardsFeedContainer = ({match:{path}}) => (
-    <View style={{flex: 1, alignSelf: 'stretch', justifyContent: 'center', alignItems: 'center'}}>
-        <Text>{path.split("/")[path.split("/").length - 1]} Screen</Text>
-    </View>
-);
+class RewardsFeedContainer extends React.Component {
+    render() {
+        return (
+            <RewardsFeedView
+                {...this.props}
+                defaultRewards={rewardsRepository.rewards}
+                rewardsList={familyUnitRepository.existingRewards} />
+        );
+    }
+}
 
 export default RewardsFeedContainer;

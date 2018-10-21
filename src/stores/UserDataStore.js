@@ -10,6 +10,7 @@ import {toQueryString} from "../services/Authorization";
 
 import familyUnitRepository from './FamilyUnitDataStore';
 import choresRepository from "./DefaultChoresStore";
+import rewardsRepository from "./DefaultRewardsStore";
 
 class UserDataStore{
     @observable mongoId;
@@ -73,7 +74,10 @@ class UserDataStore{
         familyUnitRepository.setFamilyData(userAndFamilyData.familyUnit);
         if (shouldPersist) await this.persistUserData(idToken, accessToken, userAndFamilyData.currentUser._id);
 
-        await choresRepository.loadChoresFromApi(idToken);
+        await Promise.all([
+            choresRepository.loadChoresFromApi(idToken),
+            rewardsRepository.loadRewardsFromApi(idToken)
+        ]);
 
         return true;
     };
@@ -95,6 +99,7 @@ class UserDataStore{
             "@kiddiekredit:accessToken",
             "@kiddiekredit:expiresIn"
         ]);
+        const auth0Logout = await fetchJson('https://kiddiekredit/v2/logout')
         this.mongoId = null;
         this.firstName = null;
         this.lastName = null;
@@ -106,7 +111,7 @@ class UserDataStore{
         this.idToken = null;
         this.nextRoute = null;
 
-        history.push("/")
+        history.push("/");
     }
 }
 

@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import {lightGrey, fountainBlue} from "../colors";
 
-const ItemTile = ({iconSrc, mainCaption, subCaption="" }) => (
+const ItemTile = ({iconSrc, mainCaption, subCaption="", renderRightItem }) => (
     <View style={styles.mainContainer}>
         <View style={styles.innerContainer}>
             <View style={styles.imgContainer}>
@@ -17,9 +17,9 @@ const ItemTile = ({iconSrc, mainCaption, subCaption="" }) => (
                 <Text style={styles.mainCaption}>{mainCaption}</Text>
                 <Text style={styles.subCaption}>{subCaption}</Text>
             </View>
-            <View style={styles.indicatorContainer}>
-
-            </View>
+            {
+                renderRightItem ? renderRightItem() : <View style={styles.indicatorContainer} />
+            }
         </View>
     </View>
 );

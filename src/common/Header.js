@@ -22,7 +22,8 @@ const Header = ({history, leftAction, rightAction, ...props}) => {
         if (!actionName) return null;
         switch (actionName){
             case 'logout': return  <LogoutButton history={history}/>;
-            case 'addChore': return <AddButton route="/maintabscreen/createchore" />
+            case 'addChore': return <AddButton route="/maintabscreen/createchore" />;
+            case 'addReward': return <AddButton route="/maintabscreen/createreward" />;
             default: return null;
         }
     };

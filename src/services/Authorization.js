@@ -57,9 +57,21 @@ async function registerWithAuth0(){
     userDataRepository.pullUserInfoFromApiAndStore(result.params.id_token, result.params.access_token, true);
 }
 
+async function logOutFromAuth0() {
+    const redirectUrl = AuthSession.getRedirectUrl();
+    const result = await AuthSession.startAsync({
+        authUrl: `${auth0Domain}/logout` + toQueryString({
+            client_id: auth0ClientId,
+            redirect_uri: redirectUrl,
+        }),
+    });
+    console.log(result);
+}
+
 export {
     loginWithAuth0,
-    registerWithAuth0
+    registerWithAuth0,
+    logOutFromAuth0
 }
 
 /* RESPONSE SHAPE WHEN LOGGING IN:

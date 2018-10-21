@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         alignSelf: 'stretch',
-        overflow: 'hidden'
     }
 });
 

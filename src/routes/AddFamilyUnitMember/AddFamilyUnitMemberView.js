@@ -20,7 +20,7 @@ import KidAvatar from "../../common/KidAvatar";
 
 
 const {width, height} = Dimensions.get("window");
-const AddFamilyUnitMember = ({firstName="", dob="", gender="", onChangeText, onAddChild, modalVisible, kidsList}) => (
+const AddFamilyUnitMember = ({firstName="", dob="", gender="", onChangeText, onAddChild, modalVisible, kidsList=[]}) => (
     <FullPage>
         <ImageBackground
             height={height}
@@ -34,7 +34,7 @@ const AddFamilyUnitMember = ({firstName="", dob="", gender="", onChangeText, onA
                     source={require("../../../assets/images/kk-letters.png")} />
                 <View style={styles.kidRow}>
                     {
-                        Array.isArray(kidsList) && kidsList.map(kid => (
+                        kidsList.map(kid => (
                             <KidAvatar {...kid} key={kid._id} />
                         ))
                     }
@@ -56,7 +56,7 @@ const AddFamilyUnitMember = ({firstName="", dob="", gender="", onChangeText, onA
                 <KKTextInput
                     value={dob}
                     onChangeText={(newVal) => onChangeText('dob', newVal)}
-                    placeholder={'DOB'}
+                    placeholder={'DOB (mm-dd-yyyy)'}
                     style={styles.input}/>
                 {/*<KKTextInput*/}
                     {/*value={gender}*/}
