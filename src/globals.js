@@ -2,7 +2,8 @@ import {Constants} from 'expo';
 const auth0ClientId = 'LVfVnJg9zngBlm5fIPkAPsZO5wyveh1z';
 const auth0Domain = 'https://kiddiekredit.auth0.com';
 
-const apiUrl = Constants.appOwnership === 'standalone'  ? '' : 'http://192.168.1.64:4000';
+const apiUrl = 'http://18.235.253.24:8080';
+    //Constants.appOwnership === 'standalone'  ? '' : 'http://192.168.2.119:4000';
 
 
 export {

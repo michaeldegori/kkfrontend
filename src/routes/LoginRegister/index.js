@@ -1,13 +1,14 @@
 import React from 'react';
 import LoginRegisterView from './LoginRegisterView';
-// import {inject, observer} from 'mobx-react';
+import {observer} from 'mobx-react';
+import userDataRepository from '../../stores/UserDataStore';
 
-// @inject('routing')
-// @observer
+@observer
 class LoginRegisterContainer extends React.Component{
     render() {
+        const {mongoId} = userDataRepository;
         return (
-            <LoginRegisterView {...this.props} />
+            <LoginRegisterView {...this.props} mongoId={mongoId} />
         );
     }
 }

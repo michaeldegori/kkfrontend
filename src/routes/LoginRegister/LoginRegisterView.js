@@ -7,7 +7,6 @@ import {
     ImageBackground,
     Image
 } from 'react-native';
-// import {observer} from 'mobx-react';
 import FullPage from "../../common/FullPage";
 
 import KKButton from "../../common/KKButton";

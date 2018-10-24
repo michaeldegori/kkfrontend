@@ -33,7 +33,6 @@ async function loginWithAuth0(startingScreen) {
 
     //finish logging in
     userDataRepository.pullUserInfoFromApiAndStore(result.params.id_token, result.params.access_token);
-
 }
 
 async function registerWithAuth0(){

@@ -37,6 +37,7 @@ class UserDataStore{
     };
 
     checkIfLoggedIn = async () => {
+        this.logOut(null);
         console.log("CALLED CHECKIFLOGGEDIN")
         let localData = await AsyncStorage.multiGet([
             "@kiddiekredit:idToken",
@@ -61,12 +62,16 @@ class UserDataStore{
             userSubType: userMetaData.parent_type
         };
         let uri = apiUrl + '/familyUnit'+toQueryString(queryStringInfo);
-        if (isRegistration) uri = apiUrl + '/user/finishRegistration' + toQueryString(queryStringInfo);
-        const userAndFamilyData = await fetchJson(uri, {
+        let fetchOptions = {
             headers: {
                 'Authorization': 'Bearer ' + idToken
             }
-        });
+        };
+        if (isRegistration) {
+            uri = apiUrl + '/user/finishRegistration' + toQueryString(queryStringInfo);
+            fetchOptions.method = 'POST';
+        }
+        const userAndFamilyData = await fetchJson(uri, fetchOptions);
 
         if (!userAndFamilyData || !userAndFamilyData.currentUser) return;
 
@@ -111,7 +116,7 @@ class UserDataStore{
         this.idToken = null;
         this.nextRoute = null;
 
-        history.push("/");
+        if (history) history.push("/");
     }
 }
 

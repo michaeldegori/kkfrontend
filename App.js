@@ -10,7 +10,7 @@ import createMemoryHistory from 'history/createMemoryHistory';
 import userRepository from "./src/stores/UserDataStore";
 // import { Provider } from 'mobx-react';
 //
-const memoryHistory = createMemoryHistory();
+
 // const routingStore = new RouterStore();
 // const history = syncHistoryWithStore(memoryHistory, routingStore);
 
@@ -24,7 +24,7 @@ class App extends React.Component {
             "Poppins SemiBold": require("./assets/fonts/poppins-semibold.ttf"),
             "Poppins Bold": require("./assets/fonts/poppins-bold.ttf"),
         });
-        await userRepository.checkIfLoggedIn();
+        await userRepository.checkIfLoggedIn('login');
         this.setState({resourcesLoaded: true});
     }
     render() {
