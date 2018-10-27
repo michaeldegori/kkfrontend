@@ -14,7 +14,7 @@ import SwipableKidSelection from "../../common/SwipableKidSelection";
 const ChoreBoardView = ({match:{path}, chores=[], kidsList=[], ...props}) => (
     <View style={{flex: 1, alignSelf: 'stretch', justifyContent: 'flex-start', alignItems: 'center'}}>
         <Header leftAction={"avatarButton"} rightAction="addChore" />
-        <SwipableKidSelection kidsList={kidsList.toJS()} renderContents={renderChoresList(kidsList, chores)}/>
+        <SwipableKidSelection kidsList={kidsList.toJS?kidsList.toJS():[]} renderContents={renderChoresList(kidsList, chores)}/>
     </View>
 );
 

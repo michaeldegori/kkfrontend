@@ -18,6 +18,9 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain"
+    },
+    "ios": {
+      "bundleIdentifier": "com.kiddiekredit.app"
     }
   }
 }
