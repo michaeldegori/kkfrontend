@@ -8,6 +8,7 @@
     "name": "Kiddie Kredit",
     "slug": "kiddiekredit",
     "scheme": "kiddiekredit",
+    "icon": "assets/images/kk-square1024.png",
     "privacy": "unlisted",
     "description": "Kidde Kredit App for Leaping Harts",
     "orientation": "portrait",
