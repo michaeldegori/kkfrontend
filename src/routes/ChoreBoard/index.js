@@ -3,7 +3,6 @@ import {observer} from 'mobx-react';
 import ChoredBoardView from './ChoreBoardView'
 import userRepository from "../../stores/UserDataStore";
 import familyUnitRepository from "../../stores/FamilyUnitDataStore";
-import choresRepository from "../../stores/DefaultChoresStore";
 
 @observer
 class ChoredBoardContainer extends React.Component{
@@ -12,7 +11,7 @@ class ChoredBoardContainer extends React.Component{
             <ChoredBoardView
                 {...this.props}
                 chores={familyUnitRepository.existingChores}
-                defaultChores={choresRepository.chores}
+                kidsList={(familyUnitRepository.kidsList || [])}
                 avatar={userRepository.avatar}
             />
         );

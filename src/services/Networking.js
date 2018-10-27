@@ -1,6 +1,3 @@
-import {
-    Alert
-} from 'react-native';
 
 export function fetchJson(uri, options={}){
     let status;

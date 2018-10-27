@@ -21,6 +21,7 @@ import AccountManager from "./AccountManager";
 import CreateChoreContainer from "./ChoreBoard/CreateChoreContainer";
 import CreateRewardContainer from "./RewardsFeed/CreateRewardContainer";
 import EditChoreContainer from "./ChoreBoard/EditChoreContainer";
+import EditRewardContainer from "./RewardsFeed/EditRewardContainer";
 
 const icons = [
     color=> <EvilIcons color={color} name="bell" size={32}/>,
@@ -85,6 +86,7 @@ class MainTabScreen extends React.Component{
                     <Route path="/maintabscreen/createchore" component={CreateChoreContainer} />
                     <Route path="/maintabscreen/editchore/:choreid" component={EditChoreContainer} />
                     <Route path="/maintabscreen/createreward" component={CreateRewardContainer} />
+                    <Route path="/maintabscreen/editreward/:rewardid" component={EditRewardContainer} />
                 </Switch>
 
                 {

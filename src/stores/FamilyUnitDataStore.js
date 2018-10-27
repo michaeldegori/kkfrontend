@@ -117,6 +117,26 @@ class FamilyUnitStore{
         this.existingRewards = postResult.existingRewards;
         this.kidsList = postResult.kidsList;
     }
+
+    updateReward = async (rewardData, idToken) => {
+        const payload = {
+            name: rewardData.rewardName,
+            kkCost: rewardData.kkCost,
+            notes: rewardData.notes,
+            rewardAppliesTo: rewardData.rewardAppliesTo
+        };
+        const putResult = await fetchJson(apiUrl + `/familyunit/${this.unitId}/reward/${rewardData._id}`, {
+            method: 'PUT',
+            headers: {
+                Authorization: 'Bearer '+idToken,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+        console.log(putResult);
+        this.existingRewards = putResult.existingRewards;
+        this.kidsList = putResult.kidsList;
+    }
 }
 
 const familyUnitRepository = new FamilyUnitStore();

@@ -1,11 +1,11 @@
 import {apiUrl, auth0ClientId, auth0Domain} from "../globals";
 import userDataRepository from '../stores/UserDataStore';
 import {
-    Alert
+    Linking, AsyncStorage
 } from 'react-native';
 import {AuthSession} from 'expo';
-import jwtDecode from 'jwt-decode';
 import {fetchJson} from "./Networking";
+
 
 export function toQueryString(params) {
     return '?' + Object.entries(params)
@@ -32,7 +32,7 @@ async function loginWithAuth0(startingScreen) {
 
 
     //finish logging in
-    userDataRepository.pullUserInfoFromApiAndStore(result.params.id_token, result.params.access_token);
+    await userDataRepository.pullUserInfoFromApiAndStore(result.params.id_token, result.params.access_token);
 }
 
 async function registerWithAuth0(){
@@ -53,18 +53,31 @@ async function registerWithAuth0(){
     }
 
     //finish logging in
-    userDataRepository.pullUserInfoFromApiAndStore(result.params.id_token, result.params.access_token, true);
+    await userDataRepository.pullUserInfoFromApiAndStore(result.params.id_token, result.params.access_token, true);
 }
 
-async function logOutFromAuth0() {
+async function logOutFromAuth0(history) {
+    await AsyncStorage.multiRemove([
+        "@kiddiekredit:idToken",
+        "@kiddiekredit:accessToken",
+        "@kiddiekredit:expiresIn"
+    ]);
     const redirectUrl = AuthSession.getRedirectUrl();
     const result = await AuthSession.startAsync({
-        authUrl: `${auth0Domain}/logout` + toQueryString({
+        authUrl: `${auth0Domain}/v2/logout` + toQueryString({
             client_id: auth0ClientId,
-            redirect_uri: redirectUrl,
+            scope: 'openid profile user_metadata email',
         }),
+        returnUrl: redirectUrl
     });
-    console.log(result);
+    console.log('LOGOUT RESULT',result);
+    // if (result.type !== 'success'){
+    //     // Alert.alert("Error while logging in", result.type);
+    //     return;
+    // }
+
+
+    history.push("/");
 }
 
 export {

@@ -16,7 +16,8 @@ import userRepository from "./src/stores/UserDataStore";
 
 class App extends React.Component {
     state = {
-        resourcesLoaded: false
+        resourcesLoaded: false,
+        isLoggedIn: false
     }
     async componentWillMount(){
         await Font.loadAsync({
@@ -24,11 +25,15 @@ class App extends React.Component {
             "Poppins SemiBold": require("./assets/fonts/poppins-semibold.ttf"),
             "Poppins Bold": require("./assets/fonts/poppins-bold.ttf"),
         });
-        await userRepository.checkIfLoggedIn('login');
-        this.setState({resourcesLoaded: true});
+        const isLoggedIn = await userRepository.checkIfLoggedIn('login');
+        this.setState( () => ({
+            resourcesLoaded: true,
+            isLoggedIn
+        }));
     }
     render() {
-        if (!this.state.resourcesLoaded) return <Expo.AppLoading/>
+        if (!this.state.resourcesLoaded) return <Expo.AppLoading />;
+
         return (
             <NativeRouter>
                 <Switch>

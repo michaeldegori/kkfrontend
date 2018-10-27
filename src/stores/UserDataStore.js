@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import {fetchJson} from "../services/Networking";
 import {apiUrl} from "../globals";
-import {toQueryString} from "../services/Authorization";
+import {logOutFromAuth0, toQueryString} from "../services/Authorization";
 
 import familyUnitRepository from './FamilyUnitDataStore';
 import choresRepository from "./DefaultChoresStore";
@@ -37,7 +37,7 @@ class UserDataStore{
     };
 
     checkIfLoggedIn = async () => {
-        this.logOut(null);
+        // this.logOut(null);
         console.log("CALLED CHECKIFLOGGEDIN")
         let localData = await AsyncStorage.multiGet([
             "@kiddiekredit:idToken",
@@ -46,10 +46,10 @@ class UserDataStore{
         ]);
         localData = localData.reduce( (acc, [key, storedVal]) => Object.assign(acc, {[key.split(":")[1]]: storedVal}), {});
         console.log("CHECKIFLOGGEDIN MIDWAY", localData);
-        if (!localData.accessToken || !localData.idToken || !localData.expiresIn || Number(localData.expiresIn) < new Date().getTime()+1000*60*60) return;
+        if (!localData.accessToken || !localData.idToken || !localData.expiresIn || Number(localData.expiresIn) < new Date().getTime()+1000*60*60) return false;
         await this.pullUserInfoFromApiAndStore(localData.idToken, localData.accessToken, false, false);
-
         console.log("CHECKIFLOGGEDIN FINISHED");
+        return true;
     };
 
     pullUserInfoFromApiAndStore = async (idToken, accessToken, isRegistration=false, shouldPersist=true) => {
@@ -99,12 +99,6 @@ class UserDataStore{
 
 
     async logOut(history) {
-        await AsyncStorage.multiRemove([
-            "@kiddiekredit:idToken",
-            "@kiddiekredit:accessToken",
-            "@kiddiekredit:expiresIn"
-        ]);
-        const auth0Logout = await fetchJson('https://kiddiekredit/v2/logout')
         this.mongoId = null;
         this.firstName = null;
         this.lastName = null;
@@ -116,7 +110,7 @@ class UserDataStore{
         this.idToken = null;
         this.nextRoute = null;
 
-        if (history) history.push("/");
+        if (history) await logOutFromAuth0(history);
     }
 }
 
