@@ -21,7 +21,8 @@
       "resizeMode": "contain"
     },
     "ios": {
-      "bundleIdentifier": "com.kiddiekredit.app"
+      "bundleIdentifier": "com.kiddiekredit.app",
+      "buildNumber": "2"
     }
   }
 }
