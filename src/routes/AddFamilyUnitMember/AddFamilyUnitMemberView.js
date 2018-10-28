@@ -58,11 +58,7 @@ const AddFamilyUnitMember = ({firstName="", dob="", gender="", onChangeText, onA
                     onChangeText={(newVal) => onChangeText('dob', newVal)}
                     placeholder={'DOB (mm-dd-yyyy)'}
                     style={styles.input}/>
-                {/*<KKTextInput*/}
-                    {/*value={gender}*/}
-                    {/*onChangeText={(newVal) => onChangeText('gender', newVal)}*/}
-                    {/*placeholder={'Gender'}*/}
-                    {/*style={[styles.input, {marginBottom: height * 0.02}]}/>*/}
+
                 <View style={styles.genderContainer}>
                     <Text style={styles.genderLabel}>Gender</Text>
                     <Text

@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, Dimensions, StyleSheet} from "react-native";
 
-const Row = ({children}) => (
-    <View style={styles.row}>
+const Row = ({children, style}) => (
+    <View style={[styles.row, (style || {})]}>
         {children}
     </View>
 );

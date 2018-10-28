@@ -137,6 +137,19 @@ class FamilyUnitStore{
         this.existingRewards = putResult.existingRewards;
         this.kidsList = putResult.kidsList;
     }
+
+    updateChildSettings = async (childId, patchUpdate, idToken) => {
+        const putResult = await fetchJson(apiUrl + `/familyunit/${this.unitId}/child/${childId}`, {
+            method: 'PATCH',
+            headers: {
+                Authorization: 'Bearer '+idToken,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(patchUpdate)
+        });
+        console.log(putResult);
+        this.kidsList = putResult.kidsList;
+    }
 }
 
 const familyUnitRepository = new FamilyUnitStore();
