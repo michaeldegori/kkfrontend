@@ -11,7 +11,7 @@ import {Switch, Route, Redirect, Link} from 'react-router-native';
 import { EvilIcons, Ionicons, Octicons } from '@expo/vector-icons';
 import {fountainBlue, lightGrey} from '../colors';
 
-import Alerts from './Alerts';
+import AlertsContainer from './Alerts';
 import ChoreBoard from './ChoreBoard';
 import KreditDashboard from './KreditDashboard';
 import RewardsFeed from './RewardsFeed';
@@ -76,7 +76,7 @@ class MainTabScreen extends React.Component{
         return (
             <View style={[styles.mainContainer]}>
                 <Switch>
-                    <Route path="/maintabscreen/alerts" component={Alerts} />
+                    <Route path="/maintabscreen/alerts" component={AlertsContainer} />
                     <Route path="/maintabscreen/choreboard" component={ChoreBoard} />
                     <Route path="/maintabscreen/rewardsfeed" component={RewardsFeed} />
                     <Route path="/maintabscreen/settings" component={Settings} />

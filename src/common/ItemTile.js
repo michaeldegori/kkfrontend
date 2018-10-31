@@ -6,6 +6,7 @@ import {
     StyleSheet
 } from 'react-native';
 import {lightGrey, fountainBlue} from "../colors";
+import PropTypes from 'prop-types';
 
 const ItemTile = ({iconSrc, mainCaption, subCaption="", renderRightItem }) => (
     <View style={styles.mainContainer}>
@@ -23,6 +24,13 @@ const ItemTile = ({iconSrc, mainCaption, subCaption="", renderRightItem }) => (
         </View>
     </View>
 );
+
+ItemTile.propTypes = {
+    iconSrc: PropTypes.string,
+    mainCaption: PropTypes.string.isRequired,
+    subCaption: PropTypes.string,
+    renderRightItem: PropTypes.func
+};
 
 const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({

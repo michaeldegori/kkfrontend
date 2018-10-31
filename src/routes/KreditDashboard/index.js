@@ -1,13 +1,28 @@
 import React from "react";
-import {
-    View
-} from 'react-native';
-import Text from '../../common/KKText';
+import KreditDashboardView from './KreditDashboardView';
+import familyUnitRepository from "../../stores/FamilyUnitDataStore";
+import {observer} from "mobx-react";
+import userRepository from "../../stores/UserDataStore";
 
-const KreditDashboardContainer = ({match:{path}}) => (
-    <View style={{flex: 1, alignSelf: 'stretch', justifyContent: 'center', alignItems: 'center'}}>
-        <Text>{path.split("/")[path.split("/").length - 1]} Screen</Text>
-    </View>
-);
+class KreditDashboardContainer extends React.Component{
+    state = {
+        loading: false
+    }
+    async componentDidMount() {
+        this.setState(()=> ({loading: true}));
+        setTimeout(() => {
+            this.setState(()=> ({loading: false}));
+        }, 750);
+    }
+    render() {
+        return (
+            <KreditDashboardView
+                {...this.props}
+                {...this.state}
+                kidsList={familyUnitRepository.kidsList}
+            />
+        );
+    }
+}
 
-export default KreditDashboardContainer;
+export default observer(KreditDashboardContainer);
