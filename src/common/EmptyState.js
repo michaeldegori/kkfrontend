@@ -1,7 +1,6 @@
 import React from 'react';
 import {
-    View,
-    Dimensions,
+    Image,
     StyleSheet,
     ActivityIndicator
 } from 'react-native';
@@ -15,7 +14,7 @@ const EmptyState = ({loading}) => (
         {
             loading ?
                 <ActivityIndicator size="large" color={fountainBlue} /> :
-                <Text style={styles.text}>- nothing here yet -</Text>
+                <Image style={styles.img} source={require('../../assets/images/winking-emote.png')}/>
         }
     </FullPage>
 );
@@ -29,8 +28,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    text: {
-        color: lightGrey
+    img: {
+        width: 256,
+        height: 256
     }
 });
 

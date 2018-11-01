@@ -18,6 +18,7 @@ class SwipableKidSelection extends Component{
         this.setState(state => ({
             selectedChildId: kidId === state.selectedChildId ? null : kidId
         }));
+        if(this.props.onChangeKid) this.props.onChangeKid();
     }
     componentDidMount() {
         if (this.props.defaultChild) this.setState(state => ({selectedChildId: this.props.defaultChild}));
@@ -56,7 +57,8 @@ SwipableKidSelection.propTypes = {
     kidsList: PropTypes.array.isRequired,
     renderContents: PropTypes.func.isRequired, // function taking a null or a child index in kidsList to display their rewards/chores/etc
     defaultChild: PropTypes.string,
-    isSelectionNullable: PropTypes.bool.isRequired
+    isSelectionNullable: PropTypes.bool.isRequired,
+    onChangeKid: PropTypes.func
 };
 
 export default SwipableKidSelection;
