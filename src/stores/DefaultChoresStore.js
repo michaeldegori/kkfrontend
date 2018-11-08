@@ -4,7 +4,7 @@ import {apiUrl} from "../globals";
 import userRepository from "./UserDataStore";
 
 class DefaultChoresStore{
-    @observable chores;
+    @observable choreSuggestions;
 
     loadChoresFromApi = async (idToken) => {
         const chores = await fetchJson(apiUrl + '/defaultchores', {
@@ -13,7 +13,7 @@ class DefaultChoresStore{
             }
         });
         if (!chores) return;
-        this.chores = chores;
+        this.choreSuggestions = chores;
     }
 
 }

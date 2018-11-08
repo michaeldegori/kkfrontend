@@ -18,7 +18,7 @@ class NonAuthStackNavigator extends Component{
         this.redirecting = false;
     }
     render(){
-        const {mongoId, nextRoute} = userRepository;
+        const {mongoId, nextRoute, BROWSING_MODE} = userRepository;
 
         console.log("rendering nonauthnav")
         if (mongoId && !nextRoute && !this.redirecting) {

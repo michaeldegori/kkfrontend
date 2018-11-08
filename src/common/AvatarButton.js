@@ -17,7 +17,7 @@ const AvatarButton = (props) => {
     else if (typeof avatar === 'string') imgSource = {uri: avatar};
 
     return (
-        <Link to="/maintabscreen/accountmanager">
+        <Link to={props.path ? props.path : "/maintabscreen/accountmanager"}>
             <Image source={imgSource} style={styles.img} />
         </Link>
     );

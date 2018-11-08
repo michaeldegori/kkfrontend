@@ -11,21 +11,18 @@ import ItemTile from "../../common/ItemTile";
 import {fountainBlue, shuttleGreyDark} from "../../colors";
 import {Link} from "react-router-native";
 
-const RewardsFeedView = ({
-     match:{path},
+const KidRewardsView = ({
     rewardsList=[]
 }) => (
     <FullPage>
-        <Header rightAction="addReward"/>
+        <Header />
         {
             rewardsList.map(reward =>
-                <Link to={`/maintabscreen/editreward/${reward._id}`} key={reward._id}>
-                    <ItemTile
-                        mainCaption={reward.name}
-                        subCaption="children list not impl yet"
-                        renderRightItem={() => <Text style={styles.rewardAmount}>{reward.kkCost} KK</Text>}
-                    />
-                </Link>
+                <ItemTile key={reward._id}
+                    mainCaption={reward.name}
+                    subCaption="children list not impl yet"
+                    renderRightItem={() => <Text style={styles.rewardAmount}>{reward.kkCost} KK</Text>}
+                />
             )
         }
     </FullPage>
@@ -40,4 +37,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default RewardsFeedView;
+export default KidRewardsView;

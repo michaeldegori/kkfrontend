@@ -5,9 +5,13 @@ import {observer} from "mobx-react";
 import userRepository from "../../stores/UserDataStore";
 
 @observer
-class AccountManager extends React.Component{
+class KidAccountManagerContainer extends React.Component{
     switchToChild = async (childId) => {
-        userRepository.switchBrowsingMode(this.props.history, childId)
+        userRepository.switchBrowsingMode(this.props.history, childId);
+    }
+    switchToParent = async () => {
+        console.log("HIIIIIIIIIII");
+        await userRepository.switchBrowsingMode(this.props.history, null, 'parent');
     }
     render() {
         return (
@@ -15,9 +19,10 @@ class AccountManager extends React.Component{
                 {...this.props}
                 kidsList={familyUnitRepository.kidsList}
                 switchToChild={this.switchToChild}
+                switchToParent={this.switchToParent}
             />
         );
     }
 }
 
-export default AccountManager;
+export default KidAccountManagerContainer;

@@ -22,6 +22,10 @@ import CreateChoreContainer from "./ChoreBoard/CreateChoreContainer";
 import CreateRewardContainer from "./RewardsFeed/CreateRewardContainer";
 import EditChoreContainer from "./ChoreBoard/EditChoreContainer";
 import EditRewardContainer from "./RewardsFeed/EditRewardContainer";
+import KidAccountManagerContainer from "./AccountManager/KidAccountManager";
+import KidChoreBoardContainer from "./ChoreBoard/KidChoreBoardContainer";
+import KidRewardsContainer from "./RewardsFeed/KidRewardsContainer";
+import KidKreditDashboardContainer from "./KreditDashboard/KidKreditDashboardContainer";
 
 const icons = [
     color=> <EvilIcons color={color} name="bell" size={32}/>,
@@ -30,12 +34,24 @@ const icons = [
     color=> <Octicons color={color} name="gift" size={30}/>,
     color=> <Octicons color={color} name="gear" size={30}/>
 ];
+const kidIcons = [
+    color=> <EvilIcons color={color} name="credit-card" size={32}/>,
+    color=> <Ionicons color={color} name="ios-list" size={32}/>,
+    color=> <Octicons color={color} name="gift" size={30}/>
+];
+
 const links = [
     "/maintabscreen/alerts",
     "/maintabscreen/kreditdashboard",
     "/maintabscreen/choreboard",
     "/maintabscreen/rewardsfeed",
     "/maintabscreen/settings"
+];
+
+const kidLinks = [
+    "/maintabscreen/kid/kreditdashboard",
+    "/maintabscreen/kid/choreboard",
+    "/maintabscreen/kid/rewardsfeed"
 ];
 
 const keyboardHiddenPaths  = [
@@ -71,6 +87,16 @@ class MainTabScreen extends React.Component{
         return keyboardHiddenPaths.indexOf(pathname) === -1;
 
     }
+    getIconSet = () => {
+        const {match, location:{pathname}} = this.props;
+        if (pathname.indexOf('/kid') !== -1) return kidIcons;
+        return icons;
+    }
+    getIconLink = (index) => {
+        const {match, location:{pathname}} = this.props;
+        if (pathname.indexOf('/kid') !== -1) return kidLinks[index];
+        return links[index];
+    }
     render() {
         const {match, location:{pathname}} = this.props;
         return (
@@ -87,6 +113,12 @@ class MainTabScreen extends React.Component{
                     <Route path="/maintabscreen/editchore/:choreid" component={EditChoreContainer} />
                     <Route path="/maintabscreen/createreward" component={CreateRewardContainer} />
                     <Route path="/maintabscreen/editreward/:rewardid" component={EditRewardContainer} />
+                    {/*KID ROUTES*/}
+
+                    <Route path="/maintabscreen/kid/accountmanager" component={KidAccountManagerContainer} />
+                    <Route path="/maintabscreen/kid/choreboard" component={KidChoreBoardContainer} />
+                    <Route path="/maintabscreen/kid/rewardsfeed" component={KidRewardsContainer} />
+                    <Route path="/maintabscreen/kid/kreditdashboard" component={KidKreditDashboardContainer} />
                 </Switch>
 
                 {
@@ -95,11 +127,11 @@ class MainTabScreen extends React.Component{
                         <View style={styles.bottomSpacer}/>
                         <View style={styles.bottomBar}>
                             {
-                                icons.map((icon, iconIndex) =>
+                                this.getIconSet().map((icon, iconIndex) =>
                                     <TabButton
                                         key={iconIndex}
-                                        to={links[iconIndex]}>
-                                        {icon(pathname===links[iconIndex] ? fountainBlue : lightGrey )}
+                                        to={this.getIconLink(iconIndex)}>
+                                        {icon(pathname===this.getIconLink(iconIndex) ? fountainBlue : lightGrey )}
                                     </TabButton>)
                             }
                         </View>

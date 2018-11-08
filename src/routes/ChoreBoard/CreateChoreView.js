@@ -18,6 +18,8 @@ import {observer} from "mobx-react";
 import KKButton from "../../common/KKButton";
 import FullPageWithModal from "../../common/FullPageWithModal";
 import KidSelection from "../../common/KidSelection";
+import Row from "../../common/Row";
+import AutoCompleteSuggestions from "../../common/AutoCompleteSuggestions";
 
 const {width, height} = Dimensions.get('window');
 
@@ -69,30 +71,40 @@ const getNewChores = (oldChoreDays, tappedChoreIdx, choreFrequency) => {
 }
 
 const CreateChoreView = ({
-         match: {path},
-         updateForm,
-         choreName = "",
-         choreDays = [],
-         monthlyChoreInterval,
-         choreFrequency,
-         chorePriority,
-         kidsList=[],
-         choreAppliedTo = [],
-         toggleKidSelection,
-         submitChore,
-         submitting,
-         modalVisible,
-         modalText
-     }) => (
+    match: {path},
+    updateForm,
+    choreName = "",
+    choreDays = [],
+    monthlyChoreInterval,
+    choreFrequency,
+    chorePriority,
+    kidsList=[],
+    choreAppliedTo = [],
+    toggleKidSelection,
+    submitChore,
+    submitting,
+    modalVisible,
+    modalText,
+    choreSuggestions
+ }) => (
     <FullPageWithModal style={{backgroundColor: lightGreyBG}} modalVisible={modalVisible} modalText={modalText}>
         <Header/>
         <ScrollView style={{flex:1, alignSelf: 'stretch'}}>
+            {console.log(choreSuggestions)}
             <KKTextInput
                 style={styles.nameInput}
                 placeholder={"Enter Chore Name"}
                 value={choreName}
                 onChangeText={text=> updateForm('choreName', text) }
             />
+            {
+                !!choreName && !!(choreName.length > 0) && !!choreSuggestions && !!(choreSuggestions.length > 0) &&
+                    !(choreSuggestions.length === 1 && choreSuggestions[0].name === choreName) &&
+                    <AutoCompleteSuggestions
+                        suggestions={choreSuggestions}
+                        onPressSuggestion={selectedText => updateForm('choreName', selectedText)}
+                    />
+            }
             <Text style={styles.textLabel}>How often would you like the chore done?</Text>
             <View style={styles.row}>
                 {

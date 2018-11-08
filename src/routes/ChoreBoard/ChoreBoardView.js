@@ -7,7 +7,6 @@ import {
 import Text from '../../common/KKText';
 import ItemTile from "../../common/ItemTile";
 import Header from "../../common/Header";
-import KidAvatar from "../../common/KidAvatar";
 import {Link} from "react-router-native";
 import SwipableKidSelection from "../../common/SwipableKidSelection";
 

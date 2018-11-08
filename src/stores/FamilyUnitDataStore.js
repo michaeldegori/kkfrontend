@@ -150,6 +150,22 @@ class FamilyUnitStore{
         console.log(putResult);
         this.kidsList = putResult.kidsList;
     }
+
+    requestCompleteChore = async (childId, choreId, idToken) => {
+        console.log(childId, choreId, idToken)
+        const putResult = await fetchJson(apiUrl + `/familyunit/${this.unitId}/child/${childId}/requestcompletechore`, {
+            method: 'PATCH',
+            headers: {
+                Authorization: 'Bearer '+idToken,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                choreId
+            })
+        });
+        console.log(putResult);
+        this.kidsList = putResult.kidsList;
+    }
 }
 
 const familyUnitRepository = new FamilyUnitStore();

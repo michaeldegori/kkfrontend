@@ -48,6 +48,11 @@ class UserDataStore{
         console.log("CHECKIFLOGGEDIN MIDWAY", localData);
         if (!localData.accessToken || !localData.idToken || !localData.expiresIn || Number(localData.expiresIn) < new Date().getTime()+1000*60*60) return false;
         await this.pullUserInfoFromApiAndStore(localData.idToken, localData.accessToken, false, false);
+        const browsingMode = await AsyncStorage.getItem("BROWSING_MODE");
+        if (browsingMode) {
+            this.BROWSING_MODE = browsingMode;
+            this.nextRoute = "/maintabscreen/kid/choreboard";
+        }
         console.log("CHECKIFLOGGEDIN FINISHED");
         return true;
     };
@@ -96,6 +101,16 @@ class UserDataStore{
             ["@kiddiekredit:expiresIn", ""+ (Number(userInfo.exp)*1000)]
         ]);
     };
+
+    async switchBrowsingMode(history, id, mode){
+        if (mode === 'parent'){
+            this.logOut(history);
+            return;
+        }
+        this.BROWSING_MODE = 'child-'+id;
+        history.push("/maintabscreen/kid/choreboard");
+        AsyncStorage.setItem("BROWSING_MODE", 'child-'+id);
+    }
 
 
     async logOut(history) {

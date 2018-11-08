@@ -27,13 +27,19 @@ const Header = ({history, leftAction, rightAction, ...props}) => {
             default: return null;
         }
     };
+    const chooseLeftAction = actionName => {
+        if (!actionName) return <BackArrow/>
+        switch (actionName) {
+            case 'avatarButton': return <AvatarButton/>;
+            case 'avatarButton-kid': return <AvatarButton path="/maintabscreen/kid/accountmanager"/>
+            default: return <BackArrow/>
+        }
+    }
     return (
         <View style={styles.mainContainer}>
             <TouchableOpacity style={styles.sideContainer} onPress={history.goBack}>
                 {
-                    leftAction === 'avatarButton' ?
-                        <AvatarButton /> :
-                        <BackArrow />
+                    chooseLeftAction(leftAction)
                 }
             </TouchableOpacity>
             <View style={styles.logoContainer}>

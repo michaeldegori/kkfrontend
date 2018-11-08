@@ -15,21 +15,22 @@ import {Link} from "react-router-native";
 import KidAvatar from "../../common/KidAvatar";
 
 const {width, height} = Dimensions.get("window");
-const AccountManagerView = ({history, kidsList=[], ...props}) => (
+const AccountManagerView = ({history, kidsList=[], switchToChild, switchToParent=()=>"", ...props}) => (
     <FullPage>
-        {console.log("#########AccountMgr", props)}
         <Header history={history} rightAction="logout"/>
         <View style={styles.iconRow}>
-            <View style={styles.badge}>
+            <TouchableOpacity style={styles.badge} onPress={switchToParent}>
                 <View style={styles.largeCircle}></View>
                 <Text semiBold style={{fontSize: width * 0.044, color: shuttleGrey}}>Me</Text>
-            </View>
+            </TouchableOpacity>
 
         </View>
         <View style={styles.iconRow}>
             {
                 kidsList.map(kid => (
-                    <KidAvatar {...kid} key={kid._id} />
+                    <TouchableOpacity onPress={()=>switchToChild(kid._id)} key={kid._id}>
+                        <KidAvatar {...kid} />
+                    </TouchableOpacity>
                 ))
             }
             <Link style={styles.badge} to={"/maintabscreen/addfamilyunitmember"}>

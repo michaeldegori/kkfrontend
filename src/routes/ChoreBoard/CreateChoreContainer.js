@@ -6,6 +6,7 @@ import CreateChoreView from './CreateChoreView';
 import {observer} from "mobx-react";
 import familyUnitRepository from "../../stores/FamilyUnitDataStore";
 import userRepository from "../../stores/UserDataStore";
+import choresRepository from "../../stores/DefaultChoresStore";
 
 @observer
 class CreateChoreContainer extends React.Component{
@@ -19,6 +20,9 @@ class CreateChoreContainer extends React.Component{
         submitting: false,
         modalVisible: false,
         modalText: "Success"
+    }
+    componentWillMount(){
+        choresRepository.loadChoresFromApi(userRepository.idToken);
     }
     updateForm = (field, newVal) => this.setState({ [field]: newVal } )
     toggleKidSelection = (kidId) => {
@@ -71,6 +75,8 @@ class CreateChoreContainer extends React.Component{
     }
     render() {
         const {kidsList} = familyUnitRepository;
+        const {choreSuggestions} = choresRepository;
+
         return (
             <CreateChoreView
                 {...this.props}
@@ -79,6 +85,7 @@ class CreateChoreContainer extends React.Component{
                 kidsList={kidsList}
                 toggleKidSelection={this.toggleKidSelection}
                 submitChore={this.submitChore}
+                choreSuggestions={choreSuggestions.filter(sug => sug.name.toLowerCase().indexOf(this.state.choreName.toLowerCase()) !== -1)}
             />
         );
     }

@@ -63,12 +63,17 @@ async function logOutFromAuth0(history) {
         "@kiddiekredit:expiresIn"
     ]);
     const redirectUrl = AuthSession.getRedirectUrl();
+    // const result = await AuthSession.startAsync({
+    //     authUrl: `${auth0Domain}/v2/logout` + toQueryString({
+    //         client_id: auth0ClientId,
+    //         scope: 'openid profile user_metadata email',
+    //     }),
+    //     returnUrl: redirectUrl
+    // });
+    //domain with back end redirect
+    // `${auth0Domain}/v2/logout?returnTo=http%3A%2F%2Fapi.kiddiekredit.com%3A8080%2Flogout&client_id=`+auth0ClientId
     const result = await AuthSession.startAsync({
-        authUrl: `${auth0Domain}/v2/logout` + toQueryString({
-            client_id: auth0ClientId,
-            scope: 'openid profile user_metadata email',
-        }),
-        returnUrl: redirectUrl
+        authUrl: `${auth0Domain}/v2/logout?returnTo=kiddiekredit%3A%2F%2Fmaintabscreen&client_id=`+auth0ClientId
     });
     console.log('LOGOUT RESULT',result);
     // if (result.type !== 'success'){
