@@ -34,7 +34,10 @@ const renderChoresList = (kidsList=[], chores=[]) => selectedChildId => (
                 if (kidsWithThisChore.length === 0) kidsWithThisChore = [{name: "Not assigned"}];
                 return (
                     <Link to={`/maintabscreen/editchore/${chore._id}`} key={chore._id}>
-                        <ItemTile mainCaption={chore.name} subCaption={kidsWithThisChore.map(kid => kid.name).join(", ")} />
+                        <ItemTile
+                            mainCaption={chore.name}
+                            subCaption={kidsWithThisChore.map(kid => kid.name).join(", ")}
+                        />
                     </Link>
                 );
             })

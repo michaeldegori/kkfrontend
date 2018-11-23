@@ -30,6 +30,7 @@ class UserDataStore{
         this.firstName = userInfo["https://kiddiekredit.com/user_metadata"].first_name;
         this.lastName = userInfo["https://kiddiekredit.com/user_metadata"].last_name;
         this.parentType = userInfo["https://kiddiekredit.com/user_metadata"].parent_type;
+        this.email = userInfo.email;
         this.accessToken = accessToken;
         this.idToken = idToken;
         this.avatar = userInfo.picture;
@@ -51,6 +52,8 @@ class UserDataStore{
         const browsingMode = await AsyncStorage.getItem("BROWSING_MODE");
         if (browsingMode) {
             this.BROWSING_MODE = browsingMode;
+        }
+        if (browsingMode && browsingMode.indexOf("child") !== -1) {
             this.nextRoute = "/maintabscreen/kid/choreboard";
         }
         console.log("CHECKIFLOGGEDIN FINISHED");
@@ -104,6 +107,7 @@ class UserDataStore{
 
     async switchBrowsingMode(history, id, mode){
         if (mode === 'parent'){
+            AsyncStorage.setItem("BROWSING_MODE", 'parent');
             this.logOut(history);
             return;
         }

@@ -26,6 +26,8 @@ import KidAccountManagerContainer from "./AccountManager/KidAccountManager";
 import KidChoreBoardContainer from "./ChoreBoard/KidChoreBoardContainer";
 import KidRewardsContainer from "./RewardsFeed/KidRewardsContainer";
 import KidKreditDashboardContainer from "./KreditDashboard/KidKreditDashboardContainer";
+import userRepository from "../stores/UserDataStore";
+import registerForPushNotificationsAsync from "../services/PushNotifications";
 
 const icons = [
     color=> <EvilIcons color={color} name="bell" size={32}/>,
@@ -63,9 +65,10 @@ class MainTabScreen extends React.Component{
     state = {
         keyboardShown: false
     }
-    componentDidMount () {
+    async componentDidMount () {
         this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+        await registerForPushNotificationsAsync(userRepository);
     }
 
     componentWillUnmount () {

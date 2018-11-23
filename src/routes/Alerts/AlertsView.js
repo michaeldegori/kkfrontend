@@ -24,7 +24,10 @@ const AlertView = ({
                 const kidObj = kidsList.find(k => k._id === kidId);
                 const choreObj = chores.find(c => c._id === choreId);
                 return (
-                    <ItemTile key={_id} mainCaption={`${kidObj.name} - ${choreObj.name}`} />
+                    <ItemTile
+                        key={_id}
+                        mainCaption={`${kidObj.name} - ${choreObj.name}`}
+                    />
                 );
             })
         }

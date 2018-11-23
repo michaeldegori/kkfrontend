@@ -6,13 +6,10 @@ import userRepository from "../../stores/UserDataStore";
 
 class KreditDashboardContainer extends React.Component{
     state = {
-        loading: false
+        loading: true
     }
     async componentDidMount() {
-        this.setState(()=> ({loading: true}));
-        setTimeout(() => {
-            this.setState(()=> ({loading: false}));
-        }, 750);
+        if (familyUnitRepository.kidsList) this.setState(() => ({loading: false}));
     }
     render() {
         return (

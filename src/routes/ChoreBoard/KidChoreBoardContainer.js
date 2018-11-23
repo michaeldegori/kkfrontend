@@ -30,6 +30,7 @@ class KidChoreBoardContainer extends React.Component{
         this.setState(() => ({modalVisible: false}));
     }
     getChoresToDisplay() {
+        if (!familyUnitRepository.kidsList ) return [];
         const kidId = userRepository.BROWSING_MODE.split("-")[1];
         const currentKid = familyUnitRepository.kidsList.find(k => k._id === kidId);
         const choresToDisplay = familyUnitRepository.existingChores.filter(globalChore => currentKid.assignedChores.includes(globalChore._id));

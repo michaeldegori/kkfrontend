@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         alignSelf: 'stretch',
+        backgroundColor: 'white'
     }
 });
 

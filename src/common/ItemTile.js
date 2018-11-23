@@ -11,9 +11,12 @@ import PropTypes from 'prop-types';
 const ItemTile = ({iconSrc, mainCaption, subCaption="", renderRightItem }) => (
     <View style={styles.mainContainer}>
         <View style={styles.innerContainer}>
-            <View style={styles.imgContainer}>
+            {
+                typeof iconSrc === 'string' && iconSrc.length > 2 &&
+                <View style={styles.imgContainer}>
 
-            </View>
+                </View>
+            }
             <View style={styles.captionContainer}>
                 <Text style={styles.mainCaption}>{mainCaption}</Text>
                 <Text style={styles.subCaption}>{subCaption}</Text>

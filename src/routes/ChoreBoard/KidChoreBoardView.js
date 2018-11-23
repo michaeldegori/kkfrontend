@@ -15,6 +15,7 @@ const KidChoreBoardView = ({chores, modalVisible, modalText, onRequestCompleteCh
         style={{flex: 1, alignSelf: 'stretch', justifyContent: 'flex-start', alignItems: 'center'}}>
         <Header leftAction={"avatarButton-kid"} />
         <ScrollView style={{flex:1, alignSelf: 'stretch'}}>
+
             {
                 chores
                     .map((chore) => (

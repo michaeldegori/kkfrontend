@@ -3,7 +3,7 @@ import {apiUrl} from "../globals";
 
 const PUSH_ENDPOINT = apiUrl + '/user/notification-token';
 
-async function registerForPushNotificationsAsync(idToken) {
+async function registerForPushNotificationsAsync({idToken, BROWSING_MODE, email}) {
     const { status: existingStatus } = await Permissions.getAsync(
         Permissions.NOTIFICATIONS
     );
@@ -27,8 +27,8 @@ async function registerForPushNotificationsAsync(idToken) {
     let token = await Notifications.getExpoPushTokenAsync();
 
     // POST the token to your backend server from where you can retrieve it to send push notifications.
-    return fetch(PUSH_ENDPOINT, {
-        method: 'POST',
+    const notificationResult = await fetch(PUSH_ENDPOINT, {
+        method: 'PUT',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
@@ -36,6 +36,15 @@ async function registerForPushNotificationsAsync(idToken) {
         },
         body: JSON.stringify({
             token,
+            browsingMode: BROWSING_MODE,
+            email
         }),
+    }).then(res => {
+        console.log(res);
     });
+
+    console.log(notificationResult);
 }
+
+
+export default registerForPushNotificationsAsync;

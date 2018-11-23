@@ -10,7 +10,6 @@ class KidAccountManagerContainer extends React.Component{
         userRepository.switchBrowsingMode(this.props.history, childId);
     }
     switchToParent = async () => {
-        console.log("HIIIIIIIIIII");
         await userRepository.switchBrowsingMode(this.props.history, null, 'parent');
     }
     render() {
