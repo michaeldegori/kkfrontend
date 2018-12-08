@@ -25,9 +25,19 @@ class CreateRewardContainer extends React.Component {
         else
             this.setState({rewardAppliesTo: this.state.rewardAppliesTo.filter(kId => kId !== kidId)});
     }
-    showModal = message => {
-        this.setState(state => ({modalVisible: true, modalText: message}));
-        setTimeout(() => this.setState(state => ({modalVisible: false})), 1750);
+    modalClose = () => this.setState(()=> ({modalVisible: false}))
+    modalAddAnotherChore = () => this.setState(() => ({
+        modalVisible: false,
+        modalText: 'Success',
+        rewardName: '',
+        rewardAppliesTo: [],
+        kkCost: '',
+        notes: '',
+        submitting: false,
+    }))
+    modalBackToDashboard = () => {
+        this.setState(() => ({modalVisible: false}));
+        if (this.props.history) this.props.history.push('/maintabscreen/rewardsfeed');
     }
     submitReward = async () => {
         console.log('submitting reward', this.state);
@@ -45,14 +55,13 @@ class CreateRewardContainer extends React.Component {
 
         try {
             await familyUnitRepository.addReward({rewardName, rewardAppliesTo, kkCost, notes}, userRepository.idToken);
-            this.showModal("Success!");
         }
         catch(err){
             console.log(err);
             Alert.alert("API error", (typeof err === 'object' ? JSON.stringify(err, null,2) : err.toString()));
         }
         finally {
-            this.setState( _ => ({submitting: false}));
+            this.setState( _ => ({submitting: false, modalVisible: true, modalText: 'Reward created!'}));
         }
     }
     render() {
@@ -65,6 +74,9 @@ class CreateRewardContainer extends React.Component {
                 kidsList={kidsList}
                 toggleKidSelection={this.toggleKidSelection}
                 submitReward={this.submitReward}
+                modalClose={this.modalClose}
+                modalAccept={this.modalAddAnotherChore}
+                modalDeny={this.modalBackToDashboard}
             />
         );
     }

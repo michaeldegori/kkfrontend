@@ -4,6 +4,7 @@ import {
     StyleSheet,
     Dimensions
 } from 'react-native';
+import {shuttleGrey} from "../colors";
 
 const KKTextInput = ({style, ...props}) => (
   <TextInput
@@ -19,7 +20,8 @@ const styles = StyleSheet.create({
         alignSelf: 'stretch',
         padding: height * 0.015,
         backgroundColor: 'white',
-        borderRadius: 8
+        borderRadius: 8,
+        color: shuttleGrey
     }
 });
 

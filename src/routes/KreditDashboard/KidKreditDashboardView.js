@@ -16,7 +16,7 @@ const KidKreditDashboardView = ({
     kreditInfo
 }) => (
     <FullPage>
-        <Header />
+        <Header leftAction={'avatarButton'}/>
         {
             loading ? <EmptyState loading={loading}/>
             :
@@ -27,7 +27,7 @@ const KidKreditDashboardView = ({
 
                     <ItemTile
                         mainCaption="Rewards Redemptions (Utilization)"
-                        subCaption={buildSubtitleString(kreditInfo, 'rewardsRedemptions')} />
+                        subCaption={buildSubtitleString(kreditInfo, 'utilization')} />
                     <ItemTile
                         mainCaption="Chore History (Payment History)"
                         subCaption={buildSubtitleString(kreditInfo, 'choreHistory')} />
@@ -39,7 +39,7 @@ const KidKreditDashboardView = ({
                         subCaption={buildSubtitleString(kreditInfo, 'totalChores')} />
                     <ItemTile
                         mainCaption="Reward Requests (Credit Inquiries)"
-                        subCaption={buildSubtitleString(kreditInfo, 'rewardsRequests')} />
+                        subCaption={buildSubtitleString(kreditInfo, 'inquiries')} />
                 </ScrollView>
 
         }
@@ -49,14 +49,17 @@ const KidKreditDashboardView = ({
 
 function buildSubtitleString(kreditInfo, key){
     const kreditInfoFraction = kreditInfo[key];
-    if (!kreditInfoFraction || !kreditInfoFraction.value || !kreditInfoFraction.denominator) return '0/20';
+    if (!kreditInfoFraction || !kreditInfoFraction.numerator || !kreditInfoFraction.denominator) return '0/20';
 
-    return `${kreditInfoFraction.value}/${kreditInfoFraction.denominator}`;
+    return `${kreditInfoFraction.numerator}/${kreditInfoFraction.denominator}`;
 }
 
 function getTotalScore(kreditInfo){
     let score = 0;
-    for (let key in kreditInfo) score += kreditInfo[key].value;
+    for (let key in kreditInfo) {
+        if (typeof kreditInfo[key] === 'object' && typeof Number(kreditInfo[key].numerator) === 'number')
+            score += Number(kreditInfo[key].numerator);
+    }
     return score;
 }
 

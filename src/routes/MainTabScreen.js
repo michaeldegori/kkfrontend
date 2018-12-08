@@ -84,9 +84,8 @@ class MainTabScreen extends React.Component{
         this.setState(() => ({keyboardShown: false}));
     }
     shouldShowTabBar = () => {
-        const {match, location:{pathname}} = this.props;
+        const {location:{pathname}} = this.props;
         if (this.state.keyboardShown) return false;
-        console.log(pathname);
         return keyboardHiddenPaths.indexOf(pathname) === -1;
 
     }

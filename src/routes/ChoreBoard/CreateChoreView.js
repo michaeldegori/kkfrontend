@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import {
     View,
     TouchableOpacity,
@@ -12,13 +12,13 @@ import Text from '../../common/KKText';
 import {Entypo} from 'react-native-vector-icons';
 import Header from "../../common/Header";
 import KKTextInput from "../../common/KKTextInput";
-import {fountainBlue, lightGreyBG, shuttleGreyDark} from "../../colors";
+import {fountainBlue, lightGreyBG, shuttleGrey, shuttleGreyDark} from "../../colors";
 import KidAvatar from "../../common/KidAvatar";
 import {observer} from "mobx-react";
 import KKButton from "../../common/KKButton";
 import FullPageWithModal from "../../common/FullPageWithModal";
 import KidSelection from "../../common/KidSelection";
-import Row from "../../common/Row";
+import {Ionicons} from 'react-native-vector-icons';
 import AutoCompleteSuggestions from "../../common/AutoCompleteSuggestions";
 
 const {width, height} = Dimensions.get('window');
@@ -70,6 +70,22 @@ const getNewChores = (oldChoreDays, tappedChoreIdx, choreFrequency) => {
     return oldChoreDays.map((e,i) => i === tappedChoreIdx ? !e : e );
 }
 
+const renderModalContents = (modalText, modalAccept, modalDeny) => () => (
+    <Fragment>
+        <Text style={{color: shuttleGreyDark, textAlign: 'center', marginBottom: height * 0.05}}>{modalText}</Text>
+        <View style={{alignSelf: 'stretch', alignItems: 'center', marginBottom: height * 0.03}}>
+            <TouchableOpacity style={[styles.modalBtn, {borderColor: fountainBlue}]} onPress={modalAccept} >
+                <Ionicons style={{marginHorizontal: width * 0.02}} size={width * 0.1} color={fountainBlue} name={"ios-checkmark-circle-outline"} />
+                <Text style={{color: fountainBlue, marginLeft: 8, flex:1}}>Add another child</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.modalBtn, {borderColor: shuttleGrey}]} onPress={modalDeny} >
+                <Ionicons style={{marginHorizontal: width * 0.02}} size={width * 0.1} color={shuttleGrey} name={"ios-arrow-dropleft"} />
+                <Text style={{color: shuttleGrey, marginLeft: 8, flex:1}}>Back to Dashboard</Text>
+            </TouchableOpacity>
+        </View>
+    </Fragment>
+);
+
 const CreateChoreView = ({
     match: {path},
     updateForm,
@@ -85,9 +101,16 @@ const CreateChoreView = ({
     submitting,
     modalVisible,
     modalText,
-    choreSuggestions
+    choreSuggestions,
+    modalClose,
+    modalAccept,
+    modalDeny
  }) => (
-    <FullPageWithModal style={{backgroundColor: lightGreyBG}} modalVisible={modalVisible} modalText={modalText}>
+    <FullPageWithModal
+       modalVisible={modalVisible}
+       modalClose={modalClose}
+       renderModalContents={renderModalContents(modalText, modalAccept, modalDeny)}
+    >
         <Header/>
         <ScrollView style={{flex:1, alignSelf: 'stretch'}}>
             {console.log(choreSuggestions)}
@@ -221,6 +244,16 @@ const styles = StyleSheet.create({
     bottomMargin: {
         marginBottom: height * 0.1
     },
+    modalBtn: {
+        width: 0.7 * width,
+        borderRadius: 8,
+        borderWidth: 2,
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        marginBottom: width * 0.015,
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
 });
 
 export default observer(CreateChoreView);

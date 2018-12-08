@@ -11,6 +11,7 @@ import {logOutFromAuth0, toQueryString} from "../services/Authorization";
 import familyUnitRepository from './FamilyUnitDataStore';
 import choresRepository from "./DefaultChoresStore";
 import rewardsRepository from "./DefaultRewardsStore";
+import registerForPushNotificationsAsync from "../services/PushNotifications";
 
 class UserDataStore{
     @observable mongoId;
@@ -108,12 +109,14 @@ class UserDataStore{
     async switchBrowsingMode(history, id, mode){
         if (mode === 'parent'){
             AsyncStorage.setItem("BROWSING_MODE", 'parent');
-            this.logOut(history);
+            await this.logOut(history);
+            registerForPushNotificationsAsync(this);
             return;
         }
         this.BROWSING_MODE = 'child-'+id;
         history.push("/maintabscreen/kid/choreboard");
         AsyncStorage.setItem("BROWSING_MODE", 'child-'+id);
+        registerForPushNotificationsAsync(this);
     }
 
 

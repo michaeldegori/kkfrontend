@@ -8,7 +8,7 @@ import {
 import {lightGrey, fountainBlue} from "../colors";
 import PropTypes from 'prop-types';
 
-const ItemTile = ({iconSrc, mainCaption, subCaption="", renderRightItem }) => (
+const ItemTile = ({iconSrc, mainCaption, subCaption="", renderRightItem, disabled=false }) => (
     <View style={styles.mainContainer}>
         <View style={styles.innerContainer}>
             {
@@ -25,6 +25,9 @@ const ItemTile = ({iconSrc, mainCaption, subCaption="", renderRightItem }) => (
                 renderRightItem ? renderRightItem() : <View style={styles.indicatorContainer} />
             }
         </View>
+        {
+            disabled && <View style={styles.overlay}></View>
+        }
     </View>
 );
 
@@ -32,7 +35,8 @@ ItemTile.propTypes = {
     iconSrc: PropTypes.string,
     mainCaption: PropTypes.string.isRequired,
     subCaption: PropTypes.string,
-    renderRightItem: PropTypes.func
+    renderRightItem: PropTypes.func,
+    disabled: PropTypes.bool
 };
 
 const {width, height} = Dimensions.get('window');
@@ -43,7 +47,15 @@ const styles = StyleSheet.create({
         margin: width * 0.03,
         padding: width * 0.03,
         borderColor: lightGrey,
-        borderWidth: 1
+        borderWidth: 1,
+        overflow: 'hidden'
+    },
+    overlay:{
+        backgroundColor: 'rgba(255,255,255,0.75)',
+        // backgroundColor: 'red',
+        position:'absolute',
+        width: width * 0.94,
+        height: height * 0.1
     },
     innerContainer: {
         flexDirection: 'row'

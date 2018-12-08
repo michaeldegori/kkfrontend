@@ -3,7 +3,7 @@ import {
     View,
     Dimensions,
     StyleSheet,
-    Slider
+    Slider,
 } from 'react-native';
 import Text from '../../common/KKText';
 import FullPage from "../../common/FullPage";
@@ -23,7 +23,7 @@ const SettingsView = ({
     savingsSliderValue
 }) => (
     <FullPage>
-        <Header/>
+        <Header leftAction={'avatarButton'}/>
         <SwipableKidSelection
             isSelectionNullable={false}
             kidsList={kidsList.toJS?kidsList.toJS():[]}

@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {Ionicons} from 'react-native-vector-icons';
 import Text from './KKText';
-import {shuttleGrey} from "../colors";
+import {lightGrey, shuttleGrey} from "../colors";
 import {Link, withRouter} from 'react-router-native';
 import AvatarButton from "./AvatarButton";
 import LogoutButton from "./LogoutButton";
@@ -24,6 +24,7 @@ const Header = ({history, leftAction, rightAction, ...props}) => {
             case 'logout': return  <LogoutButton history={history}/>;
             case 'addChore': return <AddButton route="/maintabscreen/createchore" />;
             case 'addReward': return <AddButton route="/maintabscreen/createreward" />;
+            case 'deleteAlerts': return <Ionicons style={{marginHorizontal: width * 0.02}} size={width * 0.1} color={lightGrey} name={"ios-trash"} />;
             default: return null;
         }
     };
@@ -31,7 +32,6 @@ const Header = ({history, leftAction, rightAction, ...props}) => {
         if (!actionName) return <BackArrow/>
         switch (actionName) {
             case 'avatarButton': return <AvatarButton/>;
-            case 'avatarButton-kid': return <AvatarButton path="/maintabscreen/kid/accountmanager"/>
             default: return <BackArrow/>
         }
     }

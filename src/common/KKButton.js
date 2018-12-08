@@ -31,7 +31,6 @@ KKButton.propTypes = {
 const {width, height} = Dimensions.get("window");
 const styles = StyleSheet.create({
     mainContainer: {
-        paddingVertical: height * 0.02,
         width:  width * 0.5,
         justifyContent: 'center',
         alignItems: 'center',
@@ -39,6 +38,9 @@ const styles = StyleSheet.create({
         borderRadius: 8
     },
     label: {
+        paddingVertical: height * 0.02,
+        alignSelf: 'center',
+        textAlign: 'center',
         color: 'white',
         letterSpacing: 5
     },

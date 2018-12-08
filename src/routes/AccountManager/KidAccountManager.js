@@ -19,6 +19,7 @@ class KidAccountManagerContainer extends React.Component{
                 kidsList={familyUnitRepository.kidsList}
                 switchToChild={this.switchToChild}
                 switchToParent={this.switchToParent}
+                parentLabel={"Parent"}
             />
         );
     }

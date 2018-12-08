@@ -4,7 +4,7 @@ import {apiUrl} from "../globals";
 import userRepository from "./UserDataStore";
 
 class AlertsStore{
-    @observable alerts = [];
+    @observable alerts = null;
 
     loadAlertsFromApi = async (idToken, familyUnitId) => {
         const alerts = await fetchJson(apiUrl + `/familyunit/${familyUnitId}/alerts`, {

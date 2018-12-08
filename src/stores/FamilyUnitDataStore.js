@@ -2,6 +2,7 @@ import {observable} from 'mobx';
 import {fetchJson} from "../services/Networking";
 import {apiUrl} from "../globals";
 import userRepository from "./UserDataStore";
+import alertsRepository from "./AlertsStore";
 
 class FamilyUnitStore{
     @observable unitId;
@@ -165,6 +166,44 @@ class FamilyUnitStore{
         });
         console.log(putResult);
         this.kidsList = putResult.kidsList;
+    }
+
+    processApprovalRequest = async (alert, status, idToken) => {
+        const {kid:childId, doneChoreId, _id: alertId} = alert;
+        const putResult = await fetchJson(apiUrl + `/familyunit/${this.unitId}/child/${childId}/processapprovalrequest`, {
+            method: 'PATCH',
+            headers: {
+                Authorization: 'Bearer '+idToken,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                doneChoreId,
+                alertId,
+                status
+            })
+        });
+        console.log(putResult);
+        this.kidsList = putResult.familyUnit.kidsList;
+
+        alertsRepository.alerts = alertsRepository.alerts.map(alert => {
+            if(alert._id !== putResult.alert._id) return alert;
+            return putResult.alert;
+        });
+    }
+
+    deleteChild = async (childId, idToken) => {
+        const deleteResult = await fetchJson(apiUrl + `/familyunit/${this.unitId}/child/${childId}`, {
+            method: 'DELETE',
+            headers: {
+                Authorization: 'Bearer '+idToken,
+                'Content-Type': 'application/json'
+            }
+        });
+        console.log(deleteResult);
+        if (deleteResult && typeof deleteResult.kidsList.length === 'number'){
+            this.kidsList = deleteResult.kidsList;
+            console.log("#####################loading new kids list")
+        }
     }
 }
 

@@ -71,10 +71,7 @@ async function logOutFromAuth0(history) {
         authUrl: `${auth0Domain}/v2/logout?returnTo=kiddiekredit%3A%2F%2Fmaintabscreen&client_id=`+auth0ClientId
     });
     console.log('LOGOUT RESULT',result);
-    // if (result.type !== 'success'){
-    //     // Alert.alert("Error while logging in", result.type);
-    //     return;
-    // }
+    return result;
 }
 
 export {

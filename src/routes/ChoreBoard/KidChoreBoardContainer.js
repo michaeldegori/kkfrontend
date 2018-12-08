@@ -13,9 +13,12 @@ class KidChoreBoardContainer extends React.Component{
         checkMarkClickable: true
     }
     requestConfirmCompleteChore = choreId => {
+        const kidId = userRepository.BROWSING_MODE.split("-")[1];
+        const currentKid = familyUnitRepository.kidsList.find(k => k._id === kidId);
         this.setState(() => ({
             modalVisible: true,
-            selectedChore: choreId
+            selectedChore: choreId,
+            modalText: `${currentKid.name}, are you sure you have completed this chore?`
         }));
     }
     completeChore = async () => {
@@ -26,7 +29,6 @@ class KidChoreBoardContainer extends React.Component{
         this.cancelModal();
     }
     cancelModal= () => {
-        console.log("Closing modal")
         this.setState(() => ({modalVisible: false}));
     }
     getChoresToDisplay() {
@@ -46,6 +48,7 @@ class KidChoreBoardContainer extends React.Component{
                 onRequestCompleteChore={this.requestConfirmCompleteChore}
                 modalAccept={this.state.checkMarkClickable ? this.completeChore : () => ""}
                 modalClose={this.cancelModal}
+                modalDeny={this.cancelModal}
                 chores={this.getChoresToDisplay()}
             />
         );

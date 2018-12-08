@@ -31,10 +31,23 @@ class CreateChoreContainer extends React.Component{
         else
             this.setState({choreAppliedTo: this.state.choreAppliedTo.filter(kId => kId !== kidId)});
     }
-    showModal = message => {
-        this.setState(state => ({modalVisible: true, modalText: message}));
-        setTimeout(() => this.setState(state => ({modalVisible: false})), 1750);
+
+    modalClose = () => this.setState(() => ({modalVisible: false}))
+    modalAddAnotherChore = () => this.setState(()=> ({choreName: "",
+        choreDays: [false, false, false, false, false, false, false],
+        choreFrequency: "weekly",
+        monthlyChoreInterval: null,
+        chorePriority: 2,
+        choreAppliedTo: [],
+        submitting: false,
+        modalVisible: false,
+        modalText: "Success"}))
+    modalBackToDashboard = () => {
+        this.setState(() => ({modalVisible: false}));
+        if (this.props.history) this.props.history.push('/maintabscreen/choreboard');
     }
+
+
     submitChore = async () => {
         this.setState(state=> ({submitting: true}));
         const {
@@ -65,13 +78,12 @@ class CreateChoreContainer extends React.Component{
 
         try {
             await familyUnitRepository.addChore({ choreName, choreDays, choreFrequency, chorePriority, choreAppliedTo, monthlyChoreInterval}, userRepository.idToken);
-            this.showModal("Success");
+            this.setState(state => ({submitting: false, modalVisible: true, modalText: "Chore successfully created!"}));
         }
         catch(err){
             Alert.alert("Error posting chore", err.toString());
         }
 
-        this.setState(state => ({submitting: false}));
     }
     render() {
         const {kidsList} = familyUnitRepository;
@@ -86,6 +98,9 @@ class CreateChoreContainer extends React.Component{
                 toggleKidSelection={this.toggleKidSelection}
                 submitChore={this.submitChore}
                 choreSuggestions={choreSuggestions.filter(sug => sug.name.toLowerCase().indexOf(this.state.choreName.toLowerCase()) !== -1)}
+                modalClose={this.modalClose}
+                modalAccept={this.modalAddAnotherChore}
+                modalDeny={this.modalBackToDashboard}
             />
         );
     }

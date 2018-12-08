@@ -16,7 +16,8 @@ const RewardsFeedView = ({
     rewardsList=[]
 }) => (
     <FullPage>
-        <Header rightAction="addReward"/>
+        <Header leftAction={'avatarButton'} rightAction="addReward"/>
+        <Text style={styles.subHeading}>Rewards Available to Children:</Text>
         {
             rewardsList.map(reward =>
                 <Link to={`/maintabscreen/editreward/${reward._id}`} key={reward._id}>
@@ -37,6 +38,11 @@ const styles = StyleSheet.create({
         color: fountainBlue,
         alignSelf: 'center',
         fontSize: width * 0.05
+    },
+    subHeading: {
+        color: fountainBlue,
+        fontSize: width * 0.05,
+        textAlign: 'center'
     }
 });
 
