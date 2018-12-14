@@ -18,7 +18,8 @@ class KidChoreBoardContainer extends React.Component{
         this.setState(() => ({
             modalVisible: true,
             selectedChore: choreId,
-            modalText: `${currentKid.name}, are you sure you have completed this chore?`
+            modalText: `${currentKid.name}, are you sure you have completed this chore?`,
+            checkMarkClickable: true
         }));
     }
     completeChore = async () => {
@@ -29,15 +30,15 @@ class KidChoreBoardContainer extends React.Component{
         this.cancelModal();
     }
     cancelModal= () => {
-        this.setState(() => ({modalVisible: false}));
+        this.setState(() => ({modalVisible: false, checkMarkClickable: false}));
     }
     getChoresToDisplay() {
         if (!familyUnitRepository.kidsList ) return [];
         const kidId = userRepository.BROWSING_MODE.split("-")[1];
         const currentKid = familyUnitRepository.kidsList.find(k => k._id === kidId);
         const choresToDisplay = familyUnitRepository.existingChores.filter(globalChore => currentKid.assignedChores.includes(globalChore._id));
-        //sort by next due
-        //remove any that are already done - check if a chore has already been done since the last time it was due
+        //TODO: sort by next due
+        //TODO:  remove any that are already done - check if a chore has already been done since the last time it was due
         return choresToDisplay;
     }
     render(){

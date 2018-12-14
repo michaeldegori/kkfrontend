@@ -1,38 +1,63 @@
-import React from "react";
+import React, {Fragment} from "react";
 import {
     View,
     StyleSheet,
-    Dimensions, ScrollView
+    Dimensions, ScrollView, TouchableOpacity
 } from 'react-native';
 import Text from '../../common/KKText';
 import Header from "../../common/Header";
-import FullPage from "../../common/FullPage";
+import {Ionicons} from 'react-native-vector-icons';
 import ItemTile from "../../common/ItemTile";
 import {fountainBlue, shuttleGrey, shuttleGreyDark} from "../../colors";
-import {Link} from "react-router-native";
+import FullPageWithModal from "../../common/FullPageWithModal";
+
+const renderModalContents = (modalText, modalAccept, modalClose) => () => (
+    <Fragment>
+        <Text style={{color: shuttleGreyDark, textAlign: 'center', marginBottom: height * 0.05}}>{modalText}</Text>
+        <View style={{alignSelf: 'stretch', alignItems: 'center', marginBottom: height * 0.03, flexDirection: 'row', justifyContent: 'space-around'}}>
+            <TouchableOpacity style={[{borderColor: fountainBlue}]} onPress={modalAccept} >
+                <Ionicons style={{marginHorizontal: width * 0.02}} size={width * 0.15} color={fountainBlue} name={"ios-checkmark-circle-outline"} />
+            </TouchableOpacity>
+            <TouchableOpacity style={[{borderColor: shuttleGrey}]} onPress={modalClose} >
+                <Ionicons style={{marginHorizontal: width * 0.02}} size={width * 0.15} color={shuttleGrey} name={"ios-close-circle-outline"} />
+            </TouchableOpacity>
+        </View>
+    </Fragment>
+);
 
 const KidRewardsView = ({
     rewardsList=[],
-    currentKid={kreditInformation:{kiddieKash:0}}
+    currentKid={kreditInformation:{kiddieKash:0}},
+    modalText,
+    modalVisible,
+    modalAccept, modalClose,
+    onRequestRedeemReward
+
 }) => (
-    <FullPage>
+    <FullPageWithModal
+        modalVisible={modalVisible}
+        renderModalContents={renderModalContents(modalText, modalAccept, modalClose)}
+        modalClose={modalClose}
+        style={{flex: 1, alignSelf: 'stretch', justifyContent: 'flex-start', alignItems: 'center'}}>
         <Header leftAction={'avatarButton'}/>
-        <ScrollView>
+        <ScrollView style={{flex:1, alignSelf: 'stretch'}}>
             <Text style={styles.smallLabel}>Your kk bucks balance:</Text>
-            <Text style={styles.bigText}>{(currentKid.kreditInformation && currentKid.kreditInformation.kiddieKash) || 0}</Text>
+            <Text style={styles.bigText}>{(currentKid.kreditInformation && currentKid.kreditInformation.kiddieKashBalance) || 0}</Text>
             <Text style={styles.subHeading}>Redeemable Rewards:</Text>
             {
                 rewardsList.map(reward =>
-                    <ItemTile key={reward._id}
-                              mainCaption={reward.name}
-                              subCaption="children list not impl yet"
-                              renderRightItem={() => <Text style={styles.rewardAmount}>{reward.kkCost} KK</Text>}
-                    />
+                    <TouchableOpacity key={reward._id} onPress={()=>onRequestRedeemReward(reward)}>
+                        <ItemTile key={reward._id}
+                                  mainCaption={reward.name}
+                                  subCaption=""
+                                  renderRightItem={() => <Text style={styles.rewardAmount}>{reward.kkCost} KK</Text>}
+                        />
+                    </TouchableOpacity>
                 )
             }
         </ScrollView>
 
-    </FullPage>
+    </FullPageWithModal>
 );
 
 const {width, height} = Dimensions.get('window');

@@ -32,7 +32,7 @@ const renderModalContents = (modalText, modalAccept, modalDeny) => () => (
 const{width, height} = Dimensions.get('window');
 const AlertView = ({
     match:{path},
-    alerts,
+    alerts=[],
     kidsList,
     chores,
     loading,

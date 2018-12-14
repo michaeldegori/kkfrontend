@@ -205,6 +205,23 @@ class FamilyUnitStore{
             console.log("#####################loading new kids list")
         }
     }
+
+    requestRedeemReward = async (kidId, rewardId, idToken) => {
+        const postResult = await fetchJson(apiUrl + `/familyunit/${this.unitId}/rewardredemption`, {
+            method: 'POST',
+            headers: {
+                Authorization: 'Bearer '+idToken,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                kidId, rewardId
+            })
+        });
+        console.log(postResult);
+        if (postResult.kidsList)
+            this.kidsList = postResult.kidsList;
+        return postResult;
+    }
 }
 
 const familyUnitRepository = new FamilyUnitStore();
