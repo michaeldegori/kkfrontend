@@ -17,6 +17,7 @@ const KidKreditDashboardView = ({
 }) => (
     <FullPage>
         <Header leftAction={'avatarButton'}/>
+        <Text style={{color: fountainBlue,fontSize: width * 0.05, textAlign: 'center'}}>Kredit Dashboard</Text>
         {
             loading ? <EmptyState loading={loading}/>
             :

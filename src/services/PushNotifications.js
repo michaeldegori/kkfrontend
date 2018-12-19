@@ -39,11 +39,9 @@ async function registerForPushNotificationsAsync({idToken, BROWSING_MODE, email}
             browsingMode: BROWSING_MODE,
             email
         }),
-    }).then(res => {
-        console.log(res);
     });
 
-    console.log(notificationResult);
+    // console.log(notificationResult);
 }
 
 

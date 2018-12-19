@@ -7,6 +7,7 @@ import AddButton from "./AddButton";
 import {View} from "react-native";
 import Text from "./KKText";
 import Row from "./Row";
+import EmptyState from "./EmptyState";
 
 
 class SwipableKidSelection extends Component{
@@ -25,24 +26,18 @@ class SwipableKidSelection extends Component{
     }
     render(){
         const {kidsList, renderContents} = this.props;
-        console.log(this.state);
         return (
             <FullPage>
                 <Row>
                     {
-                        kidsList.length > 0 ?
-                            kidsList.map( kid => (
-                                <KidSelection
-                                    key={kid._id}
-                                    selected={kid._id === this.state.selectedChildId}
-                                    onPress={this.selectChild(kid._id)}>
-                                    <KidAvatar {...kid} />
-                                    {console.log(kid._id === this.state.selectedChildId)}
-                                </KidSelection>))
-                            : <View>
-                                <AddButton route="/maintabscreen/addfamilyunitmember" />
-                                <Text>Add Child</Text>
-                            </View>
+                        kidsList.map( kid => (
+                            <KidSelection
+                                key={kid._id}
+                                selected={kid._id === this.state.selectedChildId}
+                                onPress={this.selectChild(kid._id)}>
+                                <KidAvatar {...kid} />
+                                {console.log(kid._id === this.state.selectedChildId)}
+                            </KidSelection>))
                     }
                 </Row>
                 {
@@ -52,6 +47,11 @@ class SwipableKidSelection extends Component{
         );
     }
 }
+
+{/*<View style={}>*/}
+    {/*<AddButton route="/maintabscreen/addfamilyunitmember" />*/}
+    {/*<Text>Add Child</Text>*/}
+{/*</View>*/}
 
 SwipableKidSelection.propTypes = {
     kidsList: PropTypes.array.isRequired,

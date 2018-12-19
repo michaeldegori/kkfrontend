@@ -10,7 +10,6 @@ import {
 import FullPage from "../../common/FullPage";
 
 import KKButton from "../../common/KKButton";
-import {loginWithAuth0} from "../../services/Authorization";
 
 const {width, height} = Dimensions.get("window");
 const LoginRegisterView = (props) => (
@@ -27,8 +26,8 @@ const LoginRegisterView = (props) => (
                     source={require("../../../assets/images/kk-combo.png")} />
             </View>
             <View style={styles.buttonContainer}>
-                <KKButton type="primary" onPress={loginWithAuth0}>Login</KKButton>
-                <KKButton type="secondary" to='/registerchooseparentchild'>Register</KKButton>
+                <KKButton type="primary" to={"/newuser/login"}>Login</KKButton>
+                <KKButton type="secondary" to='/newuser/registerchooseparentchild'>Register</KKButton>
             </View>
         </ImageBackground>
     </FullPage>

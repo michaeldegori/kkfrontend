@@ -13,8 +13,19 @@ class AlertsStore{
             }
         });
         if (!alerts) return;
+        if (alerts.err) return;
+        if (alerts.message) return;
         this.alerts = alerts;
     }
+    deleteAlerts = async (idToken, familyUnitId) => {
+        const deleteResult = await fetchJson(apiUrl + `/familyunit/${familyUnitId}/alerts`, {
+            headers: {
+                Authorization: 'Bearer ' + idToken
+            },
+            method: 'DELETE'
+        });
+        if (deleteResult.message === 'ok') this.alerts = [];
+    };
 
 }
 

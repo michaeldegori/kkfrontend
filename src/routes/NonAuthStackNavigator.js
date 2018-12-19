@@ -10,6 +10,7 @@ import ChildRegistrationMessage from './RegistrationFlow/ChildRegistrationMessag
 import {inject} from "mobx-react";
 import AccountManager from "./AccountManager";
 import Expo from "expo";
+import RegistrationForm from "./RegistrationFlow/RegistrationForm";
 
 // @inject('routing')
 @observer
@@ -17,25 +18,25 @@ class NonAuthStackNavigator extends Component{
     componentDidMount(){
         this.redirecting = false;
     }
+    componentDidUpdate(){
+        console.log("nonauthnav Component did update");
+    }
     render(){
-        const {mongoId, nextRoute, BROWSING_MODE} = userRepository;
+        const {isLoggedIn} = userRepository;
 
         console.log("rendering nonauthnav")
-        if (mongoId && !nextRoute && !this.redirecting) {
+        if (isLoggedIn && !this.redirecting) {
             this.redirecting = true;
-            return <Redirect to="/maintabscreen/choreboard" />;
+            return <Redirect to="/" />;
         }
-        if (mongoId && nextRoute && !this.redirecting) {
-            console.log(this.props.history.location.pathname);
-            this.redirecting = true;
-            return <Redirect to={nextRoute} />;
-        }
+
         return (
             <Switch>
-                    <Route exact path={"/login"} render={() => <Login location={this.props.location}/>} />
-                    <Route exact path={"/registerchooseparentchild"} render={() => <ChooseParentChild location={this.props.location}/>} />
-                    <Route exact path={"/childregistrationmessage"} component={() => <ChildRegistrationMessage {...this.props}/>} />
-                    <Route exact path={"/"} render={() => <LoginRegister location={this.props.location}/>} />
+                    <Route exact path={"/newuser/login"} render={() => <Login location={this.props.location}/>} />
+                    <Route exact path={"/newuser/registerchooseparentchild"} render={() => <ChooseParentChild location={this.props.location}/>} />
+                    <Route exact path={"/newuser/registrationform"} component={RegistrationForm} />
+                    <Route exact path={"/newuser/childregistrationmessage"} component={() => <ChildRegistrationMessage {...this.props}/>} />
+                    <Route exact path={"/newuser"} render={() => <LoginRegister location={this.props.location}/>} />
             </Switch>
         );
     }

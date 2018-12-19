@@ -41,12 +41,17 @@ class EditRewardContainer extends React.Component {
         else
             this.setState({rewardAppliesTo: this.state.rewardAppliesTo.filter(kId => kId !== kidId)});
     }
-    showModal = message => {
-        this.setState(state => ({modalVisible: true, modalText: message}));
-        setTimeout(() => this.setState(state => ({modalVisible: false})), 1750);
+    modalClose = () => this.setState(()=> ({modalVisible: false}))
+    modalAddAnotherReward = () => {
+        this.setState(() => ({modalVisible: false}));
+        this.props.history.push('/maintabscreen/createreward');
+    }
+    modalBackToDashboard = () => {
+        this.setState(() => ({modalVisible: false}));
+        if (this.props.history) this.props.history.push('/maintabscreen/rewardsfeed');
     }
     submitReward = async () => {
-        console.log('submitting reward', this.state);
+        if (this.state.submitting) return;
         this.setState( _ => ({submitting: true}));
         const {
             _id,
@@ -62,14 +67,13 @@ class EditRewardContainer extends React.Component {
 
         try {
             await familyUnitRepository.updateReward({_id, rewardName, rewardAppliesTo, kkCost, notes}, userRepository.idToken);
-            this.showModal("Success!");
         }
         catch(err){
             console.log(err);
             Alert.alert("API error", (typeof err === 'object' ? JSON.stringify(err, null,2) : err.toString()));
         }
         finally {
-            this.setState( _ => ({submitting: false}));
+            this.setState( _ => ({submitting: false, modalVisible: true, modalText: 'Reward edited!'}));
         }
     }
     render() {
@@ -82,6 +86,9 @@ class EditRewardContainer extends React.Component {
                 kidsList={kidsList}
                 toggleKidSelection={this.toggleKidSelection}
                 submitReward={this.submitReward}
+                modalAccept={this.modalAddAnotherReward}
+                modalClose={this.modalClose}
+                modalDeny={this.modalBackToDashboard}
             />
         );
     }

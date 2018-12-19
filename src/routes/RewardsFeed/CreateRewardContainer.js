@@ -40,6 +40,7 @@ class CreateRewardContainer extends React.Component {
         if (this.props.history) this.props.history.push('/maintabscreen/rewardsfeed');
     }
     submitReward = async () => {
+        if (this.state.submitting) return;
         console.log('submitting reward', this.state);
         this.setState( _ => ({submitting: true}));
         const {

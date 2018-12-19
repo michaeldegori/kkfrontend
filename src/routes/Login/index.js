@@ -1,6 +1,7 @@
 import React from 'react';
 import LoginView from './LoginView';
 import {observer, inject} from 'mobx-react';
+import {loginWithAuth0} from "../../services/Authorization";
 
 //INACTIVE COMPONENT, LOGIN DONE WITH AUTH0
 
@@ -8,13 +9,19 @@ import {observer, inject} from 'mobx-react';
 // @inject('routing')
 // @observer
 class LoginContainer extends React.Component{
-    componentDidMount(){
-        console.log("login view mounted");
+    state = {
+        username: '',
+        password: ''
     }
-
+    handleTextInput = (key, newValue) => this.setState(() => ({[key]: newValue}))
     render() {
         return (
-            <LoginView {...this.props} loginWithAuth0={this.loginWithAuth0} />
+            <LoginView
+                {...this.props}
+                {...this.state}
+                handleTextInput={this.handleTextInput}
+                loginWithAuth0={loginWithAuth0('login')}
+            />
         );
     }
 }

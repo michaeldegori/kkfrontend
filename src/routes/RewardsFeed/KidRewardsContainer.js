@@ -17,7 +17,10 @@ class KidRewardsContainer extends React.Component {
         const kidId = userRepository.BROWSING_MODE.split("-")[1];
         const currentKid = familyUnitRepository.kidsList.find(k => k._id === kidId);
 
-        // if (!currentKid.kreditInformation || !currentKid.kreditInformation.kiddieKashBalance ) return;
+        if (!currentKid.kreditInformation || !currentKid.kreditInformation.kiddieKashBalance ){
+            Alert.alert("Cannot Redeem Reward", `${currentKid.name}, you do not have enough Kiddie Kash to redeem this reward.`)
+            return;
+        }
 
         this.setState(() => ({
             modalVisible: true,
@@ -27,6 +30,7 @@ class KidRewardsContainer extends React.Component {
         }));
     }
     redeemReward = async () => {
+        this.setState(() => ({checkMarkClickable: false}));
         const kidId = userRepository.BROWSING_MODE.split("-")[1];
         console.log(`Redeeming reward.... ${kidId}, ${this.state.selectedReward}`);
         const postResult = await familyUnitRepository.requestRedeemReward(kidId, this.state.selectedReward, userRepository.idToken);

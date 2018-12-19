@@ -5,7 +5,6 @@ import {
     Dimensions,
     TouchableOpacity,
     Keyboard,
-    KeyboardAvoidingView
 } from 'react-native';
 import {Switch, Route, Redirect, Link} from 'react-router-native';
 import { EvilIcons, Ionicons, Octicons } from '@expo/vector-icons';
@@ -83,6 +82,8 @@ class MainTabScreen extends React.Component{
     _keyboardDidHide = () => {
         this.setState(() => ({keyboardShown: false}));
     }
+    //hides the bottom tab bar when keyboard is out
+    //Also hides tab bar for a certain set of hardcoded paths
     shouldShowTabBar = () => {
         const {location:{pathname}} = this.props;
         if (this.state.keyboardShown) return false;
@@ -101,6 +102,10 @@ class MainTabScreen extends React.Component{
     }
     render() {
         const {match, location:{pathname}} = this.props;
+        const {BROWSING_MODE} = userRepository;
+        let redirectPath =  '/maintabscreen/choreboard';
+        if (BROWSING_MODE.toString() !== 'parent')
+            redirectPath = '/maintabscreen/kid/choreboard';
         return (
             <View style={[styles.mainContainer]}>
                 <Switch>
@@ -121,6 +126,7 @@ class MainTabScreen extends React.Component{
                     <Route path="/maintabscreen/kid/choreboard" component={KidChoreBoardContainer} />
                     <Route path="/maintabscreen/kid/rewardsfeed" component={KidRewardsContainer} />
                     <Route path="/maintabscreen/kid/kreditdashboard" component={KidKreditDashboardContainer} />
+                    <Redirect to={redirectPath}/>
                 </Switch>
 
                 {

@@ -47,7 +47,7 @@ const AlertView = ({
         <Header leftAction={'avatarButton'} rightAction="deleteAlerts"/>
         <Text style={{color: fountainBlue,fontSize: width * 0.05, textAlign: 'center'}}>Alerts</Text>
         {
-            !alerts
+            (!alerts || !alerts.length)
                 ? <EmptyState loading={loading}/>
                 : <ScrollView>
                     {

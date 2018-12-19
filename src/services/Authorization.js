@@ -1,10 +1,9 @@
-import {apiUrl, auth0ClientId, auth0Domain} from "../globals";
+import {apiUrl, auth0ClientId, auth0Domain, auth0ClientSecret} from "../globals";
 import userDataRepository from '../stores/UserDataStore';
 import {
     Linking, AsyncStorage
 } from 'react-native';
 import {AuthSession} from 'expo';
-import {fetchJson} from "./Networking";
 
 
 export function toQueryString(params) {
@@ -13,71 +12,91 @@ export function toQueryString(params) {
         .join('&');
 }
 
-async function loginWithAuth0(startingScreen) {
-    const redirectUrl = AuthSession.getRedirectUrl();
-    const result = await AuthSession.startAsync({
-        authUrl: `${auth0Domain}/authorize` + toQueryString({
-            client_id: auth0ClientId,
-            response_type: 'token',
-            scope: 'openid profile user_metadata email',
-            redirect_uri: redirectUrl,
-            initialScreen: startingScreen === 'signUp' ? 'signUp' : 'login'
-        }),
-    });
-    console.log('profile result:', result);
-    if (result.type !== 'success'){
-        // Alert.alert("Error while logging in", result.type);
-        return;
-    }
 
+const loginWithAuth0 = (startingPage) => async (username, password) => {
+    let loginResult = await fetch(auth0Domain + '/oauth/token', {
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        body: JSON.stringify({
+            grant_type: 'password',
+            username,
+            password,
+            scope: "openid email profile offline_access",
+            client_id: auth0ClientId,
+            // client_secret: auth0ClientSecret
+        }),
+        method: 'POST'
+    });
+    if (loginResult.status !== 200) return false;
+    loginResult = await loginResult.json();
 
     //finish logging in
-    await userDataRepository.pullUserInfoFromApiAndStore(result.params.id_token, result.params.access_token);
+    await userDataRepository.pullUserInfoFromApiAndStore(loginResult.id_token, loginResult.access_token, startingPage==='registration', loginResult.refresh_token);
+    return true;
 }
 
-async function registerWithAuth0(){
-    const redirectUrl = AuthSession.getRedirectUrl();
-    const result = await AuthSession.startAsync({
-        authUrl: `${auth0Domain}/authorize` + toQueryString({
+//email, password, firstName, lastName, userSubType-['mother', 'father', 'male_guardian', 'female_guardian']
+async function registerWithAuth0(email, password, firstName, lastName, parent_type){
+    let result = await fetch(auth0Domain + '/dbconnections/signup', {
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        body: JSON.stringify({
+            email,
+            password,
+            connection: 'Username-Password-Authentication',
             client_id: auth0ClientId,
-            response_type: 'token',
-            scope: 'openid profile user_metadata email',
-            redirect_uri: redirectUrl,
-            initialScreen: 'signUp'
+            user_metadata: {
+                firstName,
+                lastName,
+                parent_type
+            }
         }),
+        method: 'POST'
     });
-    console.log('profile result:', result);
-    if (result.type !== 'success'){
-        // Alert.alert("Error while logging in", result.type);
-        return;
+    if (result.status !== 200) {
+        console.log(await result.text());
+        return false;
     }
+    result = await result.json();
 
+    console.log(result);
     //finish logging in
-    await userDataRepository.pullUserInfoFromApiAndStore(result.params.id_token, result.params.access_token, true);
+    return await loginWithAuth0('registration')(email, password);
 }
 
 async function logOutFromAuth0(history) {
     await AsyncStorage.multiRemove([
         "@kiddiekredit:idToken",
         "@kiddiekredit:accessToken",
-        "@kiddiekredit:expiresIn"
+        "@kiddiekredit:expiresIn",
+        "@kiddiekredit:refreshToken",
     ]);
 
-    const redirectUrl = AuthSession.getRedirectUrl();
+    history.push("/newuser/login");
+    return true;
+}
 
-    //domain with back end redirect
-    // `${auth0Domain}/v2/logout?returnTo=http%3A%2F%2Fapi.kiddiekredit.com%3A8080%2Flogout&client_id=`+auth0ClientId
-    const result = await AuthSession.startAsync({
-        authUrl: `${auth0Domain}/v2/logout?returnTo=kiddiekredit%3A%2F%2Fmaintabscreen&client_id=`+auth0ClientId
+async function loginWithRefreshToken(refreshToken) {
+    let loginResult = await fetch(auth0Domain + '/oauth/token', {
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        body: JSON.stringify({
+            grant_type: 'refresh_token',
+            client_id: auth0ClientId,
+            refresh_token: refreshToken
+        }),
+        method: 'POST'
     });
-    console.log('LOGOUT RESULT',result);
-    return result;
+    if (loginResult.status !== 200) {
+        console.warn(loginResult);
+        return false;
+    }
+    loginResult = await loginResult.json();
+    return loginResult;
 }
 
 export {
     loginWithAuth0,
     registerWithAuth0,
-    logOutFromAuth0
+    logOutFromAuth0,
+    loginWithRefreshToken
 }
 
 /* RESPONSE SHAPE WHEN LOGGING IN:

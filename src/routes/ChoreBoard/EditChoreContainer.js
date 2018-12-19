@@ -51,7 +51,7 @@ class EditChoreContainer extends React.Component{
             choreFrequency,
             monthlyChoreInterval: (repRule.options.bysetpos && repRule.options.bysetpos[0] === -1) ? 1 : 0,
             chorePriority: Number(chore.priority),
-            choreAppliedTo: familyUnitRepository.kidsList.filter(kid => kid.assignedChores.includes(chore._id)).map(kid => kid._id),
+            choreAppliedTo: familyUnitRepository.kidsList.filter(kid => (kid.assignedChores||[]).includes(chore._id)).map(kid => kid._id),
         }))
     }
     updateForm = (field, newVal) => this.setState({ [field]: newVal } )

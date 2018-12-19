@@ -18,6 +18,7 @@ const KreditDashboardView = ({
 }) => (
     <FullPage>
         <Header leftAction={"avatarButton"} />
+        <Text style={{color: fountainBlue,fontSize: width * 0.05, textAlign: 'center'}}>Kredit Dashboard</Text>
         {
             kidsList && kidsList.length > 0 ?
                 <SwipableKidSelection

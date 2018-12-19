@@ -22,7 +22,7 @@ class KidRewardsContainer extends React.Component {
             <KidKreditDashboardView
                 {...this.props}
                 {...this.state}
-                kreditInfo={currentKid.kreditInfo|| {}}
+                kreditInfo={currentKid.kreditInformation|| {}}
                  />
         );
     }
