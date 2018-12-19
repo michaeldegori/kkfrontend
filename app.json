@@ -1,6 +1,6 @@
 {
   "expo": {
-    "sdkVersion": "30.0.0",
+    "sdkVersion": "31.0.0",
     "assetBundlePatterns": [
       "assets/images/*",
       "assets/fonts/*"
@@ -22,7 +22,7 @@
     },
     "ios": {
       "bundleIdentifier": "com.kiddiekredit.app",
-      "buildNumber": "4",
+      "buildNumber": "5",
       "supportsTablet": true
     },
     "android": {
