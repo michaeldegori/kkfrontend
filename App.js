@@ -1,5 +1,5 @@
 import React from 'react';
-import Expo, {Font, Constants, Asset} from 'expo';
+import {AppLoading, Font, Constants} from 'expo';
 import {Platform, View} from 'react-native';
 import {NativeRouter, Router, Route, Switch, Redirect} from 'react-router-native';
 import NonAuthStackNavigator from './src/routes/NonAuthStackNavigator';
@@ -40,7 +40,7 @@ class App extends React.Component {
         }));
     }
     render() {
-        if (!this.state.resourcesLoaded) return <Expo.AppLoading />;
+        if (!this.state.resourcesLoaded) return <AppLoading />;
 
         let paddingView = null;
         if (Platform.OS === 'ios' && Constants.statusBarHeight !== 0)

@@ -1,7 +1,6 @@
 import {observable} from 'mobx';
 import {fetchJson} from "../services/Networking";
 import {apiUrl} from "../globals";
-import userRepository from "./UserDataStore";
 import alertsRepository from "./AlertsStore";
 
 class FamilyUnitStore{
@@ -21,12 +20,12 @@ class FamilyUnitStore{
         this.choreExceptions = choreExceptions;
     }
 
-    async addChild(name, dob, gender){
-        if (!userRepository.idToken) return false;
+    async addChild(name, dob, gender, idToken){
+        if (idToken) return false;
         const apiResult = await fetchJson(apiUrl + `/familyunit/${this.unitId}/addchild`, {
             method: 'POST',
             headers: {
-                Authorization: 'Bearer ' + userRepository.idToken,
+                Authorization: 'Bearer ' + idToken,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({name, dob, gender})

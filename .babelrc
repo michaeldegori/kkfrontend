@@ -1,10 +1,4 @@
 {
   "presets": ["babel-preset-expo"],
-  "sourceMaps": "inline",
-  "plugins": ["transform-react-jsx-source", "transform-decorators-legacy"],
-  "env": {
-    "production": {
-      "plugins": ["transform-remove-console"]
-    }
-  }
+  "sourceMaps": "inline"
 }

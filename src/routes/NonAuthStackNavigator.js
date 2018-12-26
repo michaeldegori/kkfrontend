@@ -7,9 +7,6 @@ import LoginRegister from './LoginRegister';
 import Login from './Login';
 import ChooseParentChild from './RegistrationFlow/ChooseParentChild';
 import ChildRegistrationMessage from './RegistrationFlow/ChildRegistrationMessage';
-import {inject} from "mobx-react";
-import AccountManager from "./AccountManager";
-import Expo from "expo";
 import RegistrationForm from "./RegistrationFlow/RegistrationForm";
 
 // @inject('routing')

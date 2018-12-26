@@ -1,7 +1,6 @@
 import {observable} from 'mobx';
 import {fetchJson} from "../services/Networking";
 import {apiUrl} from "../globals";
-import userRepository from "./UserDataStore";
 
 class DefaultRewardsStore{
     @observable rewards;

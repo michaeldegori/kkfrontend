@@ -59,10 +59,10 @@ const styles = StyleSheet.create({
         elevation: 4,
         padding: 10,
         paddingTop: 0,
-        shadowColor: '#333',
-        shadowOffset: {width: 0, height: 1},
-        shadowOpacity: 0.5,
-        overflow: 'visible'
+        // shadowColor: '#333',
+        // shadowOffset: {width: 0, height: 1},
+        // shadowOpacity: 0.5,
+        // overflow: 'visible'
     },
     closeBtn:{
         padding: 6,

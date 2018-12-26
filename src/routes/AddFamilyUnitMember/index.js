@@ -16,7 +16,10 @@ export default class AddFamilyUnitMember extends React.Component{
         modalVisible: false,
         modalText: "Child added!"
     }
-    modalClose = () => this.setState(()=> ({modalVisible: false}))
+    modalClose = () => {
+        console.log("modalClose handler called")
+        this.setState(()=> ({modalVisible: false}))
+    }
     addAnotherChild = () => this.setState(() => ({ firstName: "", dobM: "", dobD: "", dobY: "", gender: "", modalVisible: false}));
     returnToDashboard = () => {
         this.setState(() => ({modalVisible: false}));
@@ -47,7 +50,8 @@ export default class AddFamilyUnitMember extends React.Component{
         const dob = `${dobM}-${dobD}-${dobY}`;
         if (!firstName || !dob || !gender) return Alert.alert("Invalid input", "Please fill out all fields.");
         if (this.isValidDOB(dob)) return Alert.alert("Invalid DOB", "Please enter date of birth in format mm/dd/yyyy");
-        const saveResult = familyUnitRepository.addChild(firstName, dob, gender==="m" ? "male" : "female");
+        const idToken = userRepository.idToken;
+        const saveResult = familyUnitRepository.addChild(firstName, dob, gender==="m" ? "male" : "female", idToken);
         if (!saveResult) return Alert.alert("Server Error", "Please try again later");
         this.setState(()=> ({modalVisible: true}));
 
