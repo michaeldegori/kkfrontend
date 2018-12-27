@@ -1,11 +1,9 @@
 import React from 'react';
 import {Modal, StyleSheet, View, Dimensions, TouchableOpacity} from 'react-native';
 import FullPage from "./FullPage";
-import Text from "./KKText";
-import {fountainBlue, lightGrey, shuttleGrey, shuttleGreyDark} from "../colors";
+import {lightGrey} from "../colors";
 import PropTypes from 'prop-types';
 import {Ionicons} from 'react-native-vector-icons';
-import Row from "./Row";
 
 /* OLD BUTTONS
                     <TouchableOpacity onPress={modalAccept}>
@@ -27,7 +25,7 @@ const FullPageWithModal = ({children, style, modalVisible, modalClose, renderMod
             transparent={true}
             animationType="fade"
             style={styles.modalTransparentPart}
-            onRequestClose={() => ""}
+            onRequestClose={() => console.log("close modal requested")}
         >
             <View style={styles.modal}>
                 <TouchableOpacity onPress={modalClose} style={styles.closeBtn}>
@@ -59,10 +57,10 @@ const styles = StyleSheet.create({
         elevation: 4,
         padding: 10,
         paddingTop: 0,
-        // shadowColor: '#333',
-        // shadowOffset: {width: 0, height: 1},
-        // shadowOpacity: 0.5,
-        // overflow: 'visible'
+        shadowColor: '#333',
+        shadowOffset: {width: 0, height: 1},
+        shadowOpacity: 0.5,
+        overflow: 'visible'
     },
     closeBtn:{
         padding: 6,

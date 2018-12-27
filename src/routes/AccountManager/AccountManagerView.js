@@ -33,15 +33,18 @@ const AccountManagerView = ({history, kidsList=[], switchToChild, onDeleteChild,
                     </TouchableOpacity>
                 ))
             }
-            <Link style={styles.badge} to={"/maintabscreen/addfamilyunitmember"}>
-                <React.Fragment>
-                    <MaterialCommunityIcons name="plus-circle" style={styles.plusIcon2} />
+            {
+                !parentLabel &&
+                <Link style={styles.badge} to={"/maintabscreen/addfamilyunitmember"}>
+                    <React.Fragment>
+                        <MaterialCommunityIcons name="plus-circle" style={styles.plusIcon2} />
 
-                    <Text semiBold style={{fontSize: width * 0.033, color: fountainBlue}}>
-                        Add a child
-                    </Text>
-                </React.Fragment>
-            </Link>
+                        <Text semiBold style={{fontSize: width * 0.033, color: fountainBlue}}>
+                            Add a child
+                        </Text>
+                    </React.Fragment>
+                </Link>
+            }
         </View>
     </FullPage>
 );

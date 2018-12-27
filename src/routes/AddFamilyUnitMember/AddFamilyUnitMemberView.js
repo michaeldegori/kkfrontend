@@ -19,9 +19,10 @@ import {fountainBlue, lightGrey, shuttleGrey, shuttleGreyDark} from "../../color
 import KidAvatar from "../../common/KidAvatar";
 import Row from "../../common/Row";
 import FullPageWithModal from "../../common/FullPageWithModal";
-import {observer} from "mobx-react";
+import Header from "../../common/Header";
 
 const {width, height} = Dimensions.get("window");
+
 
 const renderModalContents = (modalText, modalAccept, modalDeny) => () => (
     <Fragment>
@@ -62,7 +63,7 @@ const AddFamilyUnitMember = ({
         renderModalContents={renderModalContents(modalText, modalAccept, modalDeny)}
         modalClose={modalClose}
     >
-        <KeyboardAvoidingView behavior={Platform.OS === 'android' ? null : 'position'}>
+        <KeyboardAvoidingView behavior={Platform.OS === 'android' ? null : 'padding'}>
             <ScrollView>
                 <ImageBackground
                     height={height}
@@ -70,10 +71,11 @@ const AddFamilyUnitMember = ({
                     style={{width: width, height, flex: 1, alignSelf: 'stretch'}}
                     resizeMode={"cover"}
                     source={require("../../../assets/images/child_bg.jpg")}>
+                    <Header />
                     <View style={styles.logoContainer}>
-                        <Image
-                            style={{width: width * 0.4, resizeMode: 'contain'}}
-                            source={require("../../../assets/images/kk-letters.png")}/>
+                        {/*<Image*/}
+                            {/*style={{width: width * 0.4, resizeMode: 'contain'}}*/}
+                            {/*source={require("../../../assets/images/kk-letters.png")}/>*/}
                         <View style={styles.kidRow}>
                             {
                                 kidsList.map(kid => (
@@ -91,7 +93,7 @@ const AddFamilyUnitMember = ({
                             placeholder={'First Name'}
                             style={styles.input}/>
 
-                        <Row>
+                        <Row style={{paddingRight: width * 0.06}}>
                             <View style={styles.dobLabelContainer}>
                                 <Text style={styles.dobLabel}>DOB</Text>
                                 {Platform.OS === 'ios' && <Text style={styles.dobLabel}>(m/d/y)</Text>}
@@ -221,7 +223,8 @@ const styles = StyleSheet.create({
         borderColor: lightGrey,
         padding: height * 0.015,
         paddingTop: height * 0.02,
-        textAlign: 'center'
+        textAlign: 'center',
+        overflow: 'hidden'
     },
     genderButtonActive: {
         backgroundColor: fountainBlue,
@@ -267,4 +270,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default observer(AddFamilyUnitMember);
+export default AddFamilyUnitMember;

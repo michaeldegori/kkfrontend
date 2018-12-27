@@ -3,7 +3,6 @@ import userDataRepository from '../stores/UserDataStore';
 import {
     Linking, AsyncStorage
 } from 'react-native';
-import {AuthSession} from 'expo';
 
 
 export function toQueryString(params) {

@@ -21,7 +21,7 @@ class FamilyUnitStore{
     }
 
     async addChild(name, dob, gender, idToken){
-        if (idToken) return false;
+        if (!idToken) return false;
         const apiResult = await fetchJson(apiUrl + `/familyunit/${this.unitId}/addchild`, {
             method: 'POST',
             headers: {

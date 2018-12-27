@@ -4,9 +4,6 @@ import {globalFontFamily, globalFontFamilySemiBold, globalFontFamilyBold} from '
 import PropTypes from 'prop-types';
 
 export default class KKText extends Component{
-    constructor(props){
-        super(props)
-    }
     static propTypes = Text.propTypes;
     setNativeProps = (np)=>{
         this._root.setNativeProps(np);

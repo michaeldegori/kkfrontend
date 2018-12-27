@@ -1,18 +1,23 @@
 import React from 'react';
-import { Alert} from 'react-native';
+import { Alert, Platform} from 'react-native';
 import AddFamilyUnitMemberView from './AddFamilyUnitMemberView';
 import familyUnitRepository from "../../stores/FamilyUnitDataStore";
 import {observer} from "mobx-react";
 import userRepository from "../../stores/UserDataStore";
 
+const defaultFormState = {
+    dobM: Platform.OS === 'ios' ? 1 : "",
+    dobD: Platform.OS === 'ios' ? 1 : "",
+    dobY: Platform.OS === 'ios' ? new Date().getFullYear() : "",
+    gender: ""
+};
+
+
 @observer
-export default class AddFamilyUnitMember extends React.Component{
+class AddFamilyUnitMember extends React.Component{
     state = {
         firstName: "",
-        dobM: "",
-        dobD: "",
-        dobY: "",
-        gender: "",
+        ...defaultFormState,
         modalVisible: false,
         modalText: "Child added!"
     }
@@ -20,7 +25,7 @@ export default class AddFamilyUnitMember extends React.Component{
         console.log("modalClose handler called")
         this.setState(()=> ({modalVisible: false}))
     }
-    addAnotherChild = () => this.setState(() => ({ firstName: "", dobM: "", dobD: "", dobY: "", gender: "", modalVisible: false}));
+    addAnotherChild = () => this.setState(() => ({ ...defaultFormState, modalVisible: false}));
     returnToDashboard = () => {
         this.setState(() => ({modalVisible: false}));
         if (this.props.history) {
@@ -45,15 +50,17 @@ export default class AddFamilyUnitMember extends React.Component{
         const numeric = dob.split("-").map(Number);
         return numeric.length === 3 && numeric.every(num => num > 0) && numeric[0] < 13 && numeric[1] < 32 && numeric[3] <= new Date().getFullYear();
     }
-    onAddChild = () => {
+    onAddChild = async () => {
+        console.log("ONADDCHILD CALLED")
         const {firstName, dobM, dobD, dobY, gender} = this.state;
         const dob = `${dobM}-${dobD}-${dobY}`;
         if (!firstName || !dob || !gender) return Alert.alert("Invalid input", "Please fill out all fields.");
         if (this.isValidDOB(dob)) return Alert.alert("Invalid DOB", "Please enter date of birth in format mm/dd/yyyy");
         const idToken = userRepository.idToken;
-        const saveResult = familyUnitRepository.addChild(firstName, dob, gender==="m" ? "male" : "female", idToken);
+        const saveResult = await familyUnitRepository.addChild(firstName, dob, gender==="m" ? "male" : "female", idToken);
         if (!saveResult) return Alert.alert("Server Error", "Please try again later");
-        this.setState(()=> ({modalVisible: true}));
+        console.log("add Child Result", saveResult);
+        this.setState(() => ({modalVisible: true}))
 
         // this.setState(() => ({ firstName: "", dob: "", gender: ""}));
         // this.showAlert();
@@ -74,3 +81,5 @@ export default class AddFamilyUnitMember extends React.Component{
         );
     }
 }
+
+export default AddFamilyUnitMember;

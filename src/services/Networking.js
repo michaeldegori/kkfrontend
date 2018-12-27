@@ -14,7 +14,7 @@ export function fetchJson(uri, options={}){
             }
         })
         .then(res => {
-            // console.log(res);
+            console.log(res);
             if (status >= 200 || status <= 299) return res;
             return {
                 status,
