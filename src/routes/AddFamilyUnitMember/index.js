@@ -22,8 +22,8 @@ class AddFamilyUnitMember extends React.Component{
         modalText: "Child added!"
     }
     modalClose = () => {
-        console.log("modalClose handler called")
-        this.setState(()=> ({modalVisible: false}))
+        console.log("modalClose handler called");
+        this.setState(()=> ({modalVisible: false}));
     }
     addAnotherChild = () => this.setState(() => ({ ...defaultFormState, modalVisible: false}));
     returnToDashboard = () => {
