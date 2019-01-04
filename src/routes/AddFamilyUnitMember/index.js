@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert, Platform} from 'react-native';
-import AddFamilyUnitMemberView from './AddFamilyUnitMemberView';
+import AddChildView from './AddChildView';
 import familyUnitRepository from "../../stores/FamilyUnitDataStore";
 import {observer} from "mobx-react";
 import userRepository from "../../stores/UserDataStore";
@@ -67,7 +67,7 @@ class AddFamilyUnitMember extends React.Component{
     }
     render() {
         return (
-            <AddFamilyUnitMemberView
+            <AddChildView
                 {...this.state}
                 kidsList={familyUnitRepository.kidsList}
                 onChangeText={this.updateForm}

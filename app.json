@@ -20,9 +20,12 @@
       "image": "./assets/images/splash.png",
       "resizeMode": "contain"
     },
+    "updates": {
+      "enabled": false
+    },
     "ios": {
       "bundleIdentifier": "com.kiddiekredit.app",
-      "buildNumber": "7",
+      "buildNumber": "8",
       "supportsTablet": true
     },
     "android": {
