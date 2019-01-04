@@ -3,6 +3,7 @@ import {observer} from 'mobx-react';
 import KidChoreBoardView from './KidChoreBoardView'
 import userRepository from "../../stores/UserDataStore";
 import familyUnitRepository from "../../stores/FamilyUnitDataStore";
+import {Redirect} from "react-router-native";
 
 @observer
 class KidChoreBoardContainer extends React.Component{
@@ -42,6 +43,12 @@ class KidChoreBoardContainer extends React.Component{
         return choresToDisplay;
     }
     render(){
+        const kidId = userRepository.BROWSING_MODE.split("-")[1];
+        const currentKid = familyUnitRepository.kidsList.find(k => k._id === kidId);
+        if (!currentKid.avatar) {
+            console.log("@########@#@#@#@#@#@redirecting choose avatar")
+            return <Redirect to="/maintabscreen/kid/chooseavatar" />
+        }
         return(
             <KidChoreBoardView
                 {...this.props}

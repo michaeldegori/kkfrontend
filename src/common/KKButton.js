@@ -24,7 +24,7 @@ const KKButton = ({children, style, type, to, ...props}) => (
 
 KKButton.propTypes = {
     children: PropTypes.any.isRequired,
-    style: PropTypes.string,
+    style: PropTypes.object,
     type: PropTypes.string.isRequired //primary or secondary
 };
 

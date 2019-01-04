@@ -7,7 +7,7 @@ import {Alert} from "react-native";
 
 @observer
 class AccountManager extends React.Component{
-    switchToChild = async (childId) => {
+    switchToChild = (childId) => {
         userRepository.switchBrowsingMode(this.props.history, childId);
     }
     onDeleteChild = (child) => {

@@ -36,15 +36,14 @@ class FamilyUnitStore{
     }
 
     addChore = async (choreData, idToken) => {
-        const { choreName, choreDays, choreFrequency, chorePriority, choreAppliedTo, monthlyChoreInterval} = choreData;
-        console.log( choreName, choreDays, choreFrequency, chorePriority, choreAppliedTo, monthlyChoreInterval);
+        const { choreName, choreDays, choreFrequency, chorePriority, choreAppliedTo, monthlyChoreInterval, choreNotes} = choreData;
         const days = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"];
         const choreDayNames = choreDays.map((e,i) => e ? days[i] : null).filter(e => e !== null);
         const payload = {
             name: choreName,
             priority: chorePriority,
             kkReward: 0,
-            notes: "",
+            notes: choreNotes,
             freq: choreFrequency.toUpperCase(),
             weekdays: choreDayNames,
             choreAppliedTo
@@ -62,8 +61,8 @@ class FamilyUnitStore{
             body: JSON.stringify(payload)
         });
         console.log(postResult);
-        this.existingChores = postResult.existingChores;
-        this.kidsList = postResult.kidsList;
+        if (postResult.existingChores) this.existingChores = postResult.existingChores;
+        if (postResult.kidsList) this.kidsList = postResult.kidsList;
 
     }
 
@@ -147,8 +146,18 @@ class FamilyUnitStore{
             },
             body: JSON.stringify(patchUpdate)
         });
-        console.log(putResult);
-        this.kidsList = putResult.kidsList;
+        if (!putResult.kidsList) return false;
+        const updatedKid = putResult.kidsList.find(kid => kid._id === childId);
+        const update = {};
+        for (let key in patchUpdate) update[key] = updatedKid[key];
+        console.log(update);
+
+        // this.kidsList = putResult.kidsList;
+        this.kidsList.forEach(kid => {
+            if (kid._id !== updatedKid._id) return;
+            Object.assign(kid, update);
+        });
+        return true;
     }
 
     requestCompleteChore = async (childId, choreId, idToken) => {

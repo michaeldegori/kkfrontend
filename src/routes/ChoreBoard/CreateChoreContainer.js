@@ -17,6 +17,7 @@ class CreateChoreContainer extends React.Component{
         monthlyChoreInterval: null,
         chorePriority: 2,
         choreAppliedTo: [],
+        choreNotes: '',
         submitting: false,
         modalVisible: false,
         modalText: "Success"
@@ -41,7 +42,7 @@ class CreateChoreContainer extends React.Component{
         choreAppliedTo: [],
         submitting: false,
         modalVisible: false,
-        modalText: "Success"}))
+        choreNotes: ""}))
     modalBackToDashboard = () => {
         this.setState(() => ({modalVisible: false}));
         if (this.props.history) this.props.history.push('/maintabscreen/choreboard');
@@ -56,7 +57,8 @@ class CreateChoreContainer extends React.Component{
             choreFrequency,
             chorePriority,
             choreAppliedTo,
-            monthlyChoreInterval
+            monthlyChoreInterval,
+            choreNotes
         } = this.state;
         console.log(this.state);
         if (choreName.length < 2) return Alert.alert("Invalid input", "Please enter a chore name");
@@ -77,7 +79,7 @@ class CreateChoreContainer extends React.Component{
         if (error) return this.setState(state => ({submitting: false}));
 
         try {
-            await familyUnitRepository.addChore({ choreName, choreDays, choreFrequency, chorePriority, choreAppliedTo, monthlyChoreInterval}, userRepository.idToken);
+            await familyUnitRepository.addChore({ choreName, choreDays, choreFrequency, chorePriority, choreAppliedTo, monthlyChoreInterval, choreNotes}, userRepository.idToken);
             this.setState(state => ({submitting: false, modalVisible: true, modalText: "Chore successfully created!"}));
         }
         catch(err){

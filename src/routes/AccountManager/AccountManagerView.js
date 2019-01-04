@@ -28,13 +28,13 @@ const AccountManagerView = ({history, kidsList=[], switchToChild, onDeleteChild,
         <View style={styles.iconRow}>
             {
                 kidsList.map(kid => (
-                    <TouchableOpacity onPress={()=>switchToChild(kid._id)} key={kid._id} onLongPress={()=>onDeleteChild(kid)}>
+                    <TouchableOpacity onPress={()=>switchToChild(kid._id)} key={kid._id} onLongPress={onDeleteChild ? () => onDeleteChild(kid) : ()=>""} style={{padding: width * 0.01}}>
                         <KidAvatar {...kid} />
                     </TouchableOpacity>
                 ))
             }
             {
-                !parentLabel &&
+                onDeleteChild &&
                 <Link style={styles.badge} to={"/maintabscreen/addfamilyunitmember"}>
                     <React.Fragment>
                         <MaterialCommunityIcons name="plus-circle" style={styles.plusIcon2} />

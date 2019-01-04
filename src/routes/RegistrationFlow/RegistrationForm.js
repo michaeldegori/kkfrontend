@@ -35,7 +35,11 @@ export default class RegistrationForm extends React.Component{
         if (!lastName) return Alert.alert('Please Fill All Fields', 'Last Name field is required');
         if (!parent_type) return Alert.alert('Please Fill All Fields', 'Parent Type field is required');
         const registrationResult = await registerWithAuth0(email, password, firstName, lastName, parent_type);
-        if (!registrationResult) Alert.alert("Problem Registering", "There was a problem with your registration. Please try again later.");
+        if (!registrationResult) {
+            Alert.alert("Problem Registering", "There was a problem with your registration. Please try again later.");
+            return;
+        }
+        if (this.props.history) this.props.history.push("/maintabscreen/accountmanager");
     }
     render(){
         return (

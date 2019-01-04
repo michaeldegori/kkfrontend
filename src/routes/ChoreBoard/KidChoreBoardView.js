@@ -38,7 +38,7 @@ const KidChoreBoardView = ({chores, modalVisible, modalText, onRequestCompleteCh
                         <TouchableOpacity key={chore._id} onPress={()=>onRequestCompleteChore(chore._id)}>
                             <ItemTile
                                 mainCaption={chore.name}
-                                subCaption={""}
+                                subCaption={chore.notes}
                             />
                         </TouchableOpacity>
                     ))

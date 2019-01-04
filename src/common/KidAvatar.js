@@ -7,11 +7,16 @@ import {
 } from 'react-native';
 import Text from './KKText';
 import {shuttleGreyDark} from "../colors";
+import {images, imageNames} from "../routes/RegistrationFlow/ChooseAvatar";
 
-const KidAvatar = ({name, gender}) => {
+const KidAvatar = ({name, gender, avatar}) => {
     let source = (typeof gender === 'string' && gender[0].toLowerCase() === 'm') ?
         require('../../assets/images/add_child_icon.png') :
         require('../../assets/images/add_child_icon_female.png');
+
+    if (avatar && imageNames.find(img => img === avatar) !== -1){
+        source = images[imageNames.findIndex(img => img === avatar)];
+    }
     return (
         <View>
             <Image source={source} style={styles.img} />

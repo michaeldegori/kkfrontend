@@ -21,7 +21,7 @@ class EditChoreContainer extends React.Component{
         choreAppliedTo: [],
         submitting: false,
         modalVisible: false,
-        modalText: "Success"
+        choreNotes: ""
     }
     componentDidMount() {
         const {match: {params: {choreid}}} = this.props;
@@ -52,6 +52,7 @@ class EditChoreContainer extends React.Component{
             monthlyChoreInterval: (repRule.options.bysetpos && repRule.options.bysetpos[0] === -1) ? 1 : 0,
             chorePriority: Number(chore.priority),
             choreAppliedTo: familyUnitRepository.kidsList.filter(kid => (kid.assignedChores||[]).includes(chore._id)).map(kid => kid._id),
+            choreNotes: chore.notes
         }))
     }
     updateForm = (field, newVal) => this.setState({ [field]: newVal } )
@@ -76,7 +77,6 @@ class EditChoreContainer extends React.Component{
             choreAppliedTo,
             monthlyChoreInterval
         } = this.state;
-        console.log(this.state);
         if (choreName.length < 2) return Alert.alert("Invalid input", "Please enter a chore name");
         const numChoreDays = choreDays.filter(e=>e).length;
         let error = false;

@@ -5,7 +5,10 @@ import userRepository from "../../stores/UserDataStore";
 import familyUnitRepository from "../../stores/FamilyUnitDataStore";
 
 @observer
-class ChoredBoardContainer extends React.Component{
+class ChoreBoardContainer extends React.Component{
+    deleteChore = () => {
+
+    }
     render(){
         return(
             <ChoredBoardView
@@ -18,4 +21,4 @@ class ChoredBoardContainer extends React.Component{
     }
 }
 
-export default ChoredBoardContainer;
+export default ChoreBoardContainer;

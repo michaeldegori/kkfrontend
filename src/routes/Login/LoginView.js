@@ -4,17 +4,16 @@ import {
     View,
     ImageBackground,
     Image, StyleSheet, Dimensions,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    Platform
 } from 'react-native';
-import {Link} from "react-router-native";
-import FullPage from "../../common/FullPage";
 import KKButton from "../../common/KKButton";
 import KKTextInput from "../../common/KKTextInput";
 import Header from "../../common/Header";
 
 const {width, height} = Dimensions.get("window");
 const LoginView = ({loginWithAuth0, handleTextInput, username, password,  ...props}) => (
-    <KeyboardAvoidingView style={{flex: 1, alignSelf: 'stretch'}} behavior={'padding'}>
+    <KeyboardAvoidingView style={{flex: 1, alignSelf: 'stretch'}} behavior={Platform.OS === 'ios' ? 'padding' : null}>
         <ImageBackground
             height={height}
             width={width}

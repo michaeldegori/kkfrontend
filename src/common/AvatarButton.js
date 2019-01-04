@@ -9,6 +9,7 @@ import {observer} from "mobx-react";
 import userRepository from "../stores/UserDataStore";
 import {Link} from 'react-router-native';
 import familyUnitRepository from "../stores/FamilyUnitDataStore";
+import {images, imageNames} from "../routes/RegistrationFlow/ChooseAvatar";
 
 const AvatarButton = (props) => {
     const {avatar, BROWSING_MODE} = userRepository;
@@ -19,13 +20,20 @@ const AvatarButton = (props) => {
     else if (typeof avatar === 'string' && BROWSING_MODE === 'parent') {
         imgSource = {uri: avatar};
     }
-    else {
+    else if (BROWSING_MODE.indexOf("child") !== -1){
         path = "/maintabscreen/kid/accountmanager";
+
         const childId = BROWSING_MODE.split('-')[1];
         const child = familyUnitRepository.kidsList.find(kid => kid._id === childId);
+
         imgSource = (typeof child.gender === 'string' && child.gender[0].toLowerCase() === 'm') ?
             require('../../assets/images/add_child_icon.png') :
             require('../../assets/images/add_child_icon_female.png');
+
+        if (child.avatar && imageNames.find(img => img === child.avatar) !== -1) {
+            imgSource = images[imageNames.findIndex(img => img === child.avatar)];
+        }
+
     }
 
     return (

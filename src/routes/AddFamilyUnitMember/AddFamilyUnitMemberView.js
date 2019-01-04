@@ -4,7 +4,6 @@ import {
     View,
     Dimensions,
     ImageBackground,
-    Image,
     Modal, ScrollView, KeyboardAvoidingView,
     Picker,
     Platform, TouchableOpacity
@@ -43,21 +42,21 @@ const renderModalContents = (modalText, modalAccept, modalDeny) => () => (
 );
 
 const AddFamilyUnitMember = ({
-                                 firstName = "",
-                                 dobM = "",
-                                 dobD = "",
-                                 dobY = "",
-                                 gender = "",
-                                 onChangeText,
-                                 onAddChild,
-                                 onDeleteChild,
-                                 kidsList = [],
-                                 modalVisible,
-                                 modalText,
-                                 modalClose,
-                                 modalAccept,
-                                 modalDeny
-                             }) => (
+    firstName = "",
+    dobM = "",
+    dobD = "",
+    dobY = "",
+    gender = "",
+    onChangeText,
+    onAddChild,
+    onDeleteChild,
+    kidsList = [],
+    modalVisible,
+    modalText,
+    modalClose,
+    modalAccept,
+    modalDeny
+}) => (
     <FullPageWithModal
         modalVisible={modalVisible}
         renderModalContents={renderModalContents(modalText, modalAccept, modalDeny)}

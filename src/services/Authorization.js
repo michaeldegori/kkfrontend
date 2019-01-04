@@ -65,8 +65,9 @@ async function logOutFromAuth0(history) {
     await AsyncStorage.multiRemove([
         "@kiddiekredit:idToken",
         "@kiddiekredit:accessToken",
-        "@kiddiekredit:expiresIn",
         "@kiddiekredit:refreshToken",
+        "@kiddiekredit:expiresIn",
+        "BROWSING_MODE"
     ]);
 
     history.push("/newuser/login");

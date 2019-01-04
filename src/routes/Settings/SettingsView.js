@@ -4,6 +4,7 @@ import {
     Dimensions,
     StyleSheet,
     Slider,
+    ScrollView
 } from 'react-native';
 import Text from '../../common/KKText';
 import FullPage from "../../common/FullPage";
@@ -20,50 +21,57 @@ const SettingsView = ({
     onChangeKid=()=>"",
     createOnSliderTick,
     allowanceSliderValue,
-    savingsSliderValue
+    savingsSliderValue,
+    saveChild
 }) => (
     <FullPage>
         <Header leftAction={'avatarButton'}/>
         <SwipableKidSelection
             isSelectionNullable={false}
             kidsList={kidsList.toJS?kidsList.toJS():[]}
-            renderContents={renderSettings(kidsList, onChangeSlider, createOnSliderTick, allowanceSliderValue, savingsSliderValue)}
+            renderContents={renderSettings(kidsList, onChangeSlider, createOnSliderTick, allowanceSliderValue, savingsSliderValue, saveChild)}
             defaultChild={kidsList.length > 0 ? kidsList[0]._id : null}
             onChangeKid={onChangeKid}
         />
     </FullPage>
 );
 
-const renderSettings = (kidsList, onChangeSlider, createOnSliderTick, allowanceSliderValue, savingsSliderValue) => selectedChildId => {
+const renderSettings = (kidsList, onChangeSlider, createOnSliderTick, allowanceSliderValue, savingsSliderValue, saveChild) => selectedChildId => {
     let selectedChild = kidsList.find(kid=>kid._id === selectedChildId);
     if (!selectedChild) selectedChild = {};
-    console.log(selectedChild);
+    const currentAllowanceAmount = allowanceSliderValue!== -1 ? allowanceSliderValue : (selectedChild.allowanceAmount || 0);
+    const currentSavingsRequired = savingsSliderValue!== -1 ? savingsSliderValue : (selectedChild.savingsRequired || 0);
     return (
-        <FullPage>
-            <Text style={styles.textLabel}>Allowance Amount: {allowanceSliderValue!== -1 ? allowanceSliderValue : (selectedChild.allowanceAmount || 0)} KK</Text>
-            <Slider thumbTintColor={shuttleGreyDark} value={selectedChild.allowanceAmount || 0}
-                    step={1} minimumValue={1} maximumValue={20}
-                    onValueChange={createOnSliderTick('allowanceSliderValue')}
-                    onSlidingComplete={onChangeSlider('allowanceAmount', selectedChildId)}/>
-            <Row style={{justifyContent: 'space-between', margin: 0}}>
-                <Text style={styles.textLabel}>0</Text>
-                <Text style={styles.textLabel}>20</Text>
-            </Row>
+        <ScrollView>
+            <FullPage>
+                <Text style={styles.textLabel}>Allowance Amount: {currentAllowanceAmount} KK</Text>
+                <View style={styles.slidersContainer}>
+                    <Slider style={{marginHorizontal: width * 0.1}} thumbTintColor={shuttleGreyDark} value={selectedChild.allowanceAmount || 0}
+                            step={1} minimumValue={1} maximumValue={20}
+                            onValueChange={createOnSliderTick('allowanceSliderValue')}
+                            onSlidingComplete={onChangeSlider('allowanceAmount', selectedChildId)}/>
+                    <Row style={{justifyContent: 'space-between', marginVertical: 0, marginHorizontal: width * 0.1}}>
+                        <Text style={styles.textLabel}>0</Text>
+                        <Text style={styles.textLabel}>20</Text>
+                    </Row>
 
-            <Text style={styles.textLabel}>Savings Required: {savingsSliderValue!== -1 ? savingsSliderValue : (selectedChild.savingsRequired || 0)} KK</Text>
-            <Slider thumbTintColor={shuttleGreyDark} value={selectedChild.savingsRequired || 0}
-                    step={1} minimumValue={1} maximumValue={20}
-                    onValueChange={createOnSliderTick('savingsSliderValue')}
-                    onSlidingComplete={onChangeSlider('savingsRequired', selectedChildId)}/>
-            <Row style={{justifyContent: 'space-between', margin: 0}}>
-                <Text style={styles.textLabel}>0</Text>
-                <Text style={styles.textLabel}>20</Text>
-            </Row>
-            <View style={{height: height * 0.015, width}}/>
-            <Text style={styles.textLabelLight}>Default: 1 KK per child's age per week</Text>
-            <Text style={styles.textLabelLight}>Note: 1KK = $1</Text>
+                    <Text style={styles.textLabel}>Savings Required: {currentSavingsRequired} KK</Text>
+                    <Slider style={{marginHorizontal: width * 0.1}} thumbTintColor={shuttleGreyDark} value={selectedChild.savingsRequired || 0}
+                            step={1} minimumValue={1} maximumValue={20}
+                            onValueChange={createOnSliderTick('savingsSliderValue')}
+                            onSlidingComplete={onChangeSlider('savingsRequired', selectedChildId)}/>
+                    <Row style={{justifyContent: 'space-between', marginVertical: 0, marginHorizontal: width * 0.1}}>
+                        <Text style={styles.textLabel}>0</Text>
+                        <Text style={styles.textLabel}>20</Text>
+                    </Row>
+                </View>
+                <View style={{height: height * 0.015, width}}/>
+                <Text style={styles.textLabelLight}>Default: 1 KK per child's age per week</Text>
+                <Text style={styles.textLabelLight}>Note: 1KK = $1</Text>
 
-        </FullPage>
+                <KKButton type={'primary'} style={styles.btn} onPress={()=>saveChild(selectedChildId, currentAllowanceAmount, currentSavingsRequired)}>SAVE</KKButton>
+            </FullPage>
+        </ScrollView>
     );
 }
 
@@ -81,6 +89,14 @@ const styles = StyleSheet.create({
         // marginTop: width * 0.06,
         textAlign: 'center',
         color: shuttleGrey
+    },
+    slidersContainer: {
+        marginHorizontal: width * 0.06,
+        alignSelf: 'stretch'
+    },
+    btn: {
+        alignSelf: 'center',
+        marginTop: height * 0.05
     }
 });
 

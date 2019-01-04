@@ -61,7 +61,7 @@ function getTotalScore(kreditInfo){
         if (typeof kreditInfo[key] === 'object' && typeof Number(kreditInfo[key].numerator) === 'number')
             score += Number(kreditInfo[key].numerator);
     }
-    return score;
+    return Math.floor(score);
 }
 
 const {width, height} = Dimensions.get('window');

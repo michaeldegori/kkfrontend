@@ -1,4 +1,5 @@
 import React from "react";
+import {Alert} from 'react-native';
 import SettingsView from './SettingsView';
 import familyUnitRepository from "../../stores/FamilyUnitDataStore";
 import {observer} from "mobx-react";
@@ -14,7 +15,7 @@ class SettingsContainer extends React.Component {
         }
     }
     onChangeSlider = (property, childId)=> (v)=> {
-        familyUnitRepository.updateChildSettings(childId, { [property]: v }, userRepository.idToken);
+        //familyUnitRepository.updateChildSettings(childId, { [property]: v }, userRepository.idToken);
     }
     onChangeKid = () => {
         this.setState(() => ({
@@ -27,6 +28,16 @@ class SettingsContainer extends React.Component {
             [property]: val
         }));
     }
+    saveChild = async (childId, allowanceAmount, savingsRequired) => {
+        console.log(`Saving ${childId} with values ${allowanceAmount}, ${savingsRequired}`);
+        const saveResult = await familyUnitRepository.updateChildSettings(childId, { allowanceAmount, savingsRequired }, userRepository.idToken);
+        if (!saveResult){
+            Alert.alert("Error", "Something went wrong when talking to the server");
+            return;
+        }
+        const theKid = familyUnitRepository.kidsList.find(kid => kid._id === childId);
+        Alert.alert("Success", `Successfully saved values for ${theKid.name}`);
+    }
     render() {
         const {kidsList} = familyUnitRepository;
         return (
@@ -35,6 +46,7 @@ class SettingsContainer extends React.Component {
                 onChangeSlider={this.onChangeSlider}
                 onChangeKid={this.onChangeKid}
                 createOnSliderTick={this.createOnSliderTick}
+                saveChild={this.saveChild}
                 {...this.props}
                 {...this.state}
             />

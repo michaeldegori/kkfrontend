@@ -25,6 +25,11 @@ const renderModalContents = (modalText, modalAccept, modalClose) => () => (
     </Fragment>
 );
 
+const getKreditScoreDisplay = currentKid => {
+    if (!currentKid.kreditInformation || !currentKid.kreditInformation.kiddieKashBalance) return 0;
+    return Math.floor(currentKid.kreditInformation.kiddieKashBalance);
+}
+
 const KidRewardsView = ({
     rewardsList=[],
     currentKid={kreditInformation:{kiddieKash:0}},
@@ -42,14 +47,14 @@ const KidRewardsView = ({
         <Header leftAction={'avatarButton'}/>
         <ScrollView style={{flex:1, alignSelf: 'stretch'}}>
             <Text style={styles.smallLabel}>Your kk bucks balance:</Text>
-            <Text style={styles.bigText}>{(currentKid.kreditInformation && currentKid.kreditInformation.kiddieKashBalance) || 0}</Text>
+            <Text style={styles.bigText}>{getKreditScoreDisplay(currentKid)}</Text>
             <Text style={styles.subHeading}>Redeemable Rewards:</Text>
             {
                 rewardsList.map(reward =>
                     <TouchableOpacity key={reward._id} onPress={()=>onRequestRedeemReward(reward)}>
                         <ItemTile key={reward._id}
                                   mainCaption={reward.name}
-                                  subCaption=""
+                                  subCaption={reward.notes}
                                   renderRightItem={() => <Text style={styles.rewardAmount}>{reward.kkCost} KK</Text>}
                         />
                     </TouchableOpacity>

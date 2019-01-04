@@ -1,7 +1,9 @@
 import React from "react";
 import {
     StyleSheet,
-    Dimensions, ScrollView
+    Dimensions,
+    ScrollView,
+    View
 } from 'react-native';
 import Text from '../../common/KKText';
 import FullPage from "../../common/FullPage";
@@ -10,6 +12,7 @@ import EmptyState from "../../common/EmptyState";
 import ItemTile from "../../common/ItemTile";
 import SwipableKidSelection from "../../common/SwipableKidSelection";
 import {fountainBlue, shuttleGrey} from "../../colors";
+import Row from "../../common/Row";
 
 const KreditDashboardView = ({
     match:{path},
@@ -43,8 +46,16 @@ const renderKidKreditInfo = (kidsList=[]) => selectedChildId => {
     console.log(kreditInformation);
     return (
         <ScrollView>
-            <Text style={styles.smallLabel}>{currentKid.name}'s kredit score:</Text>
-            <Text style={styles.bigText}>{getTotalScore(kreditInformation)}</Text>
+            <Row>
+                <View>
+                    <Text style={styles.smallLabel}>{currentKid.name}'s kredit score:</Text>
+                    <Text style={styles.bigText}>{getTotalScore(kreditInformation)}</Text>
+                </View>
+                <View>
+                    <Text style={styles.smallLabel}>Kiddie Kash</Text>
+                    <Text style={styles.bigText}>{Math.floor(kreditInformation.kiddieKashBalance || 0 )}</Text>
+                </View>
+            </Row>
             <Text style={styles.subHeading}>Kredit Breakdown</Text>
             <ItemTile
                 mainCaption="Rewards Redemptions (Utilization)"
@@ -79,7 +90,7 @@ function getTotalScore(kreditInfo){
         if (typeof kreditInfo[key] === 'object' && typeof Number(kreditInfo[key].numerator) === 'number')
             score += Number(kreditInfo[key].numerator);
     }
-    return score;
+    return Math.floor(score);
 }
 
 const {width, height} = Dimensions.get('window');

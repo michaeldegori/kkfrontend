@@ -130,9 +130,11 @@ class UserDataStore{
             return;
         }
         this.BROWSING_MODE = 'child-'+id;
-        history.push("/maintabscreen/kid/choreboard");
+
         AsyncStorage.setItem("BROWSING_MODE", 'child-'+id);
         registerForPushNotificationsAsync(this);
+
+        history.push("/maintabscreen/kid/choreboard");;
     }
 
 

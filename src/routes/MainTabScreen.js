@@ -27,6 +27,7 @@ import KidRewardsContainer from "./RewardsFeed/KidRewardsContainer";
 import KidKreditDashboardContainer from "./KreditDashboard/KidKreditDashboardContainer";
 import userRepository from "../stores/UserDataStore";
 import registerForPushNotificationsAsync from "../services/PushNotifications";
+import ChooseAvatar from "./RegistrationFlow/ChooseAvatar";
 
 const icons = [
     color=> <EvilIcons color={color} name="bell" size={32}/>,
@@ -126,6 +127,7 @@ class MainTabScreen extends React.Component{
                     <Route path="/maintabscreen/kid/choreboard" component={KidChoreBoardContainer} />
                     <Route path="/maintabscreen/kid/rewardsfeed" component={KidRewardsContainer} />
                     <Route path="/maintabscreen/kid/kreditdashboard" component={KidKreditDashboardContainer} />
+                    <Route path="/maintabscreen/kid/chooseavatar" component={ChooseAvatar} />
                     <Redirect to={redirectPath}/>
                 </Switch>
 

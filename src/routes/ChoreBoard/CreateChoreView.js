@@ -6,7 +6,9 @@ import {
     StyleSheet,
     Slider,
     ScrollView,
-    Picker, Modal
+    Picker,
+    Modal,
+    Platform
 } from 'react-native';
 import Text from '../../common/KKText';
 import {Entypo} from 'react-native-vector-icons';
@@ -20,6 +22,7 @@ import FullPageWithModal from "../../common/FullPageWithModal";
 import KidSelection from "../../common/KidSelection";
 import {Ionicons} from 'react-native-vector-icons';
 import AutoCompleteSuggestions from "../../common/AutoCompleteSuggestions";
+import PlatformDependentScrollingContainer from "../../common/PlatformDependentScrollingContainer";
 
 const {width, height} = Dimensions.get('window');
 
@@ -32,7 +35,7 @@ const RadioWidget = ({label, active, onPress}) => (
 );
 
 const SliderWidget = ({value=5, onChange= () => ""}) => (
-    <View style={{alignSelf: 'stretch', padding: width * 0.04}}>
+    <View style={{alignSelf: 'stretch', padding: width * 0.15}}>
         <Slider thumbTintColor={shuttleGreyDark} value={value} step={1} minimumValue={1} maximumValue={3}
                 onSlidingComplete={onChange}/>
         <View style={styles.row}>
@@ -76,7 +79,7 @@ const renderModalContents = (modalText, modalAccept, modalDeny) => () => (
         <View style={{alignSelf: 'stretch', alignItems: 'center', marginBottom: height * 0.03}}>
             <TouchableOpacity style={[styles.modalBtn, {borderColor: fountainBlue}]} onPress={modalAccept} >
                 <Ionicons style={{marginHorizontal: width * 0.02}} size={width * 0.1} color={fountainBlue} name={"ios-checkmark-circle-outline"} />
-                <Text style={{color: fountainBlue, marginLeft: 8, flex:1}}>Add another child</Text>
+                <Text style={{color: fountainBlue, marginLeft: 8, flex:1}}>Add another chore</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.modalBtn, {borderColor: shuttleGrey}]} onPress={modalDeny} >
                 <Ionicons style={{marginHorizontal: width * 0.02}} size={width * 0.1} color={shuttleGrey} name={"ios-arrow-dropleft"} />
@@ -96,6 +99,7 @@ const CreateChoreView = ({
     chorePriority,
     kidsList=[],
     choreAppliedTo = [],
+    choreNotes,
     toggleKidSelection,
     submitChore,
     submitting,
@@ -106,19 +110,26 @@ const CreateChoreView = ({
     modalAccept,
     modalDeny
  }) => (
-    <FullPageWithModal
+    <PlatformDependentScrollingContainer
        modalVisible={modalVisible}
        modalClose={modalClose}
-       renderModalContents={renderModalContents(modalText, modalAccept, modalDeny)}
+       renderModalContents={()=>renderModalContents(modalText, modalAccept, modalDeny)}
     >
         <Header/>
         <ScrollView style={{flex:1, alignSelf: 'stretch'}}>
-            {console.log(choreSuggestions)}
             <KKTextInput
                 style={styles.nameInput}
                 placeholder={"Enter Chore Name"}
                 value={choreName}
                 onChangeText={text=> updateForm('choreName', text) }
+            />
+            {/*<Text style={styles.textLabel}>Notes (Chore Description)</Text>*/}
+            <KKTextInput
+                multiline={true}
+                style={[styles.nameInput, {height: height * 0.15, padding: 6}]}
+                placeholder={"Enter A Kid-Friendly Description"}
+                value={choreNotes}
+                onChangeText={text=> updateForm('choreNotes', text) }
             />
             {
                 !!choreName && !!(choreName.length > 0) && !!choreSuggestions && !!(choreSuggestions.length > 0) &&
@@ -129,9 +140,9 @@ const CreateChoreView = ({
                     />
             }
             <Text style={styles.textLabel}>How often would you like the chore done?</Text>
-            <View style={styles.row}>
+            <View style={[styles.row, {justifyContent: "space-around" }]}>
                 {
-                    ["M", "T", "W", "R", "F", "S", "S"].map((label, idx) =>
+                    ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map((label, idx) =>
                         <RadioWidget key={idx} label={label} active={choreDays[idx]}
                                onPress={() => updateForm('choreDays', getNewChores(choreDays, idx, choreFrequency))}
                         />
@@ -193,14 +204,23 @@ const CreateChoreView = ({
             </View>
         </ScrollView>
 
-    </FullPageWithModal>
+    </PlatformDependentScrollingContainer>
 );
 
 
 const styles = StyleSheet.create({
     nameInput: {
         margin: width * 0.08,
-        elevation: 5,
+        ...Platform.select({
+            android: {
+                elevation: 5,
+            },
+            ios: {
+                shadowColor: 'black',
+                shadowOpacity: 0.3,
+                shadowOffset: {width: 0, height: 2}
+            }
+        })
     },
     row: {
         flexDirection: 'row',
@@ -209,7 +229,6 @@ const styles = StyleSheet.create({
         margin: width * 0.05
     },
     dayWidget: {
-        paddingHorizontal: width * 0.025,
         alignItems: 'center',
         flex: 1
     },
@@ -221,9 +240,9 @@ const styles = StyleSheet.create({
     },
     radioLabel: {
         color: shuttleGreyDark,
-        fontSize: width * 0.05,
+        fontSize: width * 0.045,
         textAlign: 'center',
-        alignSelf: 'stretch'
+        alignSelf: 'stretch',
     },
     radio: {
         width: width * 0.065,
