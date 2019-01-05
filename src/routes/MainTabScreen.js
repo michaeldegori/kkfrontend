@@ -28,6 +28,7 @@ import KidKreditDashboardContainer from "./KreditDashboard/KidKreditDashboardCon
 import userRepository from "../stores/UserDataStore";
 import registerForPushNotificationsAsync from "../services/PushNotifications";
 import ChooseAvatar from "./RegistrationFlow/ChooseAvatar";
+import AddFamilyAdminContainer from "./AddFamilyAdmin";
 
 const icons = [
     color=> <EvilIcons color={color} name="bell" size={32}/>,
@@ -117,6 +118,7 @@ class MainTabScreen extends React.Component{
                     <Route path="/maintabscreen/kreditdashboard" component={KreditDashboard} />
                     <Route path="/maintabscreen/accountmanager" component={AccountManager} />
                     <Route path="/maintabscreen/addfamilyunitmember" component={AddFamilyUnitMember} />
+                    <Route path="/maintabscreen/addfamilyadmin" component={AddFamilyAdminContainer} />
                     <Route path="/maintabscreen/createchore" component={CreateChoreContainer} />
                     <Route path="/maintabscreen/editchore/:choreid" component={EditChoreContainer} />
                     <Route path="/maintabscreen/createreward" component={CreateRewardContainer} />

@@ -230,6 +230,23 @@ class FamilyUnitStore{
             this.kidsList = postResult.kidsList;
         return postResult;
     }
+
+    addAdmin = async (email, idToken) => {
+        const postResult = await fetchJson(apiUrl + `/familyunit/${this.unitId}/addadmin`, {
+            method: 'POST',
+            headers: {
+                Authorization: 'Bearer '+idToken,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email
+            })
+        });
+        console.log(postResult);
+        if (postResult.adminsList)
+            this.adminsList = postResult.adminsList;
+        return postResult;
+    }
 }
 
 const familyUnitRepository = new FamilyUnitStore();

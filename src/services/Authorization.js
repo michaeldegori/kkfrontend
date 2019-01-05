@@ -1,7 +1,7 @@
 import {apiUrl, auth0ClientId, auth0Domain, auth0ClientSecret} from "../globals";
 import userDataRepository from '../stores/UserDataStore';
 import {
-    Linking, AsyncStorage
+    Linking, AsyncStorage, Alert
 } from 'react-native';
 
 
@@ -25,7 +25,10 @@ const loginWithAuth0 = (startingPage) => async (username, password) => {
         }),
         method: 'POST'
     });
-    if (loginResult.status !== 200) return false;
+    if (loginResult.status !== 200){
+        Alert.alert("Login error", "Username or password incorrect");
+        return false;
+    }
     loginResult = await loginResult.json();
 
     //finish logging in
@@ -66,9 +69,9 @@ async function logOutFromAuth0(history) {
         "@kiddiekredit:idToken",
         "@kiddiekredit:accessToken",
         "@kiddiekredit:refreshToken",
-        "@kiddiekredit:expiresIn",
-        "BROWSING_MODE"
+        "@kiddiekredit:expiresIn"
     ]);
+    AsyncStorage.removeItem("BROWSING_MODE");
 
     history.push("/newuser/login");
     return true;

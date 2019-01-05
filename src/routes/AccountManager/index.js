@@ -23,6 +23,9 @@ class AccountManager extends React.Component{
                 kidsList={familyUnitRepository.kidsList}
                 switchToChild={this.switchToChild}
                 parentLabel={"Me"}
+                parentAvatar={userRepository.avatar}
+                parentId={userRepository.mongoId}
+                adminsList={familyUnitRepository.adminsList}
                 onDeleteChild={this.onDeleteChild}
             />
         );
