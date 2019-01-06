@@ -13,9 +13,10 @@ import Text from "../../common/KKText";
 import {fountainBlue, shuttleGrey} from "../../colors";
 import {Link} from "react-router-native";
 import KidAvatar from "../../common/KidAvatar";
+import {observer} from "mobx-react";
 
 const {width, height} = Dimensions.get("window");
-const AccountManagerView = ({history, kidsList=[], switchToChild, onDeleteChild, switchToParent=()=>"", parentLabel, parentAvatar, adminsList=[], parentId, ...props}) => (
+const AccountManagerView = ({history, kidsList=[], switchToChild, onDeleteChild, switchToParent=()=>"", parentLabel, parentAvatar, adminsList=[], parentId, onDeleteAdmin, ...props}) => (
     <FullPage>
         <Header history={history} rightAction="logout"/>
         {
@@ -27,10 +28,10 @@ const AccountManagerView = ({history, kidsList=[], switchToChild, onDeleteChild,
                     {
                         adminsList.length > 0 &&
                         adminsList.filter(admin => admin._id !== parentId).map(admin => //this variable can be an email string or a user object
-                            <View style={styles.badge} key={admin._id || admin}>
+                            <TouchableOpacity style={styles.badge} key={admin._id || admin} onLongPress={() => onDeleteAdmin(admin)}>
                                 <Octicons name={"person"} style={styles.icon} />
                                 <Text style={{fontSize: width * 0.02}}>{admin.firstName || admin.split("@")[0]}</Text>
-                            </View>
+                            </TouchableOpacity>
                         )
                     }
 
@@ -159,4 +160,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default AccountManagerView;
+export default observer(AccountManagerView);

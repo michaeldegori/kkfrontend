@@ -16,7 +16,19 @@ class AccountManager extends React.Component{
             {text: "Cancel", onPress: () => ""}
         ]);
     }
+    onDeleteAdmin = (adminId) => {
+        const adminEmail = typeof adminId === 'string' ? adminId : admin.email;
+        Alert.alert('Confirm Admin Deletion', `Are you sure you wish to remove ${adminEmail} as admin to this family unit?`, [
+            {text: "Ok", onPress: this._deleteAdmin(adminEmail)},
+            {text: "Cancel", onPress: () => ""}
+        ]);
+    }
+    _deleteAdmin = (adminEmail) => async () => {
+        const deleteResult = await familyUnitRepository.deleteAdmin(adminEmail, userRepository.idToken);
+        if (!deleteResult) Alert.alert("Something went wrong", "Please try again later");
+    }
     render() {
+        console.log("RERENDERING ACCOUNTMANAGER");
         return (
             <AccountManagerView
                 {...this.props}
@@ -27,6 +39,7 @@ class AccountManager extends React.Component{
                 parentId={userRepository.mongoId}
                 adminsList={familyUnitRepository.adminsList}
                 onDeleteChild={this.onDeleteChild}
+                onDeleteAdmin={this.onDeleteAdmin}
             />
         );
     }

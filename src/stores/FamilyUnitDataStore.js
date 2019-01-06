@@ -242,10 +242,28 @@ class FamilyUnitStore{
                 email
             })
         });
-        console.log(postResult);
-        if (postResult.adminsList)
-            this.adminsList = postResult.adminsList;
-        return postResult;
+        console.log(postResult.adminsList);
+        if (!postResult.adminsList) return false;
+
+        this.adminsList = postResult.adminsList;
+        return true;
+    }
+    deleteAdmin = async (email, idToken) => {
+        const postResult = await fetchJson(apiUrl + `/familyunit/${this.unitId}/addadmin`, {
+            method: 'DELETE',
+            headers: {
+                Authorization: 'Bearer '+idToken,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email
+            })
+        });
+        console.log(postResult.adminsList);
+        if (!postResult.adminsList) return false;
+
+        this.adminsList = postResult.adminsList;
+        return true;
     }
 }
 
