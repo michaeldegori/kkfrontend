@@ -2,17 +2,18 @@ import React from 'react';
 import {
     View,
     Dimensions,
-    StyleSheet, ScrollView
+    StyleSheet,
+    ScrollView,
+    TouchableOpacity
 } from 'react-native';
 import Text from '../../common/KKText';
 import ItemTile from "../../common/ItemTile";
 import Header from "../../common/Header";
-import {Link} from "react-router-native";
 import SwipableKidSelection from "../../common/SwipableKidSelection";
 import EmptyState from "../../common/EmptyState";
 import {fountainBlue, lightGrey} from "../../colors";
 
-const ChoreBoardView = ({match:{path}, chores=[], kidsList=[], ...props}) => (
+const ChoreBoardView = ({match:{path}, chores=[], kidsList=[], deleteChore, navigateToEditChore, ...props}) => (
     <View style={{flex: 1, alignSelf: 'stretch', justifyContent: 'flex-start', alignItems: 'center'}}>
         <Header leftAction={"avatarButton"} rightAction="addChore" />
         <Text style={{color: fountainBlue,fontSize: width * 0.05, textAlign: 'center'}}>Chore Board</Text>
@@ -21,18 +22,19 @@ const ChoreBoardView = ({match:{path}, chores=[], kidsList=[], ...props}) => (
                 <EmptyState loading={false}/> :
                 <SwipableKidSelection
                     kidsList={kidsList.toJS?kidsList.toJS():[]}
-                    renderContents={renderChoresList(kidsList, chores)}
+                    renderContents={renderChoresList(kidsList, chores, deleteChore, navigateToEditChore)}
                     isSelectionNullable={true}
                 />
         }
     </View>
 );
 
-const renderChoresList = (kidsList=[], chores=[]) => selectedChildId =>
+const renderChoresList = (kidsList=[], chores=[], deleteChore, navigateToEditChore) => selectedChildId =>
     chores.length > 0 ?
         <ScrollView style={{flex:1, alignSelf: 'stretch'}}>
             {
                 chores
+                    .filter(chore => !chore.deleted)
                     .filter(chore => {
                         let kidsWithThisChore = kidsList.filter(kid => (kid.assignedChores||[]).includes(chore._id)).map(kid => kid._id);
                         return kidsWithThisChore.includes(selectedChildId) || selectedChildId === null;
@@ -41,12 +43,12 @@ const renderChoresList = (kidsList=[], chores=[]) => selectedChildId =>
                         let kidsWithThisChore = kidsList.filter(kid => (kid.assignedChores||[]).includes(chore._id));
                         if (kidsWithThisChore.length === 0) kidsWithThisChore = [{name: "Not assigned"}];
                         return (
-                            <Link to={`/maintabscreen/editchore/${chore._id}`} key={chore._id}>
+                            <TouchableOpacity onPress={()=>navigateToEditChore(chore._id)} onLongPress={()=>deleteChore(chore)} key={chore._id}>
                                 <ItemTile
                                     mainCaption={chore.name}
                                     subCaption={kidsWithThisChore.map(kid => kid.name).join(", ")}
                                 />
-                            </Link>
+                            </TouchableOpacity>
                         );
                     })
             }

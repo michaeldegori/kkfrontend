@@ -60,7 +60,6 @@ class FamilyUnitStore{
             },
             body: JSON.stringify(payload)
         });
-        console.log(postResult);
         if (postResult.existingChores) this.existingChores = postResult.existingChores;
         if (postResult.kidsList) this.kidsList = postResult.kidsList;
 
@@ -92,7 +91,6 @@ class FamilyUnitStore{
             },
             body: JSON.stringify(payload)
         });
-        console.log(postResult);
         this.existingChores = postResult.existingChores;
         this.kidsList = postResult.kidsList;
     }
@@ -112,7 +110,6 @@ class FamilyUnitStore{
             },
             body: JSON.stringify(payload)
         });
-        console.log(postResult);
         this.existingRewards = postResult.existingRewards;
         this.kidsList = postResult.kidsList;
     }
@@ -132,7 +129,7 @@ class FamilyUnitStore{
             },
             body: JSON.stringify(payload)
         });
-        console.log(putResult);
+
         this.existingRewards = putResult.existingRewards;
         this.kidsList = putResult.kidsList;
     }
@@ -150,7 +147,6 @@ class FamilyUnitStore{
         const updatedKid = putResult.kidsList.find(kid => kid._id === childId);
         const update = {};
         for (let key in patchUpdate) update[key] = updatedKid[key];
-        console.log(update);
 
         // this.kidsList = putResult.kidsList;
         this.kidsList.forEach(kid => {
@@ -172,7 +168,7 @@ class FamilyUnitStore{
                 choreId
             })
         });
-        console.log(putResult);
+
         this.kidsList = putResult.kidsList;
     }
 
@@ -190,7 +186,7 @@ class FamilyUnitStore{
                 status
             })
         });
-        console.log(putResult);
+
         this.kidsList = putResult.familyUnit.kidsList;
 
         alertsRepository.alerts = alertsRepository.alerts.map(alert => {
@@ -207,7 +203,6 @@ class FamilyUnitStore{
                 'Content-Type': 'application/json'
             }
         });
-        console.log(deleteResult);
         if (deleteResult && typeof deleteResult.kidsList.length === 'number'){
             this.kidsList = deleteResult.kidsList;
             console.log("#####################loading new kids list")
@@ -225,14 +220,14 @@ class FamilyUnitStore{
                 kidId, rewardId
             })
         });
-        console.log(postResult);
+
         if (postResult.kidsList)
             this.kidsList = postResult.kidsList;
         return postResult;
     }
 
     addAdmin = async (email, idToken) => {
-        const postResult = await fetchJson(apiUrl + `/familyunit/${this.unitId}/addadmin`, {
+        const postResult = await fetchJson(apiUrl + `/familyunit/${this.unitId}/admin`, {
             method: 'POST',
             headers: {
                 Authorization: 'Bearer '+idToken,
@@ -242,14 +237,14 @@ class FamilyUnitStore{
                 email
             })
         });
-        console.log(postResult.adminsList);
+
         if (!postResult.adminsList) return false;
 
         this.adminsList = postResult.adminsList;
         return true;
     }
     deleteAdmin = async (email, idToken) => {
-        const postResult = await fetchJson(apiUrl + `/familyunit/${this.unitId}/addadmin`, {
+        const deleteResult = await fetchJson(apiUrl + `/familyunit/${this.unitId}/admin`, {
             method: 'DELETE',
             headers: {
                 Authorization: 'Bearer '+idToken,
@@ -259,10 +254,28 @@ class FamilyUnitStore{
                 email
             })
         });
-        console.log(postResult.adminsList);
-        if (!postResult.adminsList) return false;
 
-        this.adminsList = postResult.adminsList;
+        if (!deleteResult.adminsList) return false;
+
+        this.adminsList = deleteResult.adminsList;
+        return true;
+    }
+    deleteChore = async (chore, idToken) => {
+        const result = await fetchJson(apiUrl + `/familyunit/${this.unitId}/chore/${chore._id}`, {
+            method: 'put',
+            headers: {
+                Authorization: 'Bearer '+idToken,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                ...chore,
+                deleted: true
+            })
+        });
+
+        if (!result.existingChores) return false;
+
+        this.existingChores = result.existingChores;
         return true;
     }
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import {AsyncStorage} from 'react-native';
 import LoginView from './LoginView';
 import {observer, inject} from 'mobx-react';
 import {loginWithAuth0} from "../../services/Authorization";
@@ -12,6 +13,17 @@ class LoginContainer extends React.Component{
     state = {
         username: '',
         password: ''
+    }
+    async componentDidMount(){
+        try{
+            const userEmailLastLoggedIn = await AsyncStorage.getItem("@kiddiekredit:email");
+            console.log("#############LoginContainer", userEmailLastLoggedIn);
+            if (typeof userEmailLastLoggedIn === 'string')
+                this.setState(() => ({username: userEmailLastLoggedIn}));
+        }
+        catch(e){
+            console.log("something went wrong with retrieving the email address from asyncstorage");
+        }
     }
     handleTextInput = (key, newValue) => this.setState(() => ({[key]: newValue}))
     render() {

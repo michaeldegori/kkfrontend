@@ -21,6 +21,7 @@ class EditChoreContainer extends React.Component{
         choreAppliedTo: [],
         submitting: false,
         modalVisible: false,
+        modalText:"",
         choreNotes: ""
     }
     componentDidMount() {
@@ -62,10 +63,7 @@ class EditChoreContainer extends React.Component{
         else
             this.setState({choreAppliedTo: this.state.choreAppliedTo.filter(kId => kId !== kidId)});
     }
-    showModal = message => {
-        this.setState(state => ({modalVisible: true, modalText: message}));
-        setTimeout(() => this.setState(state => ({modalVisible: false})), 1750);
-    }
+
     submitChore = async () => {
         this.setState(state=> ({submitting: true}));
         const {
@@ -96,14 +94,15 @@ class EditChoreContainer extends React.Component{
 
         try {
             await familyUnitRepository.putChore({ choreId, choreName, choreDays, choreFrequency, chorePriority, choreAppliedTo, monthlyChoreInterval}, userRepository.idToken);
-            this.showModal("Success");
+            this.setState(() => ({submitting: false, modalVisible: true, modalText: "Chore successfully created!"}));
         }
         catch(err){
             Alert.alert("Error posting chore", err.toString());
         }
 
-        this.setState(state => ({submitting: false}));
     }
+    modalClose = () => this.setState(() => ({modalVisible: false}))
+    modalBackToDashboard = () => this.props.history.push("/maintabscreen/choreboard")
     render() {
         const {kidsList} = familyUnitRepository;
         return (
@@ -114,6 +113,9 @@ class EditChoreContainer extends React.Component{
                 kidsList={kidsList}
                 toggleKidSelection={this.toggleKidSelection}
                 submitChore={this.submitChore}
+                modalClose={this.modalClose}
+                modalAccept={false}
+                modalDeny={this.modalBackToDashboard}
             />
         );
     }

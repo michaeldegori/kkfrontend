@@ -41,7 +41,6 @@ async function registerForPushNotificationsAsync({idToken, BROWSING_MODE, email}
         }),
     });
 
-    // console.log(notificationResult);
 }
 
 

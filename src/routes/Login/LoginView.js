@@ -25,7 +25,7 @@ const LoginView = ({loginWithAuth0, handleTextInput, username, password,  ...pro
                 style={{width: width * 0.35, height: width * 0.35}}
                 source={require("../../../assets/images/kk-square.png")} />
             <View style={{alignSelf: 'stretch'}}>
-                <KKTextInput placeholder={'Email'} style={styles.input} onChangeText={v => handleTextInput('username', v)} value={username}/>
+                <KKTextInput inputType="email" placeholder={'Email'} style={styles.input} onChangeText={v => handleTextInput('username', v)} value={username}/>
                 <KKTextInput placeholder={'Password'} style={styles.input} onChangeText={v => handleTextInput('password', v)} secureTextEntry={true} value={password}/>
                 <View style={styles.buttonContainer}>
                     <KKButton type="primary" onPress={() => loginWithAuth0(username, password)}>Login</KKButton>

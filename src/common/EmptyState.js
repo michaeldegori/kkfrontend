@@ -36,7 +36,6 @@ const getSubMessage = path => (messages[path] && messages[path].sub) ? messages[
 
 const EmptyState = ({loading, ...props}) => (
     <FullPage style={styles.container}>
-        {console.log(props.history.location.pathname)}
         {
             loading ?
                 <ActivityIndicator size="large" color={fountainBlue} /> :

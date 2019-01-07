@@ -41,7 +41,7 @@ export default class ChooseAvatar extends Component{
         const kidId = userRepository.BROWSING_MODE.split("-")[1];
         const avatarImgName = imageNames[imgIndex];
         const updateResult = await familyUnitRepository.updateChildSettings(kidId, {avatar: avatarImgName}, userRepository.idToken);
-        console.log(updateResult);
+
         if (!updateResult) {
             Alert.Alert("Server Error", "Something went wrong selecting your new avatar. Please try again later");
             return;

@@ -42,15 +42,6 @@ class UserDataStore{
 
     //TODO: Change this so it only looks for refresh token
     checkIfLoggedIn = async () => {
-        // let localData = await AsyncStorage.multiGet([
-        //     "@kiddiekredit:idToken",
-        //     "@kiddiekredit:accessToken",
-        //     "@kiddiekredit:refreshToken",
-        //     "@kiddiekredit:expiresIn"
-        // ]);
-        // localData = localData.reduce( (acc, [key, storedVal]) => Object.assign(acc, {[key.split(":")[1]]: storedVal}), {});
-        // if (!localData.accessToken || !localData.refreshToken || !localData.idToken || !localData.expiresIn || Number(localData.expiresIn) < new Date().getTime()+1000*60*60) return false;
-        // console.log("HYDRATED STORAGE DATA", localData);
 
         let refreshToken = await AsyncStorage.getItem("@kiddiekredit:refreshToken");
         if (!refreshToken) return false;
@@ -58,7 +49,6 @@ class UserDataStore{
         const refreshedInfo = await loginWithRefreshToken(refreshToken);
         if (!refreshedInfo || typeof refreshedInfo !== 'object') return false;
 
-        console.log(refreshedInfo);
 
         const {id_token:idToken, access_token:accessToken} = refreshedInfo;
 
@@ -73,7 +63,6 @@ class UserDataStore{
 
     pullUserInfoFromApiAndStore = async (idToken, accessToken, isRegistration=false, refreshToken) => {
         const decodedToken = jwtDecode(idToken);
-        console.log("################pullUser", decodedToken);
         const userMetaData = decodedToken['https://kiddiekredit.com/user_metadata'];
         const queryStringInfo = {
             firstName: userMetaData.firstName,
@@ -81,7 +70,6 @@ class UserDataStore{
             email: decodedToken.email,
             userSubType: userMetaData.parent_type
         };
-        console.log("##QueryString Info", queryStringInfo);
         let uri = apiUrl + '/familyUnit'+toQueryString(queryStringInfo);
         let fetchOptions = {
             headers: {
@@ -96,7 +84,6 @@ class UserDataStore{
 
         if (!userAndFamilyData || !userAndFamilyData.currentUser) return false;
 
-        // console.log('################' + JSON.stringify(userAndFamilyData, null, 4));
 
         this.setUserData(idToken, accessToken, userAndFamilyData.currentUser._id);
         familyUnitRepository.setFamilyData(userAndFamilyData.familyUnit);
@@ -113,12 +100,13 @@ class UserDataStore{
 
     persistUserData = async (idToken, accessToken, refreshToken) => {
         const userInfo = jwtDecode(idToken);
-        console.log("@@@@@@@Persisting User Data", (idToken||"").length, (accessToken||"").length, (refreshToken||"").length)
+        console.log("@@@@@@@Persisting User Data", (idToken||"").length, (accessToken||"").length, (refreshToken||"").length, userInfo.email);
         return await AsyncStorage.multiSet([
             ["@kiddiekredit:idToken", idToken],
             ["@kiddiekredit:accessToken", accessToken],
             ["@kiddiekredit:refreshToken", refreshToken],
-            ["@kiddiekredit:expiresIn", ""+ (Number(userInfo.exp)*1000)]
+            ["@kiddiekredit:expiresIn", ""+ (Number(userInfo.exp)*1000)],
+            ["@kiddiekredit:email", userInfo.email]
         ]);
     };
 

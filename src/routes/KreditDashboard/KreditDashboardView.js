@@ -43,7 +43,6 @@ const renderKidKreditInfo = (kidsList=[]) => selectedChildId => {
     if (!currentKid.kreditInformation)
         currentKid.kreditInformation = {};
     const {kreditInformation} = currentKid;
-    console.log(kreditInformation);
     return (
         <ScrollView>
             <Row>

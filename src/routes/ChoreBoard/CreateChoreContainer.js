@@ -60,7 +60,6 @@ class CreateChoreContainer extends React.Component{
             monthlyChoreInterval,
             choreNotes
         } = this.state;
-        console.log(this.state);
         if (choreName.length < 2) return Alert.alert("Invalid input", "Please enter a chore name");
         const numChoreDays = choreDays.filter(e=>e).length;
         let error = false;

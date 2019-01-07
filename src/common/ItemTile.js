@@ -8,7 +8,7 @@ import {
 import {lightGrey, fountainBlue} from "../colors";
 import PropTypes from 'prop-types';
 
-const ItemTile = ({iconSrc, mainCaption, subCaption="", renderRightItem, disabled=false }) => (
+const ItemTile = ({iconSrc, mainCaption, subCaption="", renderRightItem, disabled=false, dotColor }) => (
     <View style={styles.mainContainer}>
         <View style={styles.innerContainer}>
             {
@@ -22,7 +22,7 @@ const ItemTile = ({iconSrc, mainCaption, subCaption="", renderRightItem, disable
                 <Text style={styles.subCaption}>{subCaption}</Text>
             </View>
             {
-                renderRightItem ? renderRightItem() : <View style={styles.indicatorContainer} />
+                renderRightItem ? renderRightItem() : <View style={[styles.indicatorContainer, dotColor? {backgroundColor: dotColor} : {}]} />
             }
         </View>
         {

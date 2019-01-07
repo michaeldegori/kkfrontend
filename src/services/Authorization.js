@@ -31,6 +31,7 @@ const loginWithAuth0 = (startingPage) => async (username, password) => {
     }
     loginResult = await loginResult.json();
 
+
     //finish logging in
     await userDataRepository.pullUserInfoFromApiAndStore(loginResult.id_token, loginResult.access_token, startingPage==='registration', loginResult.refresh_token);
     return true;
@@ -59,7 +60,6 @@ async function registerWithAuth0(email, password, firstName, lastName, parent_ty
     }
     result = await result.json();
 
-    console.log(result);
     //finish logging in
     return await loginWithAuth0('registration')(email, password);
 }
