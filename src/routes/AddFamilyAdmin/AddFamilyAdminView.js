@@ -58,13 +58,13 @@ const AddFamilyAdminView = ({
 
 const styles = StyleSheet.create({
     input: {
-        overflow: 'hidden',
         borderRadius: 12,
         elevation: 6,
         shadowOpacity: 0.2,
         shadowColor: 'black',
         marginHorizontal: width * 0.08,
-        marginVertical: height * 0.01
+        marginVertical: height * 0.01,
+        shadowOffset: {width:0, height: 3}
     },
     textLabel: {
         margin: width * 0.03,

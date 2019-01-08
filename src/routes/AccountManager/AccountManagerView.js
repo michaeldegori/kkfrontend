@@ -19,32 +19,6 @@ const {width, height} = Dimensions.get("window");
 const AccountManagerView = ({history, kidsList=[], switchToChild, onDeleteChild, switchToParent=()=>"", parentLabel, parentAvatar, adminsList=[], parentId, onDeleteAdmin, ...props}) => (
     <FullPage>
         <Header history={history} rightAction="logout"/>
-        {
-            onDeleteChild &&
-                <View style={styles.adminCol}>
-                    <Text style={styles.sideLabel}>Family</Text>
-                    <Text style={styles.sideLabel}>Admins:</Text>
-
-                    {
-                        adminsList.length > 0 &&
-                        adminsList.filter(admin => admin._id !== parentId).map(admin => //this variable can be an email string or a user object
-                            <TouchableOpacity style={styles.badge} key={admin._id || admin} onLongPress={() => onDeleteAdmin(admin)}>
-                                <Octicons name={"person"} style={styles.icon} />
-                                <Text style={{fontSize: width * 0.02}}>{admin.firstName || admin.split("@")[0]}</Text>
-                            </TouchableOpacity>
-                        )
-                    }
-
-                    <Link style={styles.badge} to={"/maintabscreen/addfamilyadmin"}>
-                        <React.Fragment>
-                            <MaterialCommunityIcons name="plus-circle" style={[styles.plusIcon2, {fontSize: width * 0.12}]} />
-                            <Text semiBold style={{fontSize: width * 0.025, color: fountainBlue}}>
-                                Add Admin
-                            </Text>
-                        </React.Fragment>
-                    </Link>
-                </View>
-        }
         <View style={styles.iconRow}>
             <TouchableOpacity style={styles.badge} onPress={switchToParent}>
                 <View style={styles.largeCircle}>
@@ -80,6 +54,32 @@ const AccountManagerView = ({history, kidsList=[], switchToChild, onDeleteChild,
                 </Link>
             }
         </View>
+        {
+            onDeleteChild &&
+            <View style={styles.adminCol}>
+                <Text style={styles.sideLabel}>Family</Text>
+                <Text style={styles.sideLabel}>Admins:</Text>
+
+                {
+                    adminsList.length > 0 &&
+                    adminsList.filter(admin => admin._id !== parentId).map(admin => //this variable can be an email string or a user object
+                        <TouchableOpacity style={styles.badge} key={admin._id || admin} onLongPress={() => onDeleteAdmin(admin)}>
+                            <Octicons name={"person"} style={styles.icon} />
+                            <Text style={{fontSize: width * 0.02}}>{admin.firstName || admin.split("@")[0]}</Text>
+                        </TouchableOpacity>
+                    )
+                }
+
+                <Link style={styles.badge} to={"/maintabscreen/addfamilyadmin"} >
+                    <View>
+                        <MaterialCommunityIcons name="plus-circle" style={[styles.plusIcon2, {fontSize: width * 0.12}]} />
+                        <Text semiBold style={{fontSize: width * 0.025, color: fountainBlue}}>
+                            Add Admin
+                        </Text>
+                    </View>
+                </Link>
+            </View>
+        }
     </FullPage>
 );
 

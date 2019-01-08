@@ -28,7 +28,6 @@ class AccountManager extends React.Component{
         if (!deleteResult) Alert.alert("Something went wrong", "Please try again later");
     }
     render() {
-        console.log("RERENDERING ACCOUNTMANAGER");
         return (
             <AccountManagerView
                 {...this.props}
