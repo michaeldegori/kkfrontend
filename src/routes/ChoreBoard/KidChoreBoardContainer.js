@@ -63,7 +63,7 @@ class KidChoreBoardContainer extends React.Component{
             });
         }
         for (let i = 0; i < delinquentChoreInstances.length; i++){
-            const theChore = familyUnitRepository.existingChores.find(chore=> chore._id === doneChores[i].chore);
+            const theChore = familyUnitRepository.existingChores.find(chore=> chore._id === delinquentChoreInstances[i].chore);
             workingValue.push({
                 ...delinquentChoreInstances[i],
                 name: theChore.name,
