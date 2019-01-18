@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         // backgroundColor: 'red',
         position:'absolute',
         width: width * 0.94,
-        height: height * 0.1
+        height: height * 0.25
     },
     innerContainer: {
         flexDirection: 'row'

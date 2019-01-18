@@ -92,6 +92,7 @@ async function loginWithRefreshToken(refreshToken) {
         return false;
     }
     loginResult = await loginResult.json();
+    console.log(loginResult);
     return loginResult;
 }
 

@@ -3,21 +3,29 @@ import {
     StyleSheet,
     Dimensions,
     ScrollView,
-    View
+    View,
+    Modal, TouchableOpacity
 } from 'react-native';
+import {Ionicons} from 'react-native-vector-icons';
 import Text from '../../common/KKText';
 import FullPage from "../../common/FullPage";
 import Header from "../../common/Header";
 import EmptyState from "../../common/EmptyState";
 import ItemTile from "../../common/ItemTile";
 import SwipableKidSelection from "../../common/SwipableKidSelection";
-import {fountainBlue, shuttleGrey} from "../../colors";
+import {fountainBlue, lightGrey, shuttleGrey} from "../../colors";
 import Row from "../../common/Row";
+import InfoIcon from "./InfoIcon";
+import EducationalModal from "../../common/EducationalModal";
 
 const KreditDashboardView = ({
     match:{path},
     kidsList,
-    loading
+    loading,
+    modalVisible,
+    educationalInfo={},
+    showModal,
+    hideModal
 }) => (
     <FullPage>
         <Header leftAction={"avatarButton"} />
@@ -26,18 +34,22 @@ const KreditDashboardView = ({
             kidsList && kidsList.length > 0 ?
                 <SwipableKidSelection
                     kidsList={kidsList.toJS ? kidsList.toJS() : []}
-                    renderContents={renderKidKreditInfo(kidsList)}
+                    renderContents={renderKidKreditInfo(kidsList, showModal)}
                     isSelectionNullable={false}
                     defaultChild={kidsList[0]._id}
                 /> :
                 <EmptyState loading={loading}/>
         }
-
-
+        <EducationalModal
+            modalVisible={modalVisible}
+            educationalInfo={educationalInfo}
+            hideModal={hideModal}
+        />
     </FullPage>
 );
 
-const renderKidKreditInfo = (kidsList=[]) => selectedChildId => {
+
+const renderKidKreditInfo = (kidsList=[], showModal) => selectedChildId => {
     const currentKid = kidsList.find(k => k._id === selectedChildId);
     if (!currentKid) return <EmptyState loading={false}/>
     if (!currentKid.kreditInformation)
@@ -58,18 +70,23 @@ const renderKidKreditInfo = (kidsList=[]) => selectedChildId => {
             <Text style={styles.subHeading}>Kredit Breakdown</Text>
             <ItemTile
                 mainCaption="Rewards Redemptions (Utilization)"
+                renderRightItem={() => <InfoIcon attributeName={'utilization'} onPress={()=>showModal('utilization')}/>}
                 subCaption={buildSubtitleString(kreditInformation, 'utilization')} />
             <ItemTile
                 mainCaption="Chore History (Payment History)"
+                renderRightItem={() => <InfoIcon attributeName={'paymentHistory'} onPress={()=>showModal('paymentHistory')}/>}
                 subCaption={buildSubtitleString(kreditInformation, 'choreHistory')} />
             <ItemTile
                 mainCaption="Average Age of Chores (Age of Accounts)"
+                renderRightItem={() => <InfoIcon attributeName={'accountAge'} onPress={()=>showModal('accountAge')}/>}
                 subCaption={buildSubtitleString(kreditInformation, 'avgChoreAge')} />
             <ItemTile
                 mainCaption="Total Chores (Number of Accounts)"
+                renderRightItem={() => <InfoIcon attributeName={'numAccounts'} onPress={()=>showModal('numAccounts')}/>}
                 subCaption={buildSubtitleString(kreditInformation, 'totalChores')} />
             <ItemTile
                 mainCaption="Reward Requests (Credit Inquiries)"
+                renderRightItem={() => <InfoIcon attributeName={'creditInquiries'} onPress={()=>showModal('creditInquiries')}/>}
                 subCaption={buildSubtitleString(kreditInformation, 'inquiries')} />
         </ScrollView>
     );
@@ -85,7 +102,6 @@ function buildSubtitleString(kreditInfo, key){
 function getTotalScore(kreditInfo){
     let score = 0;
     for (let key in kreditInfo) {
-        console.log(kreditInfo[key]);
         if (typeof kreditInfo[key] === 'object' && typeof Number(kreditInfo[key].numerator) === 'number')
             score += Number(kreditInfo[key].numerator);
     }
@@ -106,9 +122,9 @@ const styles = StyleSheet.create({
     },
     subHeading: {
         color: fountainBlue,
-            fontSize: width * 0.07,
-            textAlign: 'center'
-    }
+        fontSize: width * 0.07,
+        textAlign: 'center'
+    },
 });
 
 

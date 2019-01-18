@@ -10,10 +10,16 @@ import FullPage from "../../common/FullPage";
 import ItemTile from "../../common/ItemTile";
 import {fountainBlue, shuttleGrey, shuttleGreyDark} from "../../colors";
 import EmptyState from "../../common/EmptyState";
+import InfoIcon from "./InfoIcon";
+import EducationalModal from "../../common/EducationalModal";
 
 const KidKreditDashboardView = ({
     loading,
-    kreditInfo
+    kreditInfo,
+    modalVisible,
+    showModal,
+    hideModal,
+    educationalInfo={}
 }) => (
     <FullPage>
         <Header leftAction={'avatarButton'}/>
@@ -28,23 +34,31 @@ const KidKreditDashboardView = ({
 
                     <ItemTile
                         mainCaption="Rewards Redemptions (Utilization)"
+                        renderRightItem={() => <InfoIcon attributeName={'utilization'} onPress={()=>showModal('utilization')}/>}
                         subCaption={buildSubtitleString(kreditInfo, 'utilization')} />
                     <ItemTile
                         mainCaption="Chore History (Payment History)"
+                        renderRightItem={() => <InfoIcon attributeName={'paymentHistory'} onPress={()=>showModal('paymentHistory')}/>}
                         subCaption={buildSubtitleString(kreditInfo, 'choreHistory')} />
                     <ItemTile
                         mainCaption="Average Age of Chores (Age of Accounts)"
+                        renderRightItem={() => <InfoIcon attributeName={'accountAge'} onPress={()=>showModal('accountAge')}/>}
                         subCaption={buildSubtitleString(kreditInfo, 'avgChoreAge')} />
                     <ItemTile
                         mainCaption="Total Chores (Number of Accounts)"
+                        renderRightItem={() => <InfoIcon attributeName={'numAccounts'} onPress={()=>showModal('numAccounts')}/>}
                         subCaption={buildSubtitleString(kreditInfo, 'totalChores')} />
                     <ItemTile
                         mainCaption="Reward Requests (Credit Inquiries)"
+                        renderRightItem={() => <InfoIcon attributeName={'creditInquiries'} onPress={()=>showModal('creditInquiries')}/>}
                         subCaption={buildSubtitleString(kreditInfo, 'inquiries')} />
                 </ScrollView>
-
         }
-
+        <EducationalModal
+            modalVisible={modalVisible}
+            educationalInfo={educationalInfo}
+            hideModal={hideModal}
+        />
     </FullPage>
 );
 
@@ -85,7 +99,7 @@ const styles = StyleSheet.create({
         color: fountainBlue,
         fontSize: width * 0.07,
         textAlign: 'center'
-    }
+    },
 });
 
 export default KidKreditDashboardView;
