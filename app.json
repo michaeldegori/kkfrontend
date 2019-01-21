@@ -10,7 +10,7 @@
     "scheme": "kiddiekredit",
     "icon": "assets/images/kk-square1024.png",
     "privacy": "unlisted",
-    "description": "Kidde Kredit App for Leaping Harts",
+    "description": "Kidde Kredit App for teaching financial literacy to children via chore tracking",
     "orientation": "portrait",
     "androidStatusBar": {
       "barStyle": "dark-content",
@@ -25,12 +25,13 @@
     },
     "ios": {
       "bundleIdentifier": "com.kiddiekredit.app",
-      "buildNumber": "12",
+      "buildNumber": "1",
       "supportsTablet": true
     },
     "android": {
       "package": "com.kiddiekredit.app",
-      "versionCode": 5
-    }
+      "versionCode": 1
+    },
+    "version": "0.2.0"
   }
 }
