@@ -54,18 +54,18 @@ const AccountManagerView = ({history, kidsList=[], switchToChild, onDeleteChild,
                 </Link>
             }
         </View>
+        {console.log('$$$$$$$$$$$$$ADMINSLIST', adminsList)}
         {
             onDeleteChild &&
             <View style={styles.adminCol}>
                 <Text style={styles.sideLabel}>Family</Text>
                 <Text style={styles.sideLabel}>Admins:</Text>
-
                 {
                     adminsList.length > 0 &&
                     adminsList.filter(admin => admin._id !== parentId).map(admin => //this variable can be an email string or a user object
                         <TouchableOpacity style={styles.badge} key={admin._id || admin} onLongPress={() => onDeleteAdmin(admin)}>
                             <Octicons name={"person"} style={styles.icon} />
-                            <Text style={{fontSize: width * 0.02}}>{admin.firstName || admin.split("@")[0]}</Text>
+                            <Text style={{fontSize: width * 0.02}}>{getAdminName(admin)}</Text>
                         </TouchableOpacity>
                     )
                 }
@@ -89,6 +89,14 @@ const KidBadge = ({kid}) => (
         <Text semiBold style={{fontSize: width * 0.033, color: shuttleGrey}}>{kid.name}</Text>
     </View>
 );
+
+function getAdminName(admin){
+    //admin.firstName || admin.split("@")[0]
+    if (typeof admin === 'string') return admin.split("@")[0];
+    if (typeof admin.firstName === 'string') return admin.firstName;
+    if (typeof admin.email === 'string') return admin.email.split("@")[0];
+    return "unknown";
+}
 
 const styles = StyleSheet.create({
     adminCol: {

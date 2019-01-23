@@ -54,9 +54,14 @@ async function registerWithAuth0(email, password, firstName, lastName, parent_ty
         }),
         method: 'POST'
     });
-    if (result.status !== 200) {
-        console.log(await result.text());
-        return false;
+    if (result.status < 200 || result.status > 299) {
+        result = {
+            status: result.status,
+            serverResponse: await result.text(),
+            error: true
+        };
+        console.log(result);
+        return result;
     }
     result = await result.json();
 
