@@ -25,7 +25,8 @@ export default class RegistrationForm extends React.Component{
         password: '123qwe',
         firstName: 'Vic',
         lastName: 'Moreno',
-        parent_type: 'father'
+        parent_type: 'father',
+        submitting: false
     }
     registerWithAuh0 = async () => {
         const {email, password, firstName, lastName, parent_type} = this.state;
@@ -34,11 +35,14 @@ export default class RegistrationForm extends React.Component{
         if (!firstName) return Alert.alert('Please Fill All Fields', 'First Name field is required');
         if (!lastName) return Alert.alert('Please Fill All Fields', 'Last Name field is required');
         if (!parent_type) return Alert.alert('Please Fill All Fields', 'Parent Type field is required');
+        this.setState({submitting: true});
         const registrationResult = await registerWithAuth0(email, password, firstName, lastName, parent_type);
         if (registrationResult.error) {
             Alert.alert("Problem Registering", "There was a problem with your registration. Please try again later. \n "+registrationResult.serverResponse);
+            this.setState({submitting: false});
             return;
         }
+        this.setState({submitting: false});
         if (this.props.history) this.props.history.push("/maintabscreen/accountmanager");
     }
     render(){
@@ -74,7 +78,7 @@ export default class RegistrationForm extends React.Component{
                             <Picker.Item label="Female guardian" value="female_guardian" />
                         </Picker>
                         <View style={styles.buttonContainer}>
-                            <KKButton type="primary" onPress={this.registerWithAuh0}>Submit</KKButton>
+                            <KKButton type="primary" onPress={this.state.submitting ? () => "" : this.registerWithAuh0}>Submit</KKButton>
                         </View>
                     </ScrollView>
                 </ImageBackground>
