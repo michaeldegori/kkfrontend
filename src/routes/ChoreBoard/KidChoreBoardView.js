@@ -56,6 +56,7 @@ const renderRow = (item, onRequestCompleteChore) => {
         dotColor = '#ff8d43';
         disabled=false;
     }
+    if (item.type === 'done' && item.status === 'unapproved') dotColor = '#ffe800';
     return (
         <TouchableOpacity key={item._id} onPress={disabled? ()=>'' : ()=>onRequestCompleteChore(item._id)}>
             <ItemTile

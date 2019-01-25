@@ -94,7 +94,7 @@ class EditChoreContainer extends React.Component{
 
         try {
             await familyUnitRepository.putChore({ choreId, choreName, choreDays, choreFrequency, chorePriority, choreAppliedTo, monthlyChoreInterval}, userRepository.idToken);
-            this.setState(() => ({submitting: false, modalVisible: true, modalText: "Chore successfully created!"}));
+            this.setState(() => ({submitting: false, modalVisible: true, modalText: "Chore successfully modified!"}));
         }
         catch(err){
             Alert.alert("Error posting chore", err.toString());
