@@ -13,8 +13,7 @@ const defaultFormState = {
 };
 
 
-@observer
-class AddFamilyUnitMember extends React.Component{
+class AddChildContainer extends React.Component{
     state = {
         firstName: "",
         ...defaultFormState,
@@ -82,4 +81,4 @@ class AddFamilyUnitMember extends React.Component{
     }
 }
 
-export default AddFamilyUnitMember;
+export default observer(AddChildContainer);

@@ -25,13 +25,13 @@
     },
     "ios": {
       "bundleIdentifier": "com.kiddiekredit.app",
-      "buildNumber": "9",
+      "buildNumber": "10",
       "supportsTablet": true
     },
     "android": {
       "package": "com.kiddiekredit.app",
-      "versionCode": 9
+      "versionCode": 10
     },
-    "version": "0.2.0"
+    "version": "0.3.0"
   }
 }

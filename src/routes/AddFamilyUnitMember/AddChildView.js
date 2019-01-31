@@ -19,6 +19,7 @@ import KidAvatar from "../../common/KidAvatar";
 import Row from "../../common/Row";
 import FullPageWithModal from "../../common/FullPageWithModal";
 import Header from "../../common/Header";
+let pkg = require('../../../app');
 
 const {width, height} = Dimensions.get("window");
 
@@ -41,7 +42,7 @@ const renderModalContents = (modalText, modalAccept, modalDeny) => () => (
     </Fragment>
 );
 
-const AddFamilyUnitMember = ({
+const AddChildView = ({
     firstName = "",
     dobM = "",
     dobD = "",
@@ -63,6 +64,7 @@ const AddFamilyUnitMember = ({
         modalClose={modalClose}
     >
         <KeyboardAvoidingView behavior={Platform.OS === 'android' ? null : 'padding'}>
+
             <ScrollView>
                 <ImageBackground
                     height={height}
@@ -154,6 +156,7 @@ const AddFamilyUnitMember = ({
                             <Text style={{color: shuttleGreyDark}}>Success</Text>
                         </View>
                     </Modal>
+                    <Text style={styles.versionLabel}>v {(pkg.expo||{}).version}</Text>
                 </ImageBackground>
             </ScrollView>
         </KeyboardAvoidingView>
@@ -162,6 +165,13 @@ const AddFamilyUnitMember = ({
 );
 
 const styles = StyleSheet.create({
+    versionLabel: {
+        position: 'absolute',
+        left: 5,
+        bottom: 5,
+        color: lightGrey,
+        fontSize: 8
+    },
     logoContainer: {
         alignSelf: 'stretch',
         padding: width * 0.02,
@@ -269,4 +279,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default AddFamilyUnitMember;
+export default AddChildView;
