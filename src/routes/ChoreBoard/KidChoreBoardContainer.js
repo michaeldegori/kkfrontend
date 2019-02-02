@@ -41,13 +41,26 @@ class KidChoreBoardContainer extends React.Component{
         const kidId = userRepository.BROWSING_MODE.split("-")[1];
         const currentKid = familyUnitRepository.kidsList.find(k => k._id === kidId);
         const choresToDisplay = familyUnitRepository.existingChores.filter(globalChore =>{
-            const choreRRule = rrulestr(globalChore.repetitionRule);
-            const occurrencesNext2Days = choreRRule.between(new Date(), new Date(new Date().getTime()+1000*60*60*24*2));
-            if (occurrencesNext2Days.length === 0) return false;
+            if (!(currentKid.assignedChores||[]).includes(globalChore._id)) return false;
 
-            return (currentKid.assignedChores||[]).includes(globalChore._id);
+            const choreRRule = rrulestr(globalChore.repetitionRule);
+            const now = new Date();
+            const day = ("0" + now.getDate()).slice(-2);
+            const month = ("0" + (now.getMonth()+1)).slice(-2);
+            const year = now.getFullYear();
+            const dateLastNight = new Date(`${year}-${month}-${day}`);
+            const tomorrowTimestamp = dateLastNight.getTime() + 1000*60*60*24;
+            const occurrencesToday = choreRRule.between(dateLastNight, new Date(tomorrowTimestamp));
+            if (occurrencesToday.length === 0) return false;
+
+            const timesChoreDoneToday = (currentKid.doneChores||[]).find(doneChoreObj => doneChoreObj.chore === globalChore._id && doneChoreObj.timeStamp > dateLastNight.getTime());
+
+            return !timesChoreDoneToday;
         });
-        return choresToDisplay;
+        if (choresToDisplay.length > 0)
+            return choresToDisplay;
+
+        return [{img: 'success'}]
     }
     getPastChores(){
         if (!familyUnitRepository.kidsList ) return [];

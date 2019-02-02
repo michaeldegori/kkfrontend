@@ -218,13 +218,13 @@ const styles = StyleSheet.create({
     },
     genderLabel: {
         flex: 1,
-        margin: width * 0.05,
+        margin: width * 0.04,
         textAlign: 'center',
         color: shuttleGreyDark
     },
     genderButton: {
         flex: 1,
-        margin: width * 0.05,
+        margin: width * 0.04,
         backgroundColor: 'rgba(255,255,255,0.4)',
         color: lightGrey,
         borderRadius: 12,

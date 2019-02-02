@@ -1,11 +1,11 @@
 import React, {Fragment} from "react";
 import ItemTile from "../../common/ItemTile";
-import {Dimensions, ScrollView, StyleSheet, TouchableOpacity, View, FlatList} from "react-native";
+import {Dimensions, ScrollView, StyleSheet, TouchableOpacity, View, FlatList, ImageBackground} from "react-native";
 import PropTypes from 'prop-types';
 import Header from "../../common/Header";
 import FullPageWithModal from "../../common/FullPageWithModal";
 import Text from "../../common/KKText";
-import {fountainBlue, shuttleGrey, shuttleGreyDark} from "../../colors";
+import {fountainBlue, fountainBlueDark, shuttleGrey, shuttleGreyDark} from "../../colors";
 import {Ionicons} from 'react-native-vector-icons';
 
 const{width, height} = Dimensions.get('window');
@@ -46,9 +46,16 @@ const KidChoreBoardView = ({chores, pastChores, modalVisible, modalText, onReque
 
 const renderRow = (item, onRequestCompleteChore) => {
     if (item.label)
+        return <Text key={item.key} style={{color: fountainBlue, textAlign: 'center', fontSize: width * 0.05}}>{item.label}</Text>;
+
+    if (item.img)
         return (
-            <Text key={item.key} style={{color: fountainBlue, textAlign: 'center', fontSize: width * 0.05}}>{item.label}</Text>
-        );
+            <ImageBackground source={require('../../../assets/images/confetti.png')} style={{width, height: width, justifyContent: 'center', alignItems: 'center' }} >
+                <Text style={{color: fountainBlueDark, textAlign: 'center', fontSize: width * 0.08}}>Done</Text>
+                <Text style={{color: fountainBlueDark, textAlign: 'center', fontSize: width * 0.08}}>For</Text>
+                <Text style={{color: fountainBlueDark, textAlign: 'center', fontSize: width * 0.08}}>Today!</Text>
+            </ImageBackground>
+        )
 
     let dotColor, disabled = true;
     if (item.type === 'delinquent') dotColor = 'red';

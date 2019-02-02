@@ -29,6 +29,7 @@ import userRepository from "../stores/UserDataStore";
 import registerForPushNotificationsAsync from "../services/PushNotifications";
 import ChooseAvatar from "./RegistrationFlow/ChooseAvatar";
 import AddFamilyAdminContainer from "./AddFamilyAdmin";
+import BaseOnboardingView from "./onboarding/BaseOnboardingView";
 
 const icons = [
     color=> <EvilIcons color={color} name="bell" size={32}/>,
@@ -58,7 +59,8 @@ const kidLinks = [
 ];
 
 const keyboardHiddenPaths  = [
-    "/maintabscreen/createchore"
+    "/maintabscreen/createchore",
+    "/onboarding",
 ];
 
 
@@ -124,6 +126,7 @@ class MainTabScreen extends React.Component{
                     <Route path="/maintabscreen/createreward" component={CreateRewardContainer} />
                     <Route path="/maintabscreen/editreward/:rewardid" component={EditRewardContainer} />
                     {/*KID ROUTES*/}
+
 
                     <Route path="/maintabscreen/kid/accountmanager" component={KidAccountManagerContainer} />
                     <Route path="/maintabscreen/kid/choreboard" component={KidChoreBoardContainer} />
