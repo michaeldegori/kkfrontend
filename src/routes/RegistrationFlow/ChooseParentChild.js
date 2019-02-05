@@ -20,7 +20,7 @@ const ChooseParentChild = () => (
     <FullPage>
         <Header/>
         <ScrollView contentContainerStyle={{alignSelf: 'stretch', justifyContent: 'center', flex: 1}}>
-            <Link style={styles.card} to={"/newuser/registrationform"} component={TouchableOpacity}>
+            <Link style={styles.card} to={"/nonauth/registrationform"} component={TouchableOpacity}>
                 <View style={styles.cardSlice}>
                     <Image source={require('../../../assets/images/reg_icon_parent.png')} style={styles.cardIcon}/>
                 </View>
@@ -29,7 +29,7 @@ const ChooseParentChild = () => (
                     <Text style={styles.cardSubtitle}>Register as Parent</Text>
                 </View>
             </Link>
-            <Link to="/newuser/childregistrationmessage" component={TouchableOpacity} style={[styles.card, {backgroundColor: shuttleGrey}]}>
+            <Link to="/nonauth/childregistrationmessage" component={TouchableOpacity} style={[styles.card, {backgroundColor: shuttleGrey}]}>
                 <View style={styles.cardSlice}>
                     <Image source={require('../../../assets/images/reg_icon_child.png')} style={styles.cardIcon}/>
                 </View>

@@ -23,8 +23,10 @@ class App extends React.Component {
             "Poppins SemiBold": require("./assets/fonts/poppins-semibold.ttf"),
             "Poppins Bold": require("./assets/fonts/poppins-bold.ttf"),
         });
+
         try {
-            await userRepository.checkIfLoggedIn();
+            // await userRepository.checkIfLoggedIn();
+            await userRepository.checkHasSeenCaroussel();
         }
         catch (e) {
             console.log("###################Error while checkIfLoggedIn", e);
@@ -35,10 +37,10 @@ class App extends React.Component {
     }
     render() {
         if (!this.state.resourcesLoaded) return <AppLoading />;
-
         let paddingView = null;
         if (Platform.OS === 'ios' && Constants.statusBarHeight !== 0)
-            paddingView = <View style={{height: Constants.statusBarHeight, alignSelf: 'stretch'}} />
+            paddingView = <View style={{height: Constants.statusBarHeight, alignSelf: 'stretch'}} />;
+
 
 
         return (
@@ -46,7 +48,7 @@ class App extends React.Component {
                 <FullPage>
                     {paddingView}
                     <Switch>
-                        <Route path={'/newuser'} component={NonAuthStackNavigator} />
+                        <Route path={'/nonauth'} component={NonAuthStackNavigator} />
                         <PrivateRoute path="/" component={MainTabScreen} />
                     </Switch>
                 </FullPage>
@@ -61,13 +63,17 @@ class PrivateRoute extends React.Component{
     }
     render(){
         const {component: TabNavComponent, ...rest} = this.props;
-        const {isLoggedIn} = userRepository;
+        const {isLoggedIn, hasSeenCaroussel} = userRepository;
         console.log("privateroute isloggedin", isLoggedIn);
+        let redirectPath = "/nonauth";
+        if (!hasSeenCaroussel) redirectPath = "/nonauth/onboarding/1";
+        console.log(redirectPath);
+
         return (
             <Route {...rest} path={'/'} render={(props) => (
-                isLoggedIn
+                isLoggedIn && hasSeenCaroussel
                     ? <TabNavComponent {...props} />
-                    : <Redirect to='/newuser' />
+                    : <Redirect to={redirectPath} />
             )} />
         );
     }

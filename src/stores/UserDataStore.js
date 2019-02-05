@@ -25,6 +25,21 @@ class UserDataStore{
     @observable accessToken;
     @observable idToken;
     @observable nextRoute;
+    @observable hasSeenCaroussel = null;
+
+    async checkHasSeenCaroussel(){
+        if (this.hasSeenCaroussel !== null) return this.hasSeenCaroussel;
+
+        const hasSeenCaroussel = await AsyncStorage.getItem("@kiddiekredit:hasSeenCaroussel");
+        console.log('hasSeenCaroussel', hasSeenCaroussel);
+        this.hasSeenCaroussel = hasSeenCaroussel;
+        return this.hasSeenCaroussel;
+    }
+
+    finishOnboarding(){
+        this.hasSeenCaroussel = true;
+        AsyncStorage.setItem("@kiddiekredit:hasSeenCaroussel", "true");
+    }
 
     setUserData(idToken, accessToken, mongoId, finishedSignup){
         const userInfo = jwtDecode(idToken);

@@ -78,7 +78,7 @@ async function logOutFromAuth0(history) {
     ]);
     AsyncStorage.removeItem("BROWSING_MODE");
 
-    history.push("/newuser/login");
+    history.push("/nonauth/login");
     return true;
 }
 
