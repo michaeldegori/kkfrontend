@@ -40,6 +40,9 @@ class KidChoreBoardContainer extends React.Component{
         if (!familyUnitRepository.kidsList ) return [];
         const kidId = userRepository.BROWSING_MODE.split("-")[1];
         const currentKid = familyUnitRepository.kidsList.find(k => k._id === kidId);
+        const famChores = familyUnitRepository.existingChores;
+        const kidAssignedChores = famChores.filter(globalChore => (currentKid.assignedChores || []).includes(globalChore._id)  )
+        if (!famChores || famChores.length === 0 || kidAssignedChores.length === 0) return [{img: 'emptystate', type: 'nochores'}];
         const choresToDisplay = familyUnitRepository.existingChores.filter(globalChore =>{
             if (!(currentKid.assignedChores||[]).includes(globalChore._id)) return false;
 

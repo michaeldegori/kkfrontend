@@ -17,6 +17,7 @@ import KKTextInput from "../../common/KKTextInput";
 import KKButton from "../../common/KKButton";
 import {shuttleGrey} from "../../colors";
 import {registerWithAuth0} from "../../services/Authorization";
+import userRepository from "../../stores/UserDataStore";
 
 const {width, height} = Dimensions.get("window");
 export default class RegistrationForm extends React.Component{
@@ -27,6 +28,9 @@ export default class RegistrationForm extends React.Component{
         lastName: 'Moreno',
         parent_type: 'father',
         submitting: false
+    }
+    componentDidMount(){
+        this.setState({submitting: false});
     }
     registerWithAuh0 = async () => {
         const {email, password, firstName, lastName, parent_type} = this.state;
@@ -42,8 +46,6 @@ export default class RegistrationForm extends React.Component{
             this.setState({submitting: false});
             return;
         }
-        this.setState({submitting: false});
-        if (this.props.history) this.props.history.push("/maintabscreen/postregonboarding/1");
     }
     render(){
         return (

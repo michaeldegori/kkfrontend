@@ -20,12 +20,12 @@ class NonAuthStackNavigator extends Component{
         this.redirecting = false;
     }
     render(){
-        const {isLoggedIn, hasSeenCaroussel} = userRepository;
+        const {isLoggedIn, nextRoute} = userRepository;
 
         console.log("rendering nonauthnav")
         if (isLoggedIn && !this.redirecting) {
             this.redirecting = true;
-            return <Redirect to="/" />;
+            return <Redirect to={nextRoute || "/"} />;
         }
 
 

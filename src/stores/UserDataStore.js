@@ -24,7 +24,7 @@ class UserDataStore{
     @observable BROWSING_MODE = 'parent';
     @observable accessToken;
     @observable idToken;
-    @observable nextRoute;
+    @observable nextRoute = "/";
     @observable hasSeenCaroussel = null;
 
     async checkHasSeenCaroussel(){
@@ -94,6 +94,7 @@ class UserDataStore{
         if (isRegistration) {
             uri = apiUrl + '/user/finishRegistration' + toQueryString(queryStringInfo);
             fetchOptions.method = 'POST';
+            this.nextRoute = "/maintabscreen/postregonboarding/1";
         }
         const userAndFamilyData = await fetchJson(uri, fetchOptions);
 

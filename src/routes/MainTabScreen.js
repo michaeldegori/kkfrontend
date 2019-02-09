@@ -63,6 +63,8 @@ const kidLinks = [
 const keyboardHiddenPaths  = [
     "/maintabscreen/createchore",
     "/onboarding",
+    '/maintabscreen/postregonboarding/1',
+    '/maintabscreen/postregonboarding/2'
 ];
 
 
@@ -108,9 +110,9 @@ class MainTabScreen extends React.Component{
     }
     render() {
         const {match, location:{pathname}} = this.props;
-        const {BROWSING_MODE} = userRepository;
-        let redirectPath =  '/maintabscreen/choreboard';
-        if (BROWSING_MODE.toString() !== 'parent')
+        let {BROWSING_MODE, redirectPath} = userRepository;
+        if (!redirectPath && BROWSING_MODE.toString() === 'parent') redirectPath =  '/maintabscreen/choreboard';
+        if (!redirectPath && BROWSING_MODE.toString() !== 'parent')
             redirectPath = '/maintabscreen/kid/choreboard';
         return (
             <View style={[styles.mainContainer]}>

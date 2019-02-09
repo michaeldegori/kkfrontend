@@ -7,6 +7,7 @@ import FullPageWithModal from "../../common/FullPageWithModal";
 import Text from "../../common/KKText";
 import {fountainBlue, fountainBlueDark, shuttleGrey, shuttleGreyDark} from "../../colors";
 import {Ionicons} from 'react-native-vector-icons';
+import EmptyState from "../../common/EmptyState";
 
 const{width, height} = Dimensions.get('window');
 const renderModalContents = (modalText, modalAccept, modalClose) => () => (
@@ -48,7 +49,10 @@ const renderRow = (item, onRequestCompleteChore) => {
     if (item.label)
         return <Text key={item.key} style={{color: fountainBlue, textAlign: 'center', fontSize: width * 0.05}}>{item.label}</Text>;
 
-    if (item.img)
+    if (item.img === 'emptystate')
+        return <EmptyState loading={false} />
+
+    if (item.img === 'success')
         return (
             <ImageBackground source={require('../../../assets/images/confetti.png')} style={{width, height: width, justifyContent: 'center', alignItems: 'center' }} >
                 <Text style={{color: fountainBlueDark, textAlign: 'center', fontSize: width * 0.08}}>Done</Text>

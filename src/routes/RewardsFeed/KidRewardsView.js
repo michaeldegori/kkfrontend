@@ -10,6 +10,7 @@ import {Ionicons} from 'react-native-vector-icons';
 import ItemTile from "../../common/ItemTile";
 import {fountainBlue, shuttleGrey, shuttleGreyDark} from "../../colors";
 import FullPageWithModal from "../../common/FullPageWithModal";
+import EmptyState from "../../common/EmptyState";
 
 const renderModalContents = (modalText, modalAccept, modalClose) => () => (
     <Fragment>
@@ -50,15 +51,17 @@ const KidRewardsView = ({
             <Text style={styles.bigText}>{getKreditScoreDisplay(currentKid)}</Text>
             <Text style={styles.subHeading}>Redeemable Rewards:</Text>
             {
-                rewardsList.map(reward =>
-                    <TouchableOpacity key={reward._id} onPress={()=>onRequestRedeemReward(reward)}>
-                        <ItemTile key={reward._id}
-                                  mainCaption={reward.name}
-                                  subCaption={reward.notes}
-                                  renderRightItem={() => <Text style={styles.rewardAmount}>{reward.kkCost} KK</Text>}
-                        />
-                    </TouchableOpacity>
-                )
+                rewardsList.length === 0 ?
+                    <EmptyState loading={false}/> :
+                    rewardsList.map(reward =>
+                        <TouchableOpacity key={reward._id} onPress={()=>onRequestRedeemReward(reward)}>
+                            <ItemTile key={reward._id}
+                                      mainCaption={reward.name}
+                                      subCaption={reward.notes}
+                                      renderRightItem={() => <Text style={styles.rewardAmount}>{reward.kkCost} KK</Text>}
+                            />
+                        </TouchableOpacity>
+                    )
             }
         </ScrollView>
 

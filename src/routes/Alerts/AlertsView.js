@@ -46,12 +46,11 @@ const AlertView = ({
     <FullPageWithModal modalVisible={modalVisible} modalClose={modalClose} renderModalContents={renderModalContents(modalText, modalAccept, modalDeny)}>
         <Header leftAction={'avatarButton'} rightAction="deleteAlerts"/>
         <Text style={{color: fountainBlue,fontSize: width * 0.05, textAlign: 'center'}}>Alerts</Text>
-        {
-            (!alerts || !alerts.length)
-                ? <EmptyState loading={loading}/>
-                : <ScrollView>
-                    {
-                        alerts.filter(a => a.recipient === 'parent').map((alert)=> {
+        <ScrollView>
+            {
+                (!alerts || !alerts.length)
+                    ? <EmptyState loading={loading}/>
+                    : alerts.filter(a => a.recipient === 'parent').map((alert)=> {
                             const {_id, kid: kidId, chore: choreId, timeStamp, customNote, isTappable} = alert;
                             const kidObj = kidsList.find(k => k._id === kidId);
                             const choreObj = chores.find(c => c._id === choreId);
@@ -64,9 +63,8 @@ const AlertView = ({
                                 </TouchableOpacity>
                             );
                         })
-                    }
-                </ScrollView>
-        }
+            }
+        </ScrollView>
     </FullPageWithModal>
 );
 

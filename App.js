@@ -7,6 +7,7 @@ import MainTabScreen from './src/routes/MainTabScreen';
 import {observer} from "mobx-react";
 import FullPage from "./src/common/FullPage";
 import userRepository from "./src/stores/UserDataStore";
+import familyUnitRepository from "./src/stores/FamilyUnitDataStore";
 
 
 YellowBox.ignoreWarnings(['Require cycle']);
@@ -64,14 +65,14 @@ class PrivateRoute extends React.Component{
     render(){
         const {component: TabNavComponent, ...rest} = this.props;
         const {isLoggedIn, hasSeenCaroussel} = userRepository;
-        console.log("privateroute isloggedin", isLoggedIn);
         let redirectPath = "/nonauth";
         if (!hasSeenCaroussel) redirectPath = "/nonauth/onboarding/1";
-        console.log(redirectPath);
+
+        console.log("##privateroute isloggedin", isLoggedIn, 'path', redirectPath);
 
         return (
             <Route {...rest} path={'/'} render={(props) => (
-                isLoggedIn && hasSeenCaroussel
+                isLoggedIn
                     ? <TabNavComponent {...props} />
                     : <Redirect to={redirectPath} />
             )} />

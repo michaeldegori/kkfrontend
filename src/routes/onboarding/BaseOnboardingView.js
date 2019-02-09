@@ -13,7 +13,7 @@ import Text from "../../common/KKText";
 import {Link} from "react-router-native";
 
 
-export default function BaseOnboardingView({nextRoute='/maintabscreen/kid/choreboard', title="Title", image=null, description="desc", btnLabel="NEXT", onNext}){
+export default function BaseOnboardingView({nextRoute='/', title="Title", image=null, description="desc", btnLabel="NEXT", onNext}){
     return (
         <FullPage style={{backgroundColor: fountainBlue}}>
             <ScrollView style={{flex: 1}} contentContainerStyle={{justifyContent: 'space-around', alignItems: 'center', flex:1}}>

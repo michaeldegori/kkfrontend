@@ -19,12 +19,14 @@ const ChoreBoardView = ({match:{path}, chores=[], kidsList=[], deleteChore, navi
         <Text style={{color: fountainBlue,fontSize: width * 0.05, textAlign: 'center'}}>Chore Board</Text>
         {
             kidsList.length === 0 ?
-                <EmptyState loading={false}/> :
-                <SwipableKidSelection
-                    kidsList={kidsList.toJS?kidsList.toJS():[]}
-                    renderContents={renderChoresList(kidsList, chores, deleteChore, navigateToEditChore)}
-                    isSelectionNullable={true}
-                />
+                <EmptyState loading={false} /> :
+                chores.length === 0 ?
+                    <EmptyState loading={false} type={"chores"}/> :
+                    <SwipableKidSelection
+                        kidsList={kidsList.toJS?kidsList.toJS():[]}
+                        renderContents={renderChoresList(kidsList, chores, deleteChore, navigateToEditChore)}
+                        isSelectionNullable={true}
+                    />
         }
     </View>
 );
