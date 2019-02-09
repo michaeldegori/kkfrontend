@@ -63,7 +63,7 @@ const renderKidKreditInfo = (kidsList=[], showModal) => selectedChildId => {
                     <Text style={styles.bigText}>{getTotalScore(kreditInformation)}</Text>
                 </View>
                 <View>
-                    <Text style={styles.smallLabel}>Kiddie Kash</Text>
+                    <Text style={styles.smallLabel}>Bamboo Bucks</Text>
                     <Text style={styles.bigText}>{Math.floor(kreditInformation.kiddieKashBalance || 0 )}</Text>
                 </View>
             </Row>

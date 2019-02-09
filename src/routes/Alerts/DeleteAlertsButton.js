@@ -11,8 +11,14 @@ import userRepository from "../../stores/UserDataStore";
 import familyUnitRepository from "../../stores/FamilyUnitDataStore";
 
 function deleteAlerts(){
-    alertsRepository.deleteAlerts(userRepository.idToken, familyUnitRepository.unitId);
-    Alert.alert("Success", "All alerts were deleted");
+    Alert.alert(
+        "Are you sure you want to delete your alerts?",
+        "Alerts will be lost forever, anything you might still need to approve or deny will be automatically approved.",
+        [
+            {text: "Ok", onPress: () => alertsRepository.deleteAlerts(userRepository.idToken, familyUnitRepository.unitId)},
+            {text: "cancel", onPress: () => ""}
+        ]
+    )
 }
 
 

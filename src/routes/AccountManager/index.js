@@ -7,8 +7,16 @@ import {Alert} from "react-native";
 
 @observer
 class AccountManager extends React.Component{
-    switchToChild = (childId) => {
-        userRepository.switchBrowsingMode(this.props.history, childId);
+    switchToChild = (child) => {
+        const childId = child._id;
+        Alert.alert(
+            'Confirm User Switch',
+            `This will restrict parent access and keep you logged into child mode.`,
+            [
+                {text: 'Ok', onPress: () => userRepository.switchBrowsingMode(this.props.history, childId)},
+                {text: 'Cancel', onPress: () => ""}
+            ]);
+
     }
     onDeleteChild = (child) => {
         Alert.alert('Confirm Child Deletion', `Are you sure you wish to remove ${child.name} from this family unit?`, [

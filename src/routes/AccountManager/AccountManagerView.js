@@ -4,18 +4,21 @@ import {
     View,
     Dimensions,
     ImageBackground,
-    TouchableOpacity
+    TouchableOpacity, Modal
 } from 'react-native';
 import FullPage from "../../common/FullPage";
 import {MaterialCommunityIcons, Octicons} from 'react-native-vector-icons';
 import Header from "../../common/Header";
 import Text from "../../common/KKText";
 import {fountainBlue, shuttleGrey} from "../../colors";
-import {Link} from "react-router-native";
+import {Link, Switch} from "react-router-native";
 import KidAvatar from "../../common/KidAvatar";
 import {observer} from "mobx-react";
+import PostRegOnboarding1 from "../onboarding/PostRegOnboarding1";
+import PostRegOnboarding2 from "../onboarding/PostRegOnboarding2";
 
 const {width, height} = Dimensions.get("window");
+//onDeleteChild is how we determine if we are in parent or child view
 const AccountManagerView = ({history, kidsList=[], switchToChild, onDeleteChild, switchToParent=()=>"", parentLabel, parentAvatar, adminsList=[], parentId, onDeleteAdmin, ...props}) => (
     <FullPage>
         <Header history={history} rightAction="logout"/>
@@ -36,7 +39,7 @@ const AccountManagerView = ({history, kidsList=[], switchToChild, onDeleteChild,
         <View style={styles.iconRow}>
             {
                 kidsList.map(kid => (
-                    <TouchableOpacity onPress={()=>switchToChild(kid._id)} key={kid._id} onLongPress={onDeleteChild ? () => onDeleteChild(kid) : ()=>""} style={{padding: width * 0.01}}>
+                    <TouchableOpacity onPress={()=>switchToChild(kid)} key={kid._id} onLongPress={onDeleteChild ? () => onDeleteChild(kid) : ()=>""} style={{padding: width * 0.01}}>
                         <KidAvatar {...kid} />
                     </TouchableOpacity>
                 ))
@@ -54,7 +57,6 @@ const AccountManagerView = ({history, kidsList=[], switchToChild, onDeleteChild,
                 </Link>
             }
         </View>
-        {console.log('$$$$$$$$$$$$$ADMINSLIST', adminsList)}
         {
             onDeleteChild &&
             <View style={styles.adminCol}>

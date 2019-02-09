@@ -43,7 +43,7 @@ export default class RegistrationForm extends React.Component{
             return;
         }
         this.setState({submitting: false});
-        if (this.props.history) this.props.history.push("/maintabscreen/accountmanager");
+        if (this.props.history) this.props.history.push("/maintabscreen/postregonboarding/1");
     }
     render(){
         return (

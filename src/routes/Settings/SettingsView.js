@@ -61,7 +61,7 @@ const renderSettings = (kidsList, onChangeSlider, createOnSliderTick, allowanceS
                             onValueChange={createOnSliderTick('savingsSliderValue')}
                             onSlidingComplete={onChangeSlider('savingsRequired', selectedChildId)}/>
                     <Row style={{justifyContent: 'space-between', marginVertical: 0, marginHorizontal: width * 0.1}}>
-                        <Text style={styles.textLabel}>0</Text>
+                        <Text style={styles.textLabel}>1</Text>
                         <Text style={styles.textLabel}>20</Text>
                     </Row>
                 </View>

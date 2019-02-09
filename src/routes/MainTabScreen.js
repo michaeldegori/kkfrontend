@@ -30,6 +30,8 @@ import registerForPushNotificationsAsync from "../services/PushNotifications";
 import ChooseAvatar from "./RegistrationFlow/ChooseAvatar";
 import AddFamilyAdminContainer from "./AddFamilyAdmin";
 import BaseOnboardingView from "./onboarding/BaseOnboardingView";
+import PostRegOnboarding2 from "./onboarding/PostRegOnboarding2";
+import PostRegOnboarding1 from "./onboarding/PostRegOnboarding1";
 
 const icons = [
     color=> <EvilIcons color={color} name="bell" size={32}/>,
@@ -119,6 +121,8 @@ class MainTabScreen extends React.Component{
                     <Route path="/maintabscreen/settings" component={Settings} />
                     <Route path="/maintabscreen/kreditdashboard" component={KreditDashboard} />
                     <Route path="/maintabscreen/accountmanager" component={AccountManager} />
+                    <Route path="/maintabscreen/postregonboarding/1" component={PostRegOnboarding1} />
+                    <Route path="/maintabscreen/postregonboarding/2" component={PostRegOnboarding2} />
                     <Route path="/maintabscreen/addfamilyunitmember" component={AddChildContainer} />
                     <Route path="/maintabscreen/addfamilyadmin" component={AddFamilyAdminContainer} />
                     <Route path="/maintabscreen/createchore" component={CreateChoreContainer} />

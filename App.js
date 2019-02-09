@@ -25,7 +25,7 @@ class App extends React.Component {
         });
 
         try {
-            // await userRepository.checkIfLoggedIn();
+            await userRepository.checkIfLoggedIn();
             await userRepository.checkHasSeenCaroussel();
         }
         catch (e) {
