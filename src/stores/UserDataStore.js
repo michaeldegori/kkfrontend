@@ -130,13 +130,13 @@ class UserDataStore{
         if (mode === 'parent'){
             AsyncStorage.setItem("BROWSING_MODE", 'parent');
             await this.logOut(history);
-            registerForPushNotificationsAsync(this);
+            // registerForPushNotificationsAsync(this);
             return;
         }
         this.BROWSING_MODE = 'child-'+id;
 
         AsyncStorage.setItem("BROWSING_MODE", 'child-'+id);
-        registerForPushNotificationsAsync(this);
+        // registerForPushNotificationsAsync(this);
 
         history.push("/maintabscreen/kid/choreboard");;
     }

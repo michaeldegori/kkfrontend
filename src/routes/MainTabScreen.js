@@ -26,10 +26,9 @@ import KidChoreBoardContainer from "./ChoreBoard/KidChoreBoardContainer";
 import KidRewardsContainer from "./RewardsFeed/KidRewardsContainer";
 import KidKreditDashboardContainer from "./KreditDashboard/KidKreditDashboardContainer";
 import userRepository from "../stores/UserDataStore";
-import registerForPushNotificationsAsync from "../services/PushNotifications";
+import registerForPushNotificationsAsync, {scheduleLocalPushNotification} from "../services/PushNotifications";
 import ChooseAvatar from "./RegistrationFlow/ChooseAvatar";
 import AddFamilyAdminContainer from "./AddFamilyAdmin";
-import BaseOnboardingView from "./onboarding/BaseOnboardingView";
 import PostRegOnboarding2 from "./onboarding/PostRegOnboarding2";
 import PostRegOnboarding1 from "./onboarding/PostRegOnboarding1";
 
@@ -76,6 +75,7 @@ class MainTabScreen extends React.Component{
         this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
         await registerForPushNotificationsAsync(userRepository);
+        scheduleLocalPushNotification();
     }
 
     componentWillUnmount () {

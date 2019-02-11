@@ -36,6 +36,7 @@ const AccountManagerView = ({history, kidsList=[], switchToChild, onDeleteChild,
             </TouchableOpacity>
 
         </View>
+        {/*KIDS ROW*/}
         <View style={styles.iconRow}>
             {
                 kidsList.map(kid => (
@@ -57,6 +58,7 @@ const AccountManagerView = ({history, kidsList=[], switchToChild, onDeleteChild,
                 </Link>
             }
         </View>
+        {/*FAMILY ADMINS*/}
         {
             onDeleteChild &&
             <View style={styles.adminCol}>
@@ -73,12 +75,12 @@ const AccountManagerView = ({history, kidsList=[], switchToChild, onDeleteChild,
                 }
 
                 <Link style={styles.badge} to={"/maintabscreen/addfamilyadmin"} >
-                    <View>
-                        <MaterialCommunityIcons name="plus-circle" style={[styles.plusIcon2, {fontSize: width * 0.12}]} />
-                        <Text semiBold style={{fontSize: width * 0.025, color: fountainBlue}}>
+                    <>
+                        <MaterialCommunityIcons name="plus-circle" style={[styles.plusIcon2, {fontSize: width * 0.1}]} />
+                        <Text semiBold style={{fontSize: width * 0.02, color: fountainBlue}}>
                             Add Admin
                         </Text>
-                    </View>
+                    </>
                 </Link>
             </View>
         }
@@ -93,10 +95,9 @@ const KidBadge = ({kid}) => (
 );
 
 function getAdminName(admin){
-    //admin.firstName || admin.split("@")[0]
     if (typeof admin === 'string') return admin.split("@")[0];
-    if (typeof admin.firstName === 'string') return admin.firstName;
-    if (typeof admin.email === 'string') return admin.email.split("@")[0];
+    if (typeof admin.firstName === 'string' && admin.firstName !== "undefined") return admin.firstName;
+    if (typeof admin.email === 'string' && admin.email.length > 0) return admin.email.split("@")[0];
     return "unknown";
 }
 
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
     plusIcon2: {
         fontSize: width * 0.17,
         color: fountainBlue,
-        lineHeight: 1/6 * width,
+        // lineHeight: 1/6 * width,
         justifyContent: 'center',
         // margin: width * 0.03,
         marginBottom: 0,
