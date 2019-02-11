@@ -34,11 +34,7 @@
     "android": {
       "package": "com.kiddiekredit.app",
       "versionCode": 11,
-      "permissions": [
-        "ACCESS_COARSE_LOCATION",
-        "ACCESS_FINE_LOCATION",
-        "READ_EXTERNAL_STORAGE",
-      ]
+      "permissions": []
     },
     "version": "0.3.0"
   }
