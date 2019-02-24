@@ -1,6 +1,14 @@
 import React, {Fragment} from "react";
 import ItemTile from "../../common/ItemTile";
-import {Dimensions, ScrollView, StyleSheet, TouchableOpacity, View, FlatList, ImageBackground} from "react-native";
+import {
+    Dimensions,
+    Platform,
+    StyleSheet,
+    TouchableOpacity,
+    View,
+    FlatList,
+    ImageBackground,
+} from "react-native";
 import PropTypes from 'prop-types';
 import Header from "../../common/Header";
 import FullPageWithModal from "../../common/FullPageWithModal";
@@ -9,6 +17,8 @@ import {fountainBlue, fountainBlueDark, shuttleGrey, shuttleGreyDark} from "../.
 import {Ionicons} from 'react-native-vector-icons';
 import EmptyState from "../../common/EmptyState";
 import {scaleRatio} from "../../configuration";
+import { DangerZone } from 'expo';
+let { Lottie } = DangerZone;
 
 const{width, height} = Dimensions.get('window');
 const renderModalContents = (modalText, modalAccept, modalClose) => () => (
@@ -25,26 +35,57 @@ const renderModalContents = (modalText, modalAccept, modalClose) => () => (
     </Fragment>
 );
 
-const KidChoreBoardView = ({chores, pastChores, modalVisible, modalText, onRequestCompleteChore, modalAccept, modalDeny, modalClose}) => (
-    <FullPageWithModal
-        modalVisible={modalVisible}
-        renderModalContents={renderModalContents(modalText, modalAccept, modalClose)}
-        modalClose={modalClose}
-        style={{flex: 1, alignSelf: 'stretch', justifyContent: 'flex-start', alignItems: 'center'}}>
-        <Header leftAction={"avatarButton"} />
-        <FlatList
-            style={{flex:1, alignSelf: 'stretch'}}
-            data={[
-                {key: 'yo', label: 'Upcoming Chores'},
-                ...chores,
-                {key: 'asdfg', label: 'Past Activity'},
-                ...pastChores
-                ]}
-            keyExtractor={(item, index) => item.key || item._id || index+''}
-            renderItem={({item}) => renderRow(item, onRequestCompleteChore)}
-        />
-    </FullPageWithModal>
-);
+class KidChoreBoardView extends React.PureComponent{
+    state = {
+        shouldHideAnimation: false
+    }
+    componentDidUpdate(){
+        this.checkPlayAnimation();
+    }
+    componentDidMount(){
+        this.checkPlayAnimation();
+    }
+    checkPlayAnimation = () => {
+        if (!this.animation || this.animationHasPlayed || this.props.chores.length !== 1 || this.props.chores[0].img !== 'success') return;
+        this.animation.play();
+        this.animationHasPlayed = true;
+        setTimeout(() => this.setState({shouldHideAnimation: true}), 2500)
+    }
+    render() {
+        const {chores, pastChores, modalVisible, modalText, onRequestCompleteChore, modalAccept, modalClose} = this.props;
+        return (
+            <FullPageWithModal
+                modalVisible={modalVisible}
+                renderModalContents={renderModalContents(modalText, modalAccept, modalClose)}
+                modalClose={modalClose}
+                style={{flex: 1, alignSelf: 'stretch', justifyContent: 'flex-start', alignItems: 'center'}}>
+                <Header leftAction={"avatarButton"} />
+                <FlatList
+                    style={{flex:1, alignSelf: 'stretch'}}
+                    data={[
+                        {key: 'yo', label: 'Upcoming Chores'},
+                        ...chores,
+                        {key: 'asdfg', label: 'Past Activity'},
+                        ...pastChores
+                    ]}
+                    keyExtractor={(item, index) => item.key || item._id || index+''}
+                    renderItem={({item}) => renderRow(item, onRequestCompleteChore)}
+                />
+                {
+                    chores.length === 1 && chores[0].img === 'success' && !this.state.shouldHideAnimation &&
+                    <Lottie
+                        ref={r => this.animation = r}
+                        style={styles.animation}
+                        loop={false}
+                        speed={Platform.OS === 'ios' ? 0.1 : 1}
+                        source={require('../../../assets/animations/triangular-confetti.json')}
+                    />
+                }
+            </FullPageWithModal>
+        );
+    }
+}
+
 
 const renderRow = (item, onRequestCompleteChore) => {
     if (item.label)
@@ -86,21 +127,25 @@ const renderRow = (item, onRequestCompleteChore) => {
 KidChoreBoardView.propTypes = {
     chores: PropTypes.array.isRequired,
 };
-/*
-<ScrollView style={{flex:1, alignSelf: 'stretch'}}>
-    <Text style={{color: fountainBlue, textAlign: 'center', fontSize: width * 0.05}}>Your Upcoming Chores:</Text>
-    {
-        chores
-            .map((chore) => (
-                <TouchableOpacity key={chore._id} onPress={()=>onRequestCompleteChore(chore._id)}>
-                    <ItemTile
-                        mainCaption={chore.name}
-                        subCaption={chore.notes}
-                    />
-                </TouchableOpacity>
-            ))
+
+const styles = StyleSheet.create({
+    animation: {
+        width,
+        height,
+        position: 'absolute',
+        top: height * 0.1,
+        left: 0,
+        // ...Platform.select({
+        //     ios: {
+        //         width: height, left: -(height-width)/4
+        //     },
+        //     android: {
+        //         width, left: 0
+        //     }
+        // })
     }
-</ScrollView>*/
+});
+
 
 
 export default KidChoreBoardView;

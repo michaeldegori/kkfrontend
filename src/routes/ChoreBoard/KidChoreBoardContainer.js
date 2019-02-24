@@ -13,7 +13,7 @@ class KidChoreBoardContainer extends React.Component{
         modalText: "Are you sure you have completed this chore?",
         selectedChore: null,
         checkMarkClickable: true,
-        submitting: false
+        submitting: false,
     }
     requestConfirmCompleteChore = choreId => {
         this.setState({submitting: true});
@@ -112,9 +112,12 @@ class KidChoreBoardContainer extends React.Component{
                 modalDeny={this.cancelModal}
                 chores={this.getChoresToDisplay()}
                 pastChores={this.getPastChores()}
+                setAnimationRef={this.setAnimationRef}
             />
         );
     }
 }
+
+
 
 export default KidChoreBoardContainer;
