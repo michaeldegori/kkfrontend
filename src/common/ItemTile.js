@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import {lightGrey, fountainBlue} from "../colors";
 import PropTypes from 'prop-types';
+import {scaleRatio} from "../configuration";
 
 const ItemTile = ({iconSrc, mainCaption, subCaption="", renderRightItem, disabled=false, dotColor }) => (
     <View style={styles.mainContainer}>
@@ -78,11 +79,11 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     mainCaption: {
-        fontSize: 14
+        fontSize: 14 * scaleRatio
     },
     subCaption: {
         color: lightGrey,
-        fontSize: 11
+        fontSize: 11 * scaleRatio
     }
 });
 

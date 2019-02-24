@@ -19,6 +19,7 @@ import KidAvatar from "../../common/KidAvatar";
 import Row from "../../common/Row";
 import FullPageWithModal from "../../common/FullPageWithModal";
 import Header from "../../common/Header";
+import {scaleRatio} from "../../configuration";
 let pkg = require('../../../app');
 
 const {width, height} = Dimensions.get("window");
@@ -170,7 +171,7 @@ const styles = StyleSheet.create({
         left: 5,
         bottom: 5,
         color: lightGrey,
-        fontSize: 8
+        fontSize: 8 * scaleRatio
     },
     logoContainer: {
         alignSelf: 'stretch',
@@ -200,7 +201,7 @@ const styles = StyleSheet.create({
     },
     plusIcon: {
         color: 'white',
-        fontSize: width * 0.174,
+        fontSize: 63 * scaleRatio,
     },
     dobLabelContainer: {
         justifyContent: 'center',
@@ -256,7 +257,7 @@ const styles = StyleSheet.create({
         color: shuttleGrey,
     },
     pickerItemIOSStyle: {
-        fontSize: width * 0.035
+        fontSize: 12 * scaleRatio
     },
     pickerandroid: {
         backgroundColor: 'white',

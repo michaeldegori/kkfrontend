@@ -52,13 +52,14 @@ export async function scheduleLocalPushNotification(){
     const month = ("0" + (now.getMonth()+1)).slice(-2);
     const year = now.getFullYear();
     const timeStampLastNight = new Date(`${year}-${month}-${day}`).getTime() ;
-    const dateTomorrow6PM = new Date(timeStampLastNight + 1000*60*60*52);
+    const timeZoneOffsetMS = new Date().getTimezoneOffset()*60*1000;
+    const dateTomorrow6PM = new Date(timeStampLastNight + 1000*60*60*42 + timeZoneOffsetMS);
     const newNotificationId = await Notifications.scheduleLocalNotificationAsync( {
         title: 'Daily Chore Reminder',
         body: 'Don\'t forget to log into the Kiddiekredit app and manage your daily chores!'
     }, {time: dateTomorrow6PM, repeat: 'day'});
     console.log('New push notification reminder set!', newNotificationId);
-    await AsyncStorage.setItem("@kiddiekredit:localnotificationid", newNotificationId);
+    await AsyncStorage.setItem("@kiddiekredit:localnotificationid", ""+newNotificationId);
 }
 
 

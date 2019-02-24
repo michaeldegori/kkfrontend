@@ -11,6 +11,7 @@ import FullPage from "../../common/FullPage";
 import {fountainBlue} from "../../colors";
 import Text from "../../common/KKText";
 import {Link} from "react-router-native";
+import {scaleRatio} from "../../configuration";
 
 
 export default function BaseOnboardingView({nextRoute='/', title="Title", image=null, description="desc", btnLabel="NEXT", onNext}){
@@ -40,7 +41,7 @@ export default function BaseOnboardingView({nextRoute='/', title="Title", image=
 const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
     title: {
-        fontSize: width * 0.08,
+        fontSize: 28.8 * scaleRatio,
         color: 'white',
     },
     img: {
@@ -53,7 +54,7 @@ const styles = StyleSheet.create({
     },
     p: {
         color: 'white',
-        fontSize: width * 0.04,
+        fontSize:14.4 * scaleRatio,
         paddingHorizontal: width * 0.08,
         textAlign: 'center',
         lineHeight: width * 0.05
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
     },
     btnLabel: {
         color: fountainBlue,
-        fontSize: width * 0.05,
+        fontSize: 18 * scaleRatio,
         letterSpacing: 5
     }
 });

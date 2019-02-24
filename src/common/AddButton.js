@@ -7,6 +7,7 @@ import {
 import {fountainBlue} from "../colors";
 import {MaterialCommunityIcons} from 'react-native-vector-icons';
 import {Link} from "react-router-native";
+import {scaleRatio} from "../configuration";
 
 
 const AddButton = ({route}) => (
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
     },
     plusIcon: {
         color: 'white',
-        fontSize: width * 0.05
+        fontSize: 18 * scaleRatio
     }
 });
 

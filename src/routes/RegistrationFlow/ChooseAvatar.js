@@ -16,6 +16,7 @@ import {shuttleGrey} from "../../colors";
 import userRepository from "../../stores/UserDataStore";
 import familyUnitRepository from "../../stores/FamilyUnitDataStore";
 import KKButton from "../../common/KKButton";
+import {scaleRatio} from "../../configuration";
 
 
 export const images = [
@@ -96,7 +97,7 @@ const {width, height} = Dimensions.get("window");
 const styles = StyleSheet.create({
     title: {
         color: shuttleGrey,
-        fontSize: width * 0.055,
+        fontSize: 18 * scaleRatio,
         alignSelf: 'center',
         textAlign: 'center'
     },

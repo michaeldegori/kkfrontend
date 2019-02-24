@@ -12,11 +12,12 @@ import Header from "../../common/Header";
 import SwipableKidSelection from "../../common/SwipableKidSelection";
 import EmptyState from "../../common/EmptyState";
 import {fountainBlue, lightGrey} from "../../colors";
+import {scaleRatio} from "../../configuration";
 
 const ChoreBoardView = ({match:{path}, chores=[], kidsList=[], deleteChore, navigateToEditChore, ...props}) => (
     <View style={{flex: 1, alignSelf: 'stretch', justifyContent: 'flex-start', alignItems: 'center'}}>
         <Header leftAction={"avatarButton"} rightAction="addChore" />
-        <Text style={{color: fountainBlue,fontSize: width * 0.05, textAlign: 'center'}}>Chore Board</Text>
+        <Text style={{color: fountainBlue,fontSize: 18 * scaleRatio, textAlign: 'center'}}>Chore Board</Text>
         {
             kidsList.length === 0 ?
                 <EmptyState loading={false} /> :
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
         alignSelf: 'stretch',
         textAlign: 'center',
         marginHorizontal: width * 0.03,
-        fontSize: width * 0.04,
+        fontSize: 14.4 * scaleRatio,
         marginTop: height * 0.02
     },
 });

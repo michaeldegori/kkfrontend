@@ -12,6 +12,7 @@ import EmptyState from "../../common/EmptyState";
 import ItemTile from "../../common/ItemTile";
 import FullPageWithModal from "../../common/FullPageWithModal";
 import {fountainBlue, shuttleGrey, shuttleGreyDark} from "../../colors";
+import {scaleRatio} from "../../configuration";
 
 const renderModalContents = (modalText, modalAccept, modalDeny) => () => (
     <Fragment>
@@ -45,7 +46,7 @@ const AlertView = ({
 }) => (
     <FullPageWithModal modalVisible={modalVisible} modalClose={modalClose} renderModalContents={renderModalContents(modalText, modalAccept, modalDeny)}>
         <Header leftAction={'avatarButton'} rightAction="deleteAlerts"/>
-        <Text style={{color: fountainBlue,fontSize: width * 0.05, textAlign: 'center'}}>Alerts</Text>
+        <Text style={{color: fountainBlue,fontSize: 18 * scaleRatio, textAlign: 'center'}}>Alerts</Text>
         <ScrollView>
             {
                 (!alerts || !alerts.length)

@@ -11,6 +11,7 @@ import Header from "../../common/Header";
 import {fountainBlue, shuttleGrey, shuttleGreyDark} from "../../colors";
 import KKButton from "../../common/KKButton";
 import {Ionicons} from 'react-native-vector-icons';
+import {scaleRatio} from "../../configuration";
 
 
 const {width, height} = Dimensions.get("window");
@@ -49,7 +50,7 @@ const AddFamilyAdminView = ({
     >
         <Header/>
         <View style={{flex:1, alignSelf: 'stretch', alignItems: 'center', justifyContent: 'space-around'}}>
-            <Text style={{color: fountainBlue,fontSize: width * 0.05, textAlign: 'center'}}>Add Family Admin</Text>
+            <Text style={{color: fountainBlue,fontSize: 18 * scaleRatio, textAlign: 'center'}}>Add Family Admin</Text>
             <KKTextInput keyboardType={'email-address'} value={email} placeholder={"Enter email address of new admin"} onChangeText={updateForm} style={styles.input}/>
             <KKButton type={"primary"} onPress={submitAddAdmin}>Submit!</KKButton>
         </View>

@@ -12,6 +12,7 @@ import ParentOnboarding1 from "./onboarding/ParentOnboarding1";
 import ParentOnboarding2 from "./onboarding/ParentOnboarding2";
 import ParentOnboarding3 from "./onboarding/ParentOnboarding3";
 import ParentOnboarding4 from "./onboarding/ParentOnboarding4";
+import NavBarPaddingView from "../common/NavBarPaddingView";
 
 // @inject('routing')
 @observer
@@ -28,9 +29,15 @@ class NonAuthStackNavigator extends Component{
             return <Redirect to={nextRoute || "/"} />;
         }
 
+        const route = this.props.location.pathname;
+
+
+
 
         return (
-            <Switch>
+            <>
+                <NavBarPaddingView route={route} />
+                <Switch>
                     <Route exact path={"/nonauth/login"} render={() => <Login location={this.props.location}/>} />
                     <Route exact path={"/nonauth/registerchooseparentchild"} render={() => <ChooseParentChild location={this.props.location}/>} />
                     <Route exact path={"/nonauth/registrationform"} component={RegistrationForm} />
@@ -40,7 +47,8 @@ class NonAuthStackNavigator extends Component{
                     <Route exact path={"/nonauth/onboarding/2"} component={ParentOnboarding2 } />
                     <Route exact path={"/nonauth/onboarding/3"} component={ParentOnboarding3 } />
                     <Route exact path={"/nonauth/onboarding/4"} component={ParentOnboarding4 } />
-            </Switch>
+                </Switch>
+            </>
         );
     }
 }

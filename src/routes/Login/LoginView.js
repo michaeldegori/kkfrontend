@@ -12,7 +12,7 @@ import KKTextInput from "../../common/KKTextInput";
 import Header from "../../common/Header";
 
 const {width, height} = Dimensions.get("window");
-const LoginView = ({loginWithAuth0, handleTextInput, username, password,  ...props}) => (
+const LoginView = ({loginWithAuth0, handleTextInput, username, password,  submitting, triggerPWResetWithAuth0, ...props}) => (
     <KeyboardAvoidingView style={{flex: 1, alignSelf: 'stretch'}} behavior={Platform.OS === 'ios' ? 'padding' : null}>
         <ImageBackground
             height={height}
@@ -28,7 +28,8 @@ const LoginView = ({loginWithAuth0, handleTextInput, username, password,  ...pro
                 <KKTextInput inputType="email" placeholder={'Email'} style={styles.input} onChangeText={v => handleTextInput('username', v)} value={username}/>
                 <KKTextInput placeholder={'Password'} style={styles.input} onChangeText={v => handleTextInput('password', v)} secureTextEntry={true} value={password}/>
                 <View style={styles.buttonContainer}>
-                    <KKButton type="primary" onPress={() => loginWithAuth0(username, password)}>Login</KKButton>
+                    <KKButton type="primary" onPress={submitting ? ()=>"" : loginWithAuth0}>Login</KKButton>
+                    <KKButton type="textOnly" onPress={submitting ? ()=>"" : triggerPWResetWithAuth0}>Forgot Password</KKButton>
                 </View>
             </View>
         </ImageBackground>

@@ -16,6 +16,7 @@ import KidAvatar from "../../common/KidAvatar";
 import {observer} from "mobx-react";
 import PostRegOnboarding1 from "../onboarding/PostRegOnboarding1";
 import PostRegOnboarding2 from "../onboarding/PostRegOnboarding2";
+import {scaleRatio} from "../../configuration";
 
 const {width, height} = Dimensions.get("window");
 //onDeleteChild is how we determine if we are in parent or child view
@@ -32,7 +33,7 @@ const AccountManagerView = ({history, kidsList=[], switchToChild, onDeleteChild,
                             </ImageBackground>
                     }
                 </View>
-                <Text semiBold style={{fontSize: width * 0.044, color: shuttleGrey}}>{parentLabel}</Text>
+                <Text semiBold style={{fontSize: 16*scaleRatio, color: shuttleGrey}}>{parentLabel}</Text>
             </TouchableOpacity>
 
         </View>
@@ -51,7 +52,7 @@ const AccountManagerView = ({history, kidsList=[], switchToChild, onDeleteChild,
                     <React.Fragment>
                         <MaterialCommunityIcons name="plus-circle" style={styles.plusIcon2} />
 
-                        <Text semiBold style={{fontSize: width * 0.033, color: fountainBlue}}>
+                        <Text semiBold style={{fontSize: 12*scaleRatio, color: fountainBlue}}>
                             Add a child
                         </Text>
                     </React.Fragment>
@@ -69,15 +70,15 @@ const AccountManagerView = ({history, kidsList=[], switchToChild, onDeleteChild,
                     adminsList.filter(admin => admin._id !== parentId).map(admin => //this variable can be an email string or a user object
                         <TouchableOpacity style={styles.badge} key={admin._id || admin} onLongPress={() => onDeleteAdmin(admin)}>
                             <Octicons name={"person"} style={styles.icon} />
-                            <Text style={{fontSize: width * 0.02}}>{getAdminName(admin)}</Text>
+                            <Text style={{fontSize: 7.2 * scaleRatio}}>{getAdminName(admin)}</Text>
                         </TouchableOpacity>
                     )
                 }
 
                 <Link style={styles.badge} to={"/maintabscreen/addfamilyadmin"} >
                     <>
-                        <MaterialCommunityIcons name="plus-circle" style={[styles.plusIcon2, {fontSize: width * 0.1}]} />
-                        <Text semiBold style={{fontSize: width * 0.02, color: fountainBlue}}>
+                        <MaterialCommunityIcons name="plus-circle" style={[styles.plusIcon2, {fontSize: 36*scaleRatio}]} />
+                        <Text semiBold style={{fontSize: 7.2*scaleRatio, color: fountainBlue}}>
                             Add Admin
                         </Text>
                     </>
@@ -90,7 +91,7 @@ const AccountManagerView = ({history, kidsList=[], switchToChild, onDeleteChild,
 const KidBadge = ({kid}) => (
     <View style={styles.badge}>
         <View style={styles.smallCircle}></View>
-        <Text semiBold style={{fontSize: width * 0.033, color: shuttleGrey}}>{kid.name}</Text>
+        <Text semiBold style={{fontSize: 12*scaleRatio, color: shuttleGrey}}>{kid.name}</Text>
     </View>
 );
 
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
     sideLabel: {
         textAlign: 'center',
         color: shuttleGrey,
-        fontSize: width * 0.033
+        fontSize: 12*scaleRatio
     },
     iconRow: {
         flexDirection: 'row',
@@ -155,13 +156,13 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     icon: {
-        fontSize: width * 0.1,
+        fontSize: 36*scaleRatio,
         color: fountainBlue,
         lineHeight: width * 0.1,
         justifyContent: 'center',
     },
     plusIcon2: {
-        fontSize: width * 0.17,
+        fontSize: 61*scaleRatio,
         color: fountainBlue,
         // lineHeight: 1/6 * width,
         justifyContent: 'center',

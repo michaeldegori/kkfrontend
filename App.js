@@ -38,16 +38,10 @@ class App extends React.Component {
     }
     render() {
         if (!this.state.resourcesLoaded) return <AppLoading />;
-        let paddingView = null;
-        if (Platform.OS === 'ios' && Constants.statusBarHeight !== 0)
-            paddingView = <View style={{height: Constants.statusBarHeight, alignSelf: 'stretch'}} />;
-
-
 
         return (
             <NativeRouter>
                 <FullPage>
-                    {paddingView}
                     <Switch>
                         <Route path={'/nonauth'} component={NonAuthStackNavigator} />
                         <PrivateRoute path="/" component={MainTabScreen} />

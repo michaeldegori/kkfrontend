@@ -8,6 +8,7 @@ import Text from "../../common/KKText";
 import {fountainBlue, fountainBlueDark, shuttleGrey, shuttleGreyDark} from "../../colors";
 import {Ionicons} from 'react-native-vector-icons';
 import EmptyState from "../../common/EmptyState";
+import {scaleRatio} from "../../configuration";
 
 const{width, height} = Dimensions.get('window');
 const renderModalContents = (modalText, modalAccept, modalClose) => () => (
@@ -47,7 +48,7 @@ const KidChoreBoardView = ({chores, pastChores, modalVisible, modalText, onReque
 
 const renderRow = (item, onRequestCompleteChore) => {
     if (item.label)
-        return <Text key={item.key} style={{color: fountainBlue, textAlign: 'center', fontSize: width * 0.05}}>{item.label}</Text>;
+        return <Text key={item.key} style={{color: fountainBlue, textAlign: 'center', fontSize: 18 * scaleRatio}}>{item.label}</Text>;
 
     if (item.img === 'emptystate')
         return <EmptyState loading={false} />
@@ -55,9 +56,9 @@ const renderRow = (item, onRequestCompleteChore) => {
     if (item.img === 'success')
         return (
             <ImageBackground source={require('../../../assets/images/confetti.png')} style={{width, height: width, justifyContent: 'center', alignItems: 'center' }} >
-                <Text style={{color: fountainBlueDark, textAlign: 'center', fontSize: width * 0.08}}>Done</Text>
-                <Text style={{color: fountainBlueDark, textAlign: 'center', fontSize: width * 0.08}}>For</Text>
-                <Text style={{color: fountainBlueDark, textAlign: 'center', fontSize: width * 0.08}}>Today!</Text>
+                <Text style={{color: fountainBlueDark, textAlign: 'center', fontSize: 28.8 * scaleRatio}}>Done</Text>
+                <Text style={{color: fountainBlueDark, textAlign: 'center', fontSize: 28.8 * scaleRatio}}>For</Text>
+                <Text style={{color: fountainBlueDark, textAlign: 'center', fontSize: 28.8 * scaleRatio}}>Today!</Text>
             </ImageBackground>
         )
 

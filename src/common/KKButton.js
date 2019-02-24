@@ -16,7 +16,7 @@ const Touchable = ({to, style, children, ...props}) =>
 
 const KKButton = ({children, style, type, to, ...props}) => (
     <Touchable style={[styles.mainContainer, style, styles[type]]} to={to} {...props}>
-        <Text style={styles.label} semiBold={true} bold={false}>
+        <Text style={[styles.label, styles[type+'Label']||{}]} semiBold={true} bold={false}>
             {children.toUpperCase()}
         </Text>
     </Touchable>
@@ -25,7 +25,7 @@ const KKButton = ({children, style, type, to, ...props}) => (
 KKButton.propTypes = {
     children: PropTypes.any.isRequired,
     style: PropTypes.object,
-    type: PropTypes.string.isRequired //primary or secondary
+    type: PropTypes.oneOf(['primary', 'secondary', 'textOnly'])
 };
 
 const {width, height} = Dimensions.get("window");
@@ -49,6 +49,13 @@ const styles = StyleSheet.create({
     },
     secondary: {
         backgroundColor: shuttleGrey
+    },
+    textOnly: {
+        backgroundColor: 'transparent',
+        letterSpacing: 1,
+    },
+    textOnlyLabel: {
+        color: fountainBlue,
     }
 });
 

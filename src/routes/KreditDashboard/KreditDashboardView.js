@@ -17,6 +17,7 @@ import {fountainBlue, lightGrey, shuttleGrey} from "../../colors";
 import Row from "../../common/Row";
 import InfoIcon from "./InfoIcon";
 import EducationalModal from "../../common/EducationalModal";
+import {scaleRatio} from "../../configuration";
 
 const KreditDashboardView = ({
     match:{path},
@@ -29,7 +30,7 @@ const KreditDashboardView = ({
 }) => (
     <FullPage>
         <Header leftAction={"avatarButton"} />
-        <Text style={{color: fountainBlue,fontSize: width * 0.05, textAlign: 'center'}}>Kredit Dashboard</Text>
+        <Text style={{color: fountainBlue, fontSize: 18 * scaleRatio, textAlign: 'center'}}>Kredit Dashboard</Text>
         {
             kidsList && kidsList.length > 0 ?
                 <SwipableKidSelection
@@ -112,17 +113,17 @@ const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
     smallLabel: {
         color: shuttleGrey,
-            fontSize: width * 0.04,
+            fontSize: 14.4 * scaleRatio,
             textAlign: 'center'
     },
     bigText:{
         color: fountainBlue,
-            fontSize: width * 0.2,
+            fontSize: 72 * scaleRatio,
             textAlign: 'center'
     },
     subHeading: {
         color: fountainBlue,
-        fontSize: width * 0.07,
+        fontSize: 25.2 * scaleRatio,
         textAlign: 'center'
     },
 });

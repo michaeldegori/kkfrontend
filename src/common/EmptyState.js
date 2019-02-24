@@ -11,6 +11,7 @@ import Text from "./KKText";
 import {fountainBlue, lightGrey, shuttleGrey} from "../colors";
 import PropTypes from 'prop-types';
 import { withRouter} from 'react-router-native';
+import {scaleRatio} from "../configuration";
 
 const messages = {
     '/maintabscreen/rewardsfeed': {
@@ -125,12 +126,12 @@ const styles = StyleSheet.create({
         color: 'white',
         alignSelf: 'stretch',
         textAlign: 'center',
-        fontSize: width * 0.06,
+        fontSize: 18 * scaleRatio,
         marginTop: height * 0.02,
         marginHorizontal: width * 0.03
     },
     smaller: {
-        fontSize: width * 0.035,
+        fontSize: 12.6 * scaleRatio,
         marginTop: height * 0.02
     },
     greyText: {

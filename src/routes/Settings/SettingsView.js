@@ -13,6 +13,7 @@ import SwipableKidSelection from "../../common/SwipableKidSelection";
 import {shuttleGrey, shuttleGreyDark} from "../../colors";
 import KKButton from "../../common/KKButton";
 import Row from "../../common/Row";
+import {scaleRatio} from "../../configuration";
 
 const SettingsView = ({
     match:{path},
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
         marginTop: width * 0.06,
         textAlign: 'center',
         color: '#333333',
-        fontSize: width * 0.045,
+        fontSize: 16 * scaleRatio,
     },
     textLabelLight: {
         // margin: width * 0.03,

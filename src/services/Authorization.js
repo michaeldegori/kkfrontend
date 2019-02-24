@@ -26,15 +26,15 @@ const loginWithAuth0 = (startingPage) => async (username, password) => {
         method: 'POST'
     });
     if (loginResult.status !== 200){
-        Alert.alert("Login error", "Username or password incorrect");
         return false;
     }
     loginResult = await loginResult.json();
 
 
     //finish logging in
-    await userDataRepository.pullUserInfoFromApiAndStore(loginResult.id_token, loginResult.access_token, startingPage==='registration', loginResult.refresh_token);
-    return true;
+    const apiInfoResult = await userDataRepository.pullUserInfoFromApiAndStore(loginResult.id_token, loginResult.access_token, startingPage==='registration', loginResult.refresh_token);
+
+    return apiInfoResult;
 }
 
 //email, password, firstName, lastName, userSubType-['mother', 'father', 'male_guardian', 'female_guardian']
@@ -101,11 +101,30 @@ async function loginWithRefreshToken(refreshToken) {
     return loginResult;
 }
 
+async function triggerPWResetWithAuth0(email){
+    console.log("Resetting password for "+email);
+    let pwResetResult = await fetch(auth0Domain + '/dbconnections/change_password', {
+        headers: {'Content-Type': 'application/json', Accept: 'application/json'},
+        body: JSON.stringify({
+            client_id: auth0ClientId,
+            connection: 'Username-Password-Authentication',
+            email
+        }),
+        method: 'POST'
+    });
+    if (pwResetResult.status < 200 || pwResetResult.status > 299) {
+        console.log(pwResetResult.status, await pwResetResult.text());
+        return false;
+    }
+    return await pwResetResult.text();
+}
+
 export {
     loginWithAuth0,
     registerWithAuth0,
     logOutFromAuth0,
-    loginWithRefreshToken
+    loginWithRefreshToken,
+    triggerPWResetWithAuth0
 }
 
 /* RESPONSE SHAPE WHEN LOGGING IN:

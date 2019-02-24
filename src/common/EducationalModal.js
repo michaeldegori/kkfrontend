@@ -3,6 +3,7 @@ import {Dimensions, Modal, StyleSheet, TouchableOpacity, View} from "react-nativ
 import Text from "./KKText";
 import {fountainBlue, shuttleGrey} from "../colors";
 import {Ionicons} from 'react-native-vector-icons';
+import {scaleRatio} from "../configuration";
 
 export default function EducationalModal({hideModal, educationalInfo, modalVisible}) {
     return (
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     },
     innerModalText: {
         color: 'white',
-        fontSize: width * 0.04,
+        fontSize: 14.4 * scaleRatio,
         marginTop: height * 0.02,
         textAlign: 'center'
     },

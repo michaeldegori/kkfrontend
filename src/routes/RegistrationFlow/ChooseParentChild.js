@@ -11,7 +11,7 @@ import FullPage from "../../common/FullPage";
 import Header from "../../common/Header";
 import Text from '../../common/KKText';
 import {fountainBlue, shuttleGrey} from "../../colors";
-import {globalFontFamilyBold} from "../../configuration";
+import {globalFontFamilyBold, scaleRatio} from "../../configuration";
 import {loginWithAuth0, registerWithAuth0} from "../../services/Authorization";
 
 
@@ -68,8 +68,8 @@ const styles = StyleSheet.create({
     },
     cardTitle: {
         fontFamily: globalFontFamilyBold,
-        fontSize: width * 0.125,
-        lineHeight: width * 0.14,
+        fontSize: 45 * scaleRatio,
+        lineHeight: 50.4 * scaleRatio,
         color: 'white'
     },
     cardSubtitle: {

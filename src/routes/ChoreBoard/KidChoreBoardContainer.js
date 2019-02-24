@@ -56,7 +56,12 @@ class KidChoreBoardContainer extends React.Component{
             const occurrencesToday = choreRRule.between(dateLastNight, new Date(tomorrowTimestamp));
             if (occurrencesToday.length === 0) return false;
 
-            const timesChoreDoneToday = (currentKid.doneChores||[]).find(doneChoreObj => doneChoreObj.chore === globalChore._id && doneChoreObj.timeStamp > dateLastNight.getTime());
+            const timesChoreDoneToday = (currentKid.doneChores||[]).find(
+                doneChoreObj =>
+                    doneChoreObj.chore === globalChore._id &&
+                    doneChoreObj.timeStamp > dateLastNight.getTime() &&
+                    doneChoreObj.status !== 'denied'
+            );
 
             return !timesChoreDoneToday;
         });

@@ -23,6 +23,7 @@ import KidSelection from "../../common/KidSelection";
 import {Ionicons} from 'react-native-vector-icons';
 import AutoCompleteSuggestions from "../../common/AutoCompleteSuggestions";
 import PlatformDependentScrollingContainer from "../../common/PlatformDependentScrollingContainer";
+import {scaleRatio} from "../../configuration";
 
 const {width, height} = Dimensions.get('window');
 
@@ -119,19 +120,12 @@ const CreateChoreView = ({
     >
         <Header/>
         <ScrollView style={{flex:1, alignSelf: 'stretch'}}>
+            <Text style={styles.subHeading}>Input All Chore Data:</Text>
             <KKTextInput
                 style={styles.nameInput}
                 placeholder={"Enter Chore Name"}
                 value={choreName}
                 onChangeText={text=> updateForm('choreName', text) }
-            />
-            {/*<Text style={styles.textLabel}>Notes (Chore Description)</Text>*/}
-            <KKTextInput
-                multiline={true}
-                style={[styles.nameInput, {height: height * 0.15, padding: 6}]}
-                placeholder={"Enter A Kid-Friendly Description"}
-                value={choreNotes}
-                onChangeText={text=> updateForm('choreNotes', text) }
             />
             {
                 !!choreName && !!(choreName.length > 0) && !!choreSuggestions && !!(choreSuggestions.length > 0) &&
@@ -141,6 +135,14 @@ const CreateChoreView = ({
                         onPressSuggestion={selectedText => updateForm('choreName', selectedText)}
                     />
             }
+
+            <KKTextInput
+                multiline={true}
+                style={[styles.nameInput, {height: height * 0.15, padding: 6}]}
+                placeholder={"Enter A Kid-Friendly Description"}
+                value={choreNotes}
+                onChangeText={text=> updateForm('choreNotes', text) }
+            />
             <Text style={styles.textLabel}>How often would you like the chore done?</Text>
             <View style={[styles.row, {justifyContent: "space-around" }]}>
                 {
@@ -224,6 +226,11 @@ const styles = StyleSheet.create({
             }
         })
     },
+    subHeading: {
+        color: fountainBlue,
+        fontSize: 18 * scaleRatio,
+        textAlign: 'center'
+    },
     row: {
         flexDirection: 'row',
         justifyContent: 'space-around',
@@ -242,7 +249,7 @@ const styles = StyleSheet.create({
     },
     radioLabel: {
         color: shuttleGreyDark,
-        fontSize: width * 0.045,
+        fontSize: 14.4 * scaleRatio,
         textAlign: 'center',
         alignSelf: 'stretch',
     },

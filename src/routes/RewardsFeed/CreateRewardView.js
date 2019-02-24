@@ -15,6 +15,7 @@ import KidAvatar from "../../common/KidAvatar";
 import KidSelection from "../../common/KidSelection";
 import KKButton from "../../common/KKButton";
 import {Ionicons} from 'react-native-vector-icons';
+import {scaleRatio} from "../../configuration";
 
 
 const {width, height} = Dimensions.get('window');
@@ -57,6 +58,7 @@ const CreateRewardView = ({
         renderModalContents={()=>renderModalContents(modalText, modalAccept, modalDeny)}>
             <Header/>
             <ScrollView style={{flex:1, alignSelf: 'stretch'}}>
+                <Text style={styles.subHeading}>Input All Reward Data:</Text>
                 <KKTextInput
                     style={styles.input}
                     placeholder={"Enter Reward Name"}
@@ -66,7 +68,7 @@ const CreateRewardView = ({
 
                 <KKTextInput
                     style={styles.input}
-                    placeholder={"Amount of kk"}
+                    placeholder={"Cost in Bamboo Bucks"}
                     value={""+kkCost}
                     keyboardType={"number-pad"}
                     onChangeText={text=> updateForm('kkCost', Number(text)) }
@@ -112,6 +114,11 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignSelf: 'stretch',
         margin: width * 0.05
+    },
+    subHeading: {
+        color: fountainBlue,
+        fontSize: 18 * scaleRatio,
+        textAlign: 'center'
     },
     bottomMargin: {
         marginBottom: height * 0.1

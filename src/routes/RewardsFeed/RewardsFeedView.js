@@ -11,6 +11,7 @@ import {fountainBlue, shuttleGrey, shuttleGreyDark} from "../../colors";
 import FullPageWithModal from "../../common/FullPageWithModal";
 import {Ionicons} from 'react-native-vector-icons';
 import EmptyState from "../../common/EmptyState";
+import {scaleRatio} from "../../configuration";
 
 const renderModalContents = (modalText, modalAccept, kidsList=[], buttonsClickable=true) => () => (
     <Fragment>
@@ -57,7 +58,7 @@ const RewardsFeedView = ({
                                     <ItemTile
                                         mainCaption={reward.name}
                                         subCaption={childrenRewardAppliesto.join(", ")}
-                                        renderRightItem={() => <Text style={styles.rewardAmount}>{reward.kkCost} KK</Text>}
+                                        renderRightItem={() => <Text style={styles.rewardAmount}>{reward.kkCost} BB</Text>}
                                     />
                                 </TouchableOpacity>
                             );
@@ -74,11 +75,11 @@ const styles = StyleSheet.create({
     rewardAmount: {
         color: fountainBlue,
         alignSelf: 'center',
-        fontSize: width * 0.05
+        fontSize: 18 * scaleRatio
     },
     subHeading: {
         color: fountainBlue,
-        fontSize: width * 0.05,
+        fontSize: 18 * scaleRatio,
         textAlign: 'center'
     },
     modalBtn: {

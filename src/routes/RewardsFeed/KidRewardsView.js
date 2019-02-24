@@ -11,6 +11,7 @@ import ItemTile from "../../common/ItemTile";
 import {fountainBlue, shuttleGrey, shuttleGreyDark} from "../../colors";
 import FullPageWithModal from "../../common/FullPageWithModal";
 import EmptyState from "../../common/EmptyState";
+import {scaleRatio} from "../../configuration";
 
 const renderModalContents = (modalText, modalAccept, modalClose) => () => (
     <Fragment>
@@ -47,7 +48,7 @@ const KidRewardsView = ({
         style={{flex: 1, alignSelf: 'stretch', justifyContent: 'flex-start', alignItems: 'center'}}>
         <Header leftAction={'avatarButton'}/>
         <ScrollView style={{flex:1, alignSelf: 'stretch'}}>
-            <Text style={styles.smallLabel}>Your kk bucks balance:</Text>
+            <Text style={styles.smallLabel}>Bamboo Bucks balance:</Text>
             <Text style={styles.bigText}>{getKreditScoreDisplay(currentKid)}</Text>
             <Text style={styles.subHeading}>Redeemable Rewards:</Text>
             {
@@ -58,7 +59,7 @@ const KidRewardsView = ({
                             <ItemTile key={reward._id}
                                       mainCaption={reward.name}
                                       subCaption={reward.notes}
-                                      renderRightItem={() => <Text style={styles.rewardAmount}>{reward.kkCost} KK</Text>}
+                                      renderRightItem={() => <Text style={styles.rewardAmount}>{reward.kkCost} BB</Text>}
                             />
                         </TouchableOpacity>
                     )
@@ -73,21 +74,21 @@ const styles = StyleSheet.create({
     rewardAmount: {
         color: fountainBlue,
         alignSelf: 'center',
-        fontSize: width * 0.05
+        fontSize: 18 * scaleRatio
     },
     smallLabel: {
         color: shuttleGrey,
-        fontSize: width * 0.04,
+        fontSize: 14.4 * scaleRatio,
         textAlign: 'center'
     },
     bigText:{
         color: fountainBlue,
-        fontSize: width * 0.15,
+        fontSize: 72 * scaleRatio,
         textAlign: 'center'
     },
     subHeading: {
         color: fountainBlue,
-        fontSize: width * 0.05,
+        fontSize: 18 * scaleRatio,
         textAlign: 'center'
     }
 });

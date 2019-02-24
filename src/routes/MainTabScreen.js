@@ -4,7 +4,7 @@ import {
     View,
     Dimensions,
     TouchableOpacity,
-    Keyboard,
+    Keyboard, Platform,
 } from 'react-native';
 import {Switch, Route, Redirect, Link} from 'react-router-native';
 import { EvilIcons, Ionicons, Octicons } from '@expo/vector-icons';
@@ -31,6 +31,8 @@ import ChooseAvatar from "./RegistrationFlow/ChooseAvatar";
 import AddFamilyAdminContainer from "./AddFamilyAdmin";
 import PostRegOnboarding2 from "./onboarding/PostRegOnboarding2";
 import PostRegOnboarding1 from "./onboarding/PostRegOnboarding1";
+import {Constants} from "expo";
+import NavBarPaddingView from "../common/NavBarPaddingView";
 
 const icons = [
     color=> <EvilIcons color={color} name="bell" size={32}/>,
@@ -99,7 +101,7 @@ class MainTabScreen extends React.Component{
 
     }
     getIconSet = () => {
-        const {match, location:{pathname}} = this.props;
+            const {match, location:{pathname}} = this.props;
         if (pathname.indexOf('/kid') !== -1) return kidIcons;
         return icons;
     }
@@ -114,8 +116,12 @@ class MainTabScreen extends React.Component{
         if (!redirectPath && BROWSING_MODE.toString() === 'parent') redirectPath =  '/maintabscreen/choreboard';
         if (!redirectPath && BROWSING_MODE.toString() !== 'parent')
             redirectPath = '/maintabscreen/kid/choreboard';
+
+
+
         return (
             <View style={[styles.mainContainer]}>
+                <NavBarPaddingView route={this.props.location.pathname}/>
                 <Switch>
                     <Route path="/maintabscreen/alerts" component={AlertsContainer} />
                     <Route path="/maintabscreen/choreboard" component={ChoreBoard} />
