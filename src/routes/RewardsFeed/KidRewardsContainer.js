@@ -11,7 +11,8 @@ class KidRewardsContainer extends React.Component {
         modalVisible: false,
         modalText: "Are you sure you want to complete this reward?",
         selectedReward: null,
-        checkMarkClickable: true
+        checkMarkClickable: true,
+        showAnimation: false
     }
     requestRedeemReward = reward => {
         const kidId = userRepository.BROWSING_MODE.split("-")[1];
@@ -38,10 +39,29 @@ class KidRewardsContainer extends React.Component {
             Alert.alert("Could not redeem reward", postResult.message);
         }
         else {
-            this.cancelModal();
+            this.cancelModal(true);
         }
     }
-    cancelModal = () => this.setState(() => ({modalVisible: false, checkMarkClickable: false}));
+    cancelModal = (showAnimation) => {
+        this.setState(() =>
+            ({
+                modalVisible: false,
+                checkMarkClickable: false,
+                showAnimation: !!showAnimation
+            }),
+            () => {
+                if (this.animation && showAnimation){
+                    this.animation.play();
+                    setTimeout(()=> this.setState({showAnimation: false}) , 2000);
+                }
+            });
+
+    }
+    setAnimationRef = e => this.animation = e;
+    hideAnimation = () => {
+        console.log('HIDING ANIM');
+        this.setState(() => ({showAnimation: false}));
+    }
     render() {
         const kidId = userRepository.BROWSING_MODE.split("-")[1];
         const currentKid = familyUnitRepository.kidsList.find(k => k._id === kidId);
@@ -54,7 +74,10 @@ class KidRewardsContainer extends React.Component {
                 modalAccept={this.redeemReward}
                 modalClose={this.cancelModal}
                 modalDeny={this.cancelModal}
-                rewardsList={familyUnitRepository.existingRewards.filter(reward => currentKid.eligibleRewards.includes(reward._id))} />
+                rewardsList={familyUnitRepository.existingRewards.filter(reward => currentKid.eligibleRewards.includes(reward._id))}
+                setAnimationRef={this.setAnimationRef}
+                hideAnimation={this.hideAnimation}
+            />
         );
     }
 }

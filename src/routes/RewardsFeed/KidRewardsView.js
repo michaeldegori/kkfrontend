@@ -2,7 +2,8 @@ import React, {Fragment} from "react";
 import {
     View,
     StyleSheet,
-    Dimensions, ScrollView, TouchableOpacity
+    Dimensions, ScrollView, TouchableOpacity,
+    Platform
 } from 'react-native';
 import Text from '../../common/KKText';
 import Header from "../../common/Header";
@@ -12,6 +13,8 @@ import {fountainBlue, shuttleGrey, shuttleGreyDark} from "../../colors";
 import FullPageWithModal from "../../common/FullPageWithModal";
 import EmptyState from "../../common/EmptyState";
 import {scaleRatio} from "../../configuration";
+import { DangerZone } from 'expo';
+let { Lottie } = DangerZone;
 
 const renderModalContents = (modalText, modalAccept, modalClose) => () => (
     <Fragment>
@@ -38,13 +41,15 @@ const KidRewardsView = ({
     modalText,
     modalVisible,
     modalAccept, modalClose,
-    onRequestRedeemReward
-
+    onRequestRedeemReward,
+    showAnimation,
+    setAnimationRef,
+    hideAnimation
 }) => (
     <FullPageWithModal
         modalVisible={modalVisible}
         renderModalContents={renderModalContents(modalText, modalAccept, modalClose)}
-        modalClose={modalClose}
+        modalClose={()=>modalClose(false)}
         style={{flex: 1, alignSelf: 'stretch', justifyContent: 'flex-start', alignItems: 'center'}}>
         <Header leftAction={'avatarButton'}/>
         <ScrollView style={{flex:1, alignSelf: 'stretch'}}>
@@ -65,7 +70,16 @@ const KidRewardsView = ({
                     )
             }
         </ScrollView>
-
+        {
+            showAnimation &&
+            <Lottie
+                ref={setAnimationRef}
+                style={styles.animation}
+                loop={false}
+                source={require('../../../assets/animations/1370-confetti.json')}
+                onAnimationFinish={hideAnimation}
+            />
+        }
     </FullPageWithModal>
 );
 
@@ -90,6 +104,19 @@ const styles = StyleSheet.create({
         color: fountainBlue,
         fontSize: 18 * scaleRatio,
         textAlign: 'center'
+    },
+    animation: {
+        position: 'absolute',
+        height,
+        top: 0,
+        ...Platform.select({
+            ios: {
+                width: height, left: -(height-width)/4
+            },
+            android: {
+                width, left: 0
+            }
+        })
     }
 });
 
