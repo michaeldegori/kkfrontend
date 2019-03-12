@@ -2,6 +2,7 @@ import {observable} from 'mobx';
 import {fetchJson} from "../services/Networking";
 import {apiUrl} from "../globals";
 import alertsRepository from "./AlertsStore";
+import * as mx from '../services/MixPanel';
 
 class FamilyUnitStore{
     @observable unitId;
@@ -31,7 +32,10 @@ class FamilyUnitStore{
             body: JSON.stringify({name, dob, gender})
         });
         if (!apiResult) return false;
-        if (apiResult.newKid) this.kidsList.push(apiResult.newKid);
+        if (apiResult.newKid) {
+            this.kidsList.push(apiResult.newKid);
+            mx.addChild(this.kidsList);
+        }
         return true;
     }
 
@@ -60,7 +64,10 @@ class FamilyUnitStore{
             },
             body: JSON.stringify(payload)
         });
-        if (postResult.existingChores) this.existingChores = postResult.existingChores;
+        if (postResult.existingChores) {
+            this.existingChores = postResult.existingChores;
+            mx.addChore(payload, choreFrequency, choreAppliedTo.length, this.kidsList.length);
+        }
         if (postResult.kidsList) this.kidsList = postResult.kidsList;
 
     }
@@ -110,7 +117,10 @@ class FamilyUnitStore{
             },
             body: JSON.stringify(payload)
         });
-        this.existingRewards = postResult.existingRewards;
+        if (postResult.existingRewards){
+            this.existingRewards = postResult.existingRewards;
+            mx.addReward(payload, this.kidsList);
+        }
         this.kidsList = postResult.kidsList;
     }
 
@@ -135,7 +145,7 @@ class FamilyUnitStore{
     }
 
     updateChildSettings = async (childId, patchUpdate, idToken) => {
-        const putResult = await fetchJson(apiUrl + `/familyunit/${this.unitId}/child/${childId}`, {
+        const patchResult = await fetchJson(apiUrl + `/familyunit/${this.unitId}/child/${childId}`, {
             method: 'PATCH',
             headers: {
                 Authorization: 'Bearer '+idToken,
@@ -143,8 +153,8 @@ class FamilyUnitStore{
             },
             body: JSON.stringify(patchUpdate)
         });
-        if (!putResult.kidsList) return false;
-        const updatedKid = putResult.kidsList.find(kid => kid._id === childId);
+        if (!patchResult.kidsList) return false;
+        const updatedKid = patchResult.kidsList.find(kid => kid._id === childId);
         const update = {};
         for (let key in patchUpdate) update[key] = updatedKid[key];
 
@@ -157,7 +167,6 @@ class FamilyUnitStore{
     }
 
     requestCompleteChore = async (childId, choreId, idToken) => {
-        console.log(childId, choreId, idToken)
         const putResult = await fetchJson(apiUrl + `/familyunit/${this.unitId}/child/${childId}/requestcompletechore`, {
             method: 'PATCH',
             headers: {
@@ -170,6 +179,7 @@ class FamilyUnitStore{
         });
 
         this.kidsList = putResult.kidsList;
+        mx.requestCompleteChore(choreId, this.existingChores, childId, this.kidsList);
     }
 
     processApprovalRequest = async (alert, status, idToken) => {
@@ -188,6 +198,7 @@ class FamilyUnitStore{
         });
 
         this.kidsList = putResult.familyUnit.kidsList;
+        mx.approveChore(doneChoreId, this.existingChores, status, childId, this.kidsList);
 
         alertsRepository.alerts = alertsRepository.alerts.map(alert => {
             if(alert._id !== putResult.alert._id) return alert;

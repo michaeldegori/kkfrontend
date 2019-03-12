@@ -46,7 +46,8 @@ async function registerForPushNotificationsAsync({idToken, BROWSING_MODE, email}
 
 export async function scheduleLocalPushNotification(){
     const notificationId = await AsyncStorage.getItem("@kiddiekredit:localnotificationid");
-    if (notificationId) return;
+    if (notificationId && notificationId.indexOf("6pm-") === 0) return;
+    await Notifications.cancelAllScheduledNotificationsAsync();
     const now = new Date();
     const day = ("0" + now.getDate()).slice(-2);
     const month = ("0" + (now.getMonth()+1)).slice(-2);
@@ -59,7 +60,7 @@ export async function scheduleLocalPushNotification(){
         body: 'Don\'t forget to log into the Kiddiekredit app and manage your daily chores!'
     }, {time: dateTomorrow6PM, repeat: 'day'});
     console.log('New push notification reminder set!', newNotificationId);
-    await AsyncStorage.setItem("@kiddiekredit:localnotificationid", ""+newNotificationId);
+    await AsyncStorage.setItem("@kiddiekredit:localnotificationid", "6pm-"+newNotificationId);
 }
 
 

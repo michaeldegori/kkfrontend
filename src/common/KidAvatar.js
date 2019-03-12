@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import Text from './KKText';
 import {shuttleGreyDark} from "../colors";
-import {images, imageNames} from "../routes/RegistrationFlow/ChooseAvatar";
+import {images, imageNames} from "./AvatarButton";
 
 const KidAvatar = ({name, gender, avatar}) => {
     let source = (typeof gender === 'string' && gender[0].toLowerCase() === 'm') ?

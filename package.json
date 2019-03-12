@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "babel-plugin-transform-remove-console": "^6.8.5",
     "babel-core": "7.0.0-bridge.0",
+    "babel-plugin-transform-remove-console": "^6.8.5",
     "babel-preset-expo": "5.0.0",
     "jest-expo": "~27.0.0",
     "react-native-scripts": "1.14.0",
@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "expo": "31.0.1",
+    "expo-mixpanel-analytics": "^0.0.7",
     "jwt-decode": "^2.2.0",
     "mobx": "4.4.1",
     "mobx-react": "5.2.8",

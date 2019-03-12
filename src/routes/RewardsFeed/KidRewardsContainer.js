@@ -14,6 +14,9 @@ class KidRewardsContainer extends React.Component {
         checkMarkClickable: true,
         showAnimation: false
     }
+    componentWillUnmount(){
+        if (this.timer) clearTimeout(this.timer);
+    }
     requestRedeemReward = reward => {
         const kidId = userRepository.BROWSING_MODE.split("-")[1];
         const currentKid = familyUnitRepository.kidsList.find(k => k._id === kidId);
@@ -52,14 +55,13 @@ class KidRewardsContainer extends React.Component {
             () => {
                 if (this.animation && showAnimation){
                     this.animation.play();
-                    setTimeout(()=> this.setState({showAnimation: false}) , 2000);
+                    this.timer = setTimeout(this.hideAnimation, 2000);
                 }
             });
 
     }
     setAnimationRef = e => this.animation = e;
     hideAnimation = () => {
-        console.log('HIDING ANIM');
         this.setState(() => ({showAnimation: false}));
     }
     render() {

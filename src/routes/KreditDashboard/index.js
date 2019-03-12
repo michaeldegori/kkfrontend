@@ -5,6 +5,7 @@ import {observer} from "mobx-react";
 import userRepository from "../../stores/UserDataStore";
 import {apiUrl} from "../../globals";
 import {fetchJson} from "../../services/Networking";
+import * as mx from '../../services/MixPanel';
 
 class KreditDashboardContainer extends React.Component{
     state = {
@@ -27,12 +28,18 @@ class KreditDashboardContainer extends React.Component{
                 educationalInfo
             }));
     }
-    showModal = (whichModal) => this.setState(() => ({
-        modalVisible: whichModal
-    }))
-    hideModal = () => this.setState(() => ({
-        modalVisible: false
-    }))
+    showModal = (whichModal) => {
+        mx.openKreditEducationModal(whichModal, "parent");
+        this.setState(() => ({
+            modalVisible: whichModal
+        }));
+    }
+    hideModal = () => {
+        mx.closeKreditEducationModal(this.state.modalVisible, "parent");
+        this.setState(() => ({
+            modalVisible: false
+        }))
+    }
     render() {
         return (
             <KreditDashboardView

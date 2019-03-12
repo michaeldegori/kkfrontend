@@ -18,22 +18,7 @@ import familyUnitRepository from "../../stores/FamilyUnitDataStore";
 import KKButton from "../../common/KKButton";
 import {scaleRatio} from "../../configuration";
 
-
-export const images = [
-    require("../../../assets/images/avatar_cheetah.png"),
-    require("../../../assets/images/avatar_dog.png"),
-    require("../../../assets/images/avatar_fox.png"),
-    require("../../../assets/images/avatar_giraffe.png"),
-    require("../../../assets/images/avatar_lion.png"),
-    require("../../../assets/images/avatar_orca.png"),
-    require("../../../assets/images/avatar_porcupine.png"),
-    require("../../../assets/images/avatar_polar-bear.png"),
-    require("../../../assets/images/avatar_racoon.png"),
-    require("../../../assets/images/avatar_tiger.png"),
-    require("../../../assets/images/avatar_walrus.png"),
-    require("../../../assets/images/avatar_zebra.png"),
-];
-export const imageNames = ["cheetah","dog", "fox", "giraffe", "lion", "orca", "porcupine", "polar-bear", "racoon", "tiger", "walrus", "zebra"];
+import {images, imageNames} from "../../common/AvatarButton";
 
 
 

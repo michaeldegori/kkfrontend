@@ -4,16 +4,18 @@ import {
     Dimensions,
     StyleSheet,
     Slider,
-    ScrollView
+    ScrollView,
+    Linking
 } from 'react-native';
 import Text from '../../common/KKText';
 import FullPage from "../../common/FullPage";
 import Header from "../../common/Header";
 import SwipableKidSelection from "../../common/SwipableKidSelection";
-import {shuttleGrey, shuttleGreyDark} from "../../colors";
+import {fountainBlue, shuttleGrey, shuttleGreyDark} from "../../colors";
 import KKButton from "../../common/KKButton";
 import Row from "../../common/Row";
 import {scaleRatio} from "../../configuration";
+import Subtitle from "../../common/Subtitle";
 
 const SettingsView = ({
     match:{path},
@@ -56,21 +58,27 @@ const renderSettings = (kidsList, onChangeSlider, createOnSliderTick, allowanceS
                         <Text style={styles.textLabel}>20</Text>
                     </Row>
 
-                    <Text style={styles.textLabel}>Savings Required: {currentSavingsRequired} KK</Text>
-                    <Slider style={{marginHorizontal: width * 0.1}} thumbTintColor={shuttleGreyDark} value={selectedChild.savingsRequired || 0}
-                            step={1} minimumValue={1} maximumValue={20}
-                            onValueChange={createOnSliderTick('savingsSliderValue')}
-                            onSlidingComplete={onChangeSlider('savingsRequired', selectedChildId)}/>
-                    <Row style={{justifyContent: 'space-between', marginVertical: 0, marginHorizontal: width * 0.1}}>
-                        <Text style={styles.textLabel}>1</Text>
-                        <Text style={styles.textLabel}>20</Text>
-                    </Row>
+                    {/*<Text style={styles.textLabel}>Savings Required: {currentSavingsRequired} KK</Text>*/}
+                    {/*<Slider style={{marginHorizontal: width * 0.1}} thumbTintColor={shuttleGreyDark} value={selectedChild.savingsRequired || 0}*/}
+                            {/*step={1} minimumValue={1} maximumValue={20}*/}
+                            {/*onValueChange={createOnSliderTick('savingsSliderValue')}*/}
+                            {/*onSlidingComplete={onChangeSlider('savingsRequired', selectedChildId)}/>*/}
+                    {/*<Row style={{justifyContent: 'space-between', marginVertical: 0, marginHorizontal: width * 0.1}}>*/}
+                        {/*<Text style={styles.textLabel}>1</Text>*/}
+                        {/*<Text style={styles.textLabel}>20</Text>*/}
+                    {/*</Row>*/}
                 </View>
                 <View style={{height: height * 0.015, width}}/>
                 <Text style={styles.textLabelLight}>Default: 1 KK per child's age per week</Text>
                 <Text style={styles.textLabelLight}>Note: 1KK = $1</Text>
 
                 <KKButton type={'primary'} style={styles.btn} onPress={()=>saveChild(selectedChildId, currentAllowanceAmount, currentSavingsRequired)}>SAVE</KKButton>
+
+                <View style={styles.linkArea}>
+                    <Subtitle>Links</Subtitle>
+                    <Subtitle onPress={()=>Linking.openURL("https://kiddiekredit.com/privacy-policy")} style={styles.link}>Privacy Policy</Subtitle>
+                    <Subtitle onPress={()=>Linking.openURL("https://www.kiddiekredit.com/terms-conditions/")} style={styles.link}>Terms of Use</Subtitle>
+                </View>
             </FullPage>
         </ScrollView>
     );
@@ -98,6 +106,15 @@ const styles = StyleSheet.create({
     btn: {
         alignSelf: 'center',
         marginTop: height * 0.05
+    },
+    linkArea: {
+        marginTop: height * 0.1
+    },
+    link: {
+        fontSize: 14*scaleRatio,
+        color: shuttleGrey,
+        paddingVertical: height * 0.0,
+        marginVertical: height * 0.01
     }
 });
 

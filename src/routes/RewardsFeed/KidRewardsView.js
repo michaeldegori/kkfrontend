@@ -77,7 +77,6 @@ const KidRewardsView = ({
                 style={styles.animation}
                 loop={false}
                 source={require('../../../assets/animations/1370-confetti.json')}
-                onAnimationFinish={hideAnimation}
             />
         }
     </FullPageWithModal>

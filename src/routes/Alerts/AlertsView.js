@@ -55,6 +55,10 @@ const AlertView = ({
                             const {_id, kid: kidId, chore: choreId, timeStamp, customNote, isTappable} = alert;
                             const kidObj = kidsList.find(k => k._id === kidId);
                             const choreObj = chores.find(c => c._id === choreId);
+                            if (!kidObj || !choreObj) {
+                                console.log(alerts);
+                                return null;
+                            }
                             if (!isTappable)
                                 return <ItemTile key={_id} mainCaption={alert.notificationBody} subCaption={`${kidObj.name} - ${choreObj.name}`} disabled={true} />;
 

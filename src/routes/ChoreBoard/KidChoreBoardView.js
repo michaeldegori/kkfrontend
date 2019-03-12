@@ -39,6 +39,9 @@ class KidChoreBoardView extends React.PureComponent{
     state = {
         shouldHideAnimation: false
     }
+    componentWillUnmount(){
+        if (this.timer) clearTimeout(this.timer);
+    }
     componentDidUpdate(){
         this.checkPlayAnimation();
     }
@@ -49,7 +52,7 @@ class KidChoreBoardView extends React.PureComponent{
         if (!this.animation || this.animationHasPlayed || this.props.chores.length !== 1 || this.props.chores[0].img !== 'success') return;
         this.animation.play();
         this.animationHasPlayed = true;
-        setTimeout(() => this.setState({shouldHideAnimation: true}), 2500)
+        this.timer = setTimeout(() => this.setState({shouldHideAnimation: true}), 2500);
     }
     render() {
         const {chores, pastChores, modalVisible, modalText, onRequestCompleteChore, modalAccept, modalClose} = this.props;
@@ -104,7 +107,7 @@ const renderRow = (item, onRequestCompleteChore) => {
         )
 
     let dotColor, disabled = true;
-    if (item.type === 'delinquent') dotColor = 'red';
+    if (item.type === 'delinquent' || item.status==="denied") dotColor = 'red';
     if (item.repetitionRule){
         dotColor = '#ff8d43';
         disabled=false;

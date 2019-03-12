@@ -4,6 +4,7 @@ import familyUnitRepository from "../../stores/FamilyUnitDataStore";
 import userRepository from "../../stores/UserDataStore";
 import {fetchJson} from "../../services/Networking";
 import {apiUrl} from "../../globals";
+import * as mx from "../../services/MixPanel";
 
 class KidRewardsContainer extends React.Component {
     state = {
@@ -28,12 +29,18 @@ class KidRewardsContainer extends React.Component {
                 educationalInfo
             }));
     }
-    showModal = (whichModal) => this.setState(() => ({
-        modalVisible: whichModal
-    }))
-    hideModal = () => this.setState(() => ({
-        modalVisible: false
-    }))
+    showModal = (whichModal) => {
+        mx.openKreditEducationModal(whichModal, "child");
+        this.setState(() => ({
+            modalVisible: whichModal
+        }));
+    }
+    hideModal = () => {
+        mx.closeKreditEducationModal(this.state.modalVisible, "child");
+        this.setState(() => ({
+            modalVisible: false
+        }))
+    }
     render() {
         const kidId = userRepository.BROWSING_MODE.split("-")[1];
         const currentKid = familyUnitRepository.kidsList.find(k => k._id === kidId);

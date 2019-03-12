@@ -3,6 +3,7 @@ import userDataRepository from '../stores/UserDataStore';
 import {
     Linking, AsyncStorage, Alert
 } from 'react-native';
+import * as mx from './MixPanel';
 
 
 export function toQueryString(params) {
@@ -29,7 +30,7 @@ const loginWithAuth0 = (startingPage) => async (username, password) => {
         return false;
     }
     loginResult = await loginResult.json();
-
+    mx.identifyUser(username);
 
     //finish logging in
     const apiInfoResult = await userDataRepository.pullUserInfoFromApiAndStore(loginResult.id_token, loginResult.access_token, startingPage==='registration', loginResult.refresh_token);
@@ -64,6 +65,7 @@ async function registerWithAuth0(email, password, firstName, lastName, parent_ty
         return result;
     }
     result = await result.json();
+    mx.signupEvent(firstName, lastName, email);
 
     //finish logging in
     return await loginWithAuth0('registration')(email, password);
@@ -96,8 +98,8 @@ async function loginWithRefreshToken(refreshToken) {
         console.warn(loginResult);
         return false;
     }
-    loginResult = await loginResult.json();
-    console.log(loginResult);
+    loginResult = await loginResult.json(); //{access_token, expires_in, id_token, scope, token_type}
+    console.log('LOGGED IN W REFRESH TOKEN', loginResult);
     return loginResult;
 }
 

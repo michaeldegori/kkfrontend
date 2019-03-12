@@ -11,7 +11,7 @@ import {loginWithRefreshToken, logOutFromAuth0, toQueryString} from "../services
 import familyUnitRepository from './FamilyUnitDataStore';
 import choresRepository from "./DefaultChoresStore";
 import rewardsRepository from "./DefaultRewardsStore";
-import registerForPushNotificationsAsync from "../services/PushNotifications";
+import * as mx from '../services/MixPanel';
 
 class UserDataStore{
     @observable isLoggedIn = false;
@@ -100,10 +100,11 @@ class UserDataStore{
 
         if (!userAndFamilyData || !userAndFamilyData.currentUser) return false;
 
-
+        mx.loginEvent(userMetaData.firstName, userMetaData.lastName, decodedToken.email);
         this.setUserData(idToken, accessToken, userAndFamilyData.currentUser._id);
         familyUnitRepository.setFamilyData(userAndFamilyData.familyUnit);
         await this.persistUserData(idToken, accessToken, refreshToken);
+
 
         await Promise.all([
             choresRepository.loadChoresFromApi(idToken),
