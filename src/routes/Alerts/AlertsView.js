@@ -51,23 +51,28 @@ const AlertView = ({
             {
                 (!alerts || !alerts.length)
                     ? <EmptyState loading={loading}/>
-                    : alerts.filter(a => a.recipient === 'parent').map((alert)=> {
-                            const {_id, kid: kidId, chore: choreId, timeStamp, customNote, isTappable} = alert;
-                            const kidObj = kidsList.find(k => k._id === kidId);
-                            const choreObj = chores.find(c => c._id === choreId);
-                            if (!kidObj || !choreObj) {
-                                console.log(alerts);
-                                return null;
-                            }
-                            if (!isTappable)
-                                return <ItemTile key={_id} mainCaption={alert.notificationBody} subCaption={`${kidObj.name} - ${choreObj.name}`} disabled={true} />;
+                    : alerts.filter(a => a.recipient === 'parent').map((alert, idx)=> {
+                        const {_id, kid: kidId, chore: choreId, isTappable, doneChoreId} = alert;
+                        const kidObj = kidsList.find(k => k._id === kidId);
+                        const choreObj = chores.find(c => c._id === choreId);
+                        if (!kidObj || !choreObj) {
+                            console.log(alerts);
+                            return null;
+                        }
+                        let doneChoreObj;
+                        if (doneChoreId && !isTappable) {
+                            doneChoreObj = kidObj.doneChores.find(doneChore => doneChore._id === doneChoreId);
+                            console.log(doneChoreObj);
+                        }
+                        if (!isTappable || (doneChoreObj && doneChoreObj.status === 'approved'))
+                            return <ItemTile key={_id} mainCaption={alert.notificationBody} subCaption={`${kidObj.name} - ${choreObj.name}`} disabled={true} />;
 
-                            return (
-                                <TouchableOpacity key={_id} onPress={()=>handleTapChore(alert, choreObj, kidObj)}>
-                                    <ItemTile mainCaption={alert.notificationBody} subCaption={`${kidObj.name} - ${choreObj.name}`}  />
-                                </TouchableOpacity>
-                            );
-                        })
+                        return (
+                            <TouchableOpacity key={_id} onPress={()=>handleTapChore(alert, choreObj, kidObj)}>
+                                <ItemTile mainCaption={alert.notificationBody} subCaption={`${kidObj.name} - ${choreObj.name}`}  />
+                            </TouchableOpacity>
+                        );
+                    })
             }
         </ScrollView>
     </FullPageWithModal>
