@@ -47,6 +47,11 @@ const messages = {
         img: require('../../assets/images/onboarding/screen4_kid_with_money.png'),
         sub: 'Ask your parent to sign back into the app, create some rewards, and make sure they are available for you to redeem.'
     },
+    '/maintabscreen/settings': {
+        main: 'No Children Yet',
+        sub: 'Please tap the top left button to add children to your family unit',
+        img: require('../../assets/images/parentpanda_rewarding_baby.png')
+    }
 };
 
 const getMainMessage = (path, type) => {

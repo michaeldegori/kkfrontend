@@ -16,6 +16,7 @@ import KKButton from "../../common/KKButton";
 import Row from "../../common/Row";
 import {scaleRatio} from "../../configuration";
 import Subtitle from "../../common/Subtitle";
+import EmptyState from "../../common/EmptyState";
 
 const SettingsView = ({
     match:{path},
@@ -29,13 +30,17 @@ const SettingsView = ({
 }) => (
     <FullPage>
         <Header leftAction={'avatarButton'}/>
-        <SwipableKidSelection
-            isSelectionNullable={false}
-            kidsList={kidsList.toJS?kidsList.toJS():[]}
-            renderContents={renderSettings(kidsList, onChangeSlider, createOnSliderTick, allowanceSliderValue, savingsSliderValue, saveChild)}
-            defaultChild={kidsList.length > 0 ? kidsList[0]._id : null}
-            onChangeKid={onChangeKid}
-        />
+        {
+            kidsList.length  === 0 ?
+                <EmptyState loading={false}/> :
+                <SwipableKidSelection
+                    isSelectionNullable={false}
+                    kidsList={kidsList.toJS?kidsList.toJS():[]}
+                    renderContents={renderSettings(kidsList, onChangeSlider, createOnSliderTick, allowanceSliderValue, savingsSliderValue, saveChild)}
+                    defaultChild={kidsList.length > 0 ? kidsList[0]._id : null}
+                    onChangeKid={onChangeKid}
+                />
+        }
     </FullPage>
 );
 
@@ -74,11 +79,11 @@ const renderSettings = (kidsList, onChangeSlider, createOnSliderTick, allowanceS
 
                 <KKButton type={'primary'} style={styles.btn} onPress={()=>saveChild(selectedChildId, currentAllowanceAmount, currentSavingsRequired)}>SAVE</KKButton>
 
-                <View style={styles.linkArea}>
-                    <Subtitle>Links</Subtitle>
-                    <Subtitle onPress={()=>Linking.openURL("https://kiddiekredit.com/privacy-policy")} style={styles.link}>Privacy Policy</Subtitle>
-                    <Subtitle onPress={()=>Linking.openURL("https://www.kiddiekredit.com/terms-conditions/")} style={styles.link}>Terms of Use</Subtitle>
-                </View>
+                {/*<View style={styles.linkArea}>*/}
+                    {/*<Subtitle>Links</Subtitle>*/}
+                    {/*<Subtitle onPress={()=>Linking.openURL("https://kiddiekredit.com/privacy-policy")} style={styles.link}>Privacy Policy</Subtitle>*/}
+                    {/*<Subtitle onPress={()=>Linking.openURL("https://www.kiddiekredit.com/terms-conditions/")} style={styles.link}>Terms of Use</Subtitle>*/}
+                {/*</View>*/}
             </FullPage>
         </ScrollView>
     );

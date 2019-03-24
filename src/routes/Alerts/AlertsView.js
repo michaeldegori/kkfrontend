@@ -60,10 +60,10 @@ const AlertView = ({
                             return null;
                         }
                         let doneChoreObj;
-                        if (doneChoreId && !isTappable) {
+                        if (doneChoreId) {
                             doneChoreObj = kidObj.doneChores.find(doneChore => doneChore._id === doneChoreId);
-                            console.log(doneChoreObj);
                         }
+
                         if (!isTappable || (doneChoreObj && doneChoreObj.status === 'approved'))
                             return <ItemTile key={_id} mainCaption={alert.notificationBody} subCaption={`${kidObj.name} - ${choreObj.name}`} disabled={true} />;
 
