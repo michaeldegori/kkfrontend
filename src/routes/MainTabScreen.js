@@ -33,6 +33,8 @@ import PostRegOnboarding2 from "./onboarding/PostRegOnboarding2";
 import PostRegOnboarding1 from "./onboarding/PostRegOnboarding1";
 import {Constants} from "expo";
 import NavBarPaddingView from "../common/NavBarPaddingView";
+import TermsOfUse from "./Settings/TermsOfUse";
+import PrivacyPolicy from "./Settings/PrivacyPolicy";
 
 const icons = [
     color=> <EvilIcons color={color} name="bell" size={32}/>,
@@ -137,9 +139,12 @@ class MainTabScreen extends React.Component{
                     <Route path="/maintabscreen/editchore/:choreid" component={EditChoreContainer} />
                     <Route path="/maintabscreen/createreward" component={CreateRewardContainer} />
                     <Route path="/maintabscreen/editreward/:rewardid" component={EditRewardContainer} />
+
+
+                    <Route path="/maintabscreen/termsofuse" component={TermsOfUse} />
+                    <Route path="/maintabscreen/privacypolicy" component={PrivacyPolicy} />
+
                     {/*KID ROUTES*/}
-
-
                     <Route path="/maintabscreen/kid/accountmanager" component={KidAccountManagerContainer} />
                     <Route path="/maintabscreen/kid/choreboard" component={KidChoreBoardContainer} />
                     <Route path="/maintabscreen/kid/rewardsfeed" component={KidRewardsContainer} />
