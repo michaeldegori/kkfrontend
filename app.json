@@ -21,11 +21,11 @@
       "resizeMode": "contain"
     },
     "updates": {
-      "enabled": false
+      "enabled": true
     },
     "ios": {
       "bundleIdentifier": "com.kiddiekredit.app",
-      "buildNumber": "18",
+      "buildNumber": "20",
       "supportsTablet": true,
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
@@ -33,9 +33,9 @@
     },
     "android": {
       "package": "com.kiddiekredit.app",
-      "versionCode": 18,
+      "versionCode": 20,
       "permissions": []
     },
-    "version": "0.4.2"
+    "version": "1.1.1"
   }
 }

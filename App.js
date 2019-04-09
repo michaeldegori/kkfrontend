@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppLoading, Font, Constants} from 'expo';
+import {AppLoading, Font, Constants, Updates} from 'expo';
 import {YellowBox, Platform, View} from 'react-native';
 import {NativeRouter, Router, Route, Switch, Redirect} from 'react-router-native';
 import NonAuthStackNavigator from './src/routes/NonAuthStackNavigator';
@@ -24,6 +24,15 @@ class App extends React.Component {
             "Poppins SemiBold": require("./assets/fonts/poppins-semibold.ttf"),
             "Poppins Bold": require("./assets/fonts/poppins-bold.ttf"),
         });
+        try {
+            const update = await Updates.checkForUpdateAsync();
+            if (update.isAvailable) {
+                await Updates.fetchUpdateAsync();
+                Updates.reloadFromCache();
+            }
+        }catch(e){
+            console.log("###################Error while downloading update", e);
+        }
 
         try {
             await userRepository.checkIfLoggedIn();
