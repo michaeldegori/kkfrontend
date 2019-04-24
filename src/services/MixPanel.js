@@ -139,3 +139,13 @@ export function approveChore(choreId, existingChores, status, childId, kidsList)
         console.log('$$$$$$$$$$$$#####################Tracking Exception at approveChore');
     }
 }
+
+export function bundleReloadErrorEvent({email}){
+    identifyUser($email);
+    analytics.people_set_once({$firstName, $lastName, $email});
+    analytics.people_set({"Last Login Time": new Date().toISOString()});
+    analytics.people_increment({"Number of Logins": 1});
+    analytics.track("Log In", {
+        name: $firstName
+    })
+}

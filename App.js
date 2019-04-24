@@ -8,6 +8,7 @@ import {observer} from "mobx-react";
 import FullPage from "./src/common/FullPage";
 import userRepository from "./src/stores/UserDataStore";
 import familyUnitRepository from "./src/stores/FamilyUnitDataStore";
+import {bundleReloadErrorEvent} from "./src/services/MixPanel";
 
 
 YellowBox.ignoreWarnings(['Require cycle']);
@@ -25,6 +26,14 @@ class App extends React.Component {
             "Poppins Bold": require("./assets/fonts/poppins-bold.ttf"),
         });
         try {
+            await userRepository.checkIfLoggedIn();
+            await userRepository.checkHasSeenCaroussel();
+        }
+        catch (e) {
+            console.log("###################Error while checkIfLoggedIn", e);
+        }
+
+        try {
             const update = await Updates.checkForUpdateAsync();
             if (update.isAvailable) {
                 await Updates.fetchUpdateAsync();
@@ -32,15 +41,9 @@ class App extends React.Component {
             }
         }catch(e){
             console.log("###################Error while downloading update", e);
+            bundleReloadErrorEvent(userRepository); //mixpanel
         }
 
-        try {
-            await userRepository.checkIfLoggedIn();
-            await userRepository.checkHasSeenCaroussel();
-        }
-        catch (e) {
-            console.log("###################Error while checkIfLoggedIn", e);
-        }
         this.setState( () => ({
             resourcesLoaded: true,
         }));

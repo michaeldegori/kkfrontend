@@ -146,17 +146,7 @@ const AddChildView = ({
                         <KKButton type="primary" onPress={onAddChild}>ADD CHILD</KKButton>
                         <KKButton type="secondary" to="/maintabscreen/accountmanager">QUIT</KKButton>
                     </View>
-                    <Modal
-                        visible={modalVisible}
-                        transparent={true}
-                        animationType="fade"
-                        style={{flex: 1, alignSelf: 'stretch', justifyContent: 'center', alignItems: 'center'}}
-                        onRequestClose={() => ""}
-                    >
-                        <View style={styles.modal}>
-                            <Text style={{color: shuttleGreyDark}}>Success</Text>
-                        </View>
-                    </Modal>
+
                     <Text style={styles.versionLabel}>v {(pkg.expo||{}).version}</Text>
                 </ImageBackground>
             </ScrollView>
