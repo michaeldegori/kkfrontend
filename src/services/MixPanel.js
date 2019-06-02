@@ -33,12 +33,12 @@ export function addChild(kidsList){
     try{
         analytics.people_increment({"Number of Children Added": 1});
         analytics.people_set({
-            "Kids List": kidsList.map((kid) => ({
-                Name: getInternalChildName(kid),
+            "Kids List": JSON.stringify(kidsList.map((kid) => ({
+                Name: kid.name,
                 id: kid._id,
                 Gender: kid.gender,
                 DOB: kid.dob
-            }))
+            })))
         });
     }
     catch(e){
@@ -140,12 +140,17 @@ export function approveChore(choreId, existingChores, status, childId, kidsList)
     }
 }
 
-export function bundleReloadErrorEvent({email}){
-    identifyUser($email);
-    analytics.people_set_once({$firstName, $lastName, $email});
-    analytics.people_set({"Last Login Time": new Date().toISOString()});
-    analytics.people_increment({"Number of Logins": 1});
-    analytics.track("Log In", {
-        name: $firstName
-    })
+export function bundleReloadErrorEvent(userRepo){
+    if (!userRepo.isLoggedIn) return;
+    try{
+        const {firstName:$firstName, lastName: $lastName, email:$email} = userRepo;
+        identifyUser($email);
+        analytics.people_set_once({$firstName, $lastName, $email});
+        analytics.track("Error", {
+            name: 'Error loading new JS bundle'
+        });
+    }
+    catch(e){
+        console.log('$$$$$$$$$$$$#####################Tracking Exception at bundleReloadErrorEvent');
+    }
 }
