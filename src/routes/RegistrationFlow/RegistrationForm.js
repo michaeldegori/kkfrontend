@@ -22,15 +22,12 @@ import userRepository from "../../stores/UserDataStore";
 const {width, height} = Dimensions.get("window");
 export default class RegistrationForm extends React.Component{
     state = {
-        email: 'abc@kk.co',
-        password: '123qwe',
-        firstName: 'Vic',
-        lastName: 'Moreno',
-        parent_type: 'father',
+        email: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+        parent_type: 'mother',
         submitting: false
-    }
-    componentDidMount(){
-        this.setState({submitting: false});
     }
     registerWithAuh0 = async () => {
         const {email, password, firstName, lastName, parent_type} = this.state;
@@ -62,10 +59,26 @@ export default class RegistrationForm extends React.Component{
                         <Image
                             style={{width: width * 0.35, height: width * 0.35, alignSelf: 'center'}}
                             source={require("../../../assets/images/kk-square.png")} />
-                        <KKTextInput placeholder={'Email'} style={styles.input} onChangeText={v => this.setState(()=> ({email: v}))} />
-                        <KKTextInput placeholder={'Password'} style={styles.input} onChangeText={v => this.setState(()=> ({password: v}))} secureTextEntry={true} />
-                        <KKTextInput placeholder={'First Name'} style={styles.input} onChangeText={v => this.setState(()=> ({firstName: v}))} />
-                        <KKTextInput placeholder={'Last Name'} style={styles.input} onChangeText={v => this.setState(() => ({lastName: v}))} />
+                        <KKTextInput
+                            placeholder={'Email'}
+                            style={styles.input}
+                            onChangeText={v => this.setState(()=> ({email: v.trim()}))}
+                        />
+                        <KKTextInput
+                            placeholder={'Password'}
+                            style={styles.input}
+                            onChangeText={v => this.setState(()=> ({password: v}))} secureTextEntry={true}
+                        />
+                        <KKTextInput
+                            placeholder={'First Name'}
+                            style={styles.input}
+                            onChangeText={v => this.setState(()=> ({firstName: v}))}
+                        />
+                        <KKTextInput
+                            placeholder={'Last Name'}
+                            style={styles.input}
+                            onChangeText={v => this.setState(() => ({lastName: v}))}
+                        />
 
                         <Picker
                             selectedValue={this.state.parent_type}

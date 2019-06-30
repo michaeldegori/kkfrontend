@@ -4,7 +4,7 @@ import {Entypo} from 'react-native-vector-icons';
 import {fountainBlue, shuttleGreyDark} from "../colors";
 
 const KidSelection = ({selected, onPress, children}) => (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} style={{maxWidth: Math.min(width * 0.25, 120)}}>
         {children}
         {
             selected &&

@@ -18,6 +18,16 @@ class AccountManager extends React.Component{
             ]);
 
     }
+    switchToOtherAdmin = (adminEmail) => {
+        Alert.alert(
+            'Confirm User Switch',
+            `This will log you out and allow you to log in as ${adminEmail}`,
+            [
+                {text: 'Ok', onPress: () => userRepository.logOut(this.props.history)},
+                {text: 'Cancel', onPress: () => ""}
+            ]);
+
+    }
     onDeleteChild = (child) => {
         Alert.alert('Confirm Child Deletion', `Are you sure you wish to remove ${child.name} from this family unit?`, [
             {text: "Ok", onPress: ()=>familyUnitRepository.deleteChild(child._id, userRepository.idToken)},
@@ -41,6 +51,7 @@ class AccountManager extends React.Component{
                 {...this.props}
                 kidsList={familyUnitRepository.kidsList}
                 switchToChild={this.switchToChild}
+                switchToOtherAdmin={this.switchToOtherAdmin}
                 parentLabel={"Me"}
                 parentAvatar={userRepository.avatar}
                 parentId={userRepository.mongoId}

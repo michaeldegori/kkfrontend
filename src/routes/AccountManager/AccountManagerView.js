@@ -20,7 +20,21 @@ import {scaleRatio} from "../../configuration";
 
 const {width, height} = Dimensions.get("window");
 //onDeleteChild is how we determine if we are in parent or child view
-const AccountManagerView = ({history, kidsList=[], switchToChild, onDeleteChild, switchToParent=()=>"", parentLabel, parentAvatar, adminsList=[], parentId, onDeleteAdmin, ...props}) => (
+const AccountManagerView = (
+    {
+        history,
+        kidsList=[],
+        switchToChild,
+        switchToOtherAdmin,
+        onDeleteChild,
+        switchToParent=()=>"",
+        parentLabel,
+        parentAvatar,
+        adminsList=[],
+        parentId,
+        onDeleteAdmin,
+        ...props
+    }) => (
     <FullPage>
         <Header history={history} rightAction="logout"/>
         <View style={styles.iconRow}>
@@ -41,7 +55,11 @@ const AccountManagerView = ({history, kidsList=[], switchToChild, onDeleteChild,
         <View style={styles.iconRow}>
             {
                 kidsList.map(kid => (
-                    <TouchableOpacity onPress={()=>switchToChild(kid)} key={kid._id} onLongPress={onDeleteChild ? () => onDeleteChild(kid) : ()=>""} style={{padding: width * 0.01}}>
+                    <TouchableOpacity
+                        onPress={()=>switchToChild(kid)}
+                        key={kid._id} onLongPress={onDeleteChild ? () => onDeleteChild(kid) : ()=>""}
+                        style={{padding: width * 0.01}}
+                    >
                         <KidAvatar {...kid} />
                     </TouchableOpacity>
                 ))
@@ -68,7 +86,12 @@ const AccountManagerView = ({history, kidsList=[], switchToChild, onDeleteChild,
                 {
                     adminsList.length > 0 &&
                     adminsList.filter(admin => admin._id !== parentId).map(admin => //this variable can be an email string or a user object
-                        <TouchableOpacity style={styles.badge} key={admin._id || admin} onLongPress={() => onDeleteAdmin(admin)}>
+                        <TouchableOpacity
+                            style={styles.badge}
+                            key={admin._id || admin}
+                            onPress={()=> switchToOtherAdmin(admin.email || admin)}
+                            onLongPress={() => onDeleteAdmin(admin)}
+                        >
                             <Octicons name={"person"} style={styles.icon} />
                             <Text style={{fontSize: 7.2 * scaleRatio}}>{getAdminName(admin)}</Text>
                         </TouchableOpacity>

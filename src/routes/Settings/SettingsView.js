@@ -53,7 +53,7 @@ const renderSettings = (kidsList, onChangeSlider, createOnSliderTick, allowanceS
     return (
         <ScrollView>
             <FullPage>
-                <Text style={styles.textLabel}>Allowance Amount: {currentAllowanceAmount} KK</Text>
+                <Text style={styles.textLabel}>Allowance Amount: {currentAllowanceAmount} BB</Text>
                 <View style={styles.slidersContainer}>
                     <Slider style={{marginHorizontal: width * 0.1}} thumbTintColor={shuttleGreyDark} value={selectedChild.allowanceAmount || 0}
                             step={1} minimumValue={1} maximumValue={20}
@@ -75,8 +75,8 @@ const renderSettings = (kidsList, onChangeSlider, createOnSliderTick, allowanceS
                     {/*</Row>*/}
                 </View>
                 <View style={{height: height * 0.015, width}}/>
-                <Text style={styles.textLabelLight}>Default: 1 KK per child's age per week</Text>
-                <Text style={styles.textLabelLight}>Note: 1KK = $1</Text>
+                <Text style={styles.textLabelLight}>Default: 1 BB per child's age per week</Text>
+                <Text style={styles.textLabelLight}>Note: 1BB = $1</Text>
 
                 <KKButton type={'primary'} style={styles.btn} onPress={()=>saveChild(selectedChildId, currentAllowanceAmount, currentSavingsRequired)}>SAVE</KKButton>
 
