@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
 
 /**
  onboarding screens
- 1- panda with book: KiddieKredit is a great way to make|chores fun for your kids while teaching|them the fundamentals of credit
+ 1- panda with book: Kiddie Kredit is a great way to make|chores fun for your kids while teaching|them the fundamentals of credit
     screen1
  2- parent with cup of coffee and phone alert - As your kid completes a chore, you|get to review and either approve|or deny their request
     screen4

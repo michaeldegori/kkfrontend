@@ -18,7 +18,7 @@ const KidAvatar = ({name, gender, avatar}) => {
         source = images[imageNames.findIndex(img => img === avatar)];
     }
     return (
-        <View>
+        <View style={{maxWidth: Math.min(width * 0.25, 120), alignItems: 'center'}}>
             <Image source={source} style={styles.img} />
             <Text style={styles.label}>{name}</Text>
         </View>
