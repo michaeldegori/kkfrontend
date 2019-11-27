@@ -14,6 +14,7 @@ import AvatarButton from "./AvatarButton";
 import LogoutButton from "./LogoutButton";
 import AddButton from "./AddButton";
 import DeleteAlertsButton from "../routes/Alerts/DeleteAlertsButton";
+import familyUnitRepository from "../stores/FamilyUnitDataStore";
 
 const {width, height} = Dimensions.get("window");
 
@@ -23,8 +24,26 @@ const Header = ({history, leftAction, rightAction, ...props}) => {
         if (!actionName) return null;
         switch (actionName){
             case 'logout': return  <LogoutButton history={history}/>;
-            case 'addChore': return <AddButton route="/maintabscreen/createchore" pulsating={true} />;
-            case 'addReward': return <AddButton route="/maintabscreen/createreward" pulsating={true} />;
+            case 'addChore': return (
+                <AddButton
+                    route="/maintabscreen/createchore"
+                    pulsating={
+                        !familyUnitRepository.existingChores ||
+                        !familyUnitRepository.existingChores.length ||
+                        familyUnitRepository.existingChores.length < 5
+                    }
+                />
+            );
+            case 'addReward': return (
+                <AddButton
+                    route="/maintabscreen/createreward"
+                    pulsating={
+                        !familyUnitRepository.existingRewards ||
+                        !familyUnitRepository.existingRewards.length ||
+                        familyUnitRepository.existingRewards.length < 3
+                    }
+                />
+            );
             case 'deleteAlerts': return <DeleteAlertsButton/>;
             default: return null;
         }
@@ -44,7 +63,11 @@ const Header = ({history, leftAction, rightAction, ...props}) => {
                 }
             </TouchableOpacity>
             <View style={styles.logoContainer}>
-                <Image source={require("../../assets/images/kk-letters.png")} style={styles.img}></Image>
+                {
+                    props.lettersOnly
+                        ? <KkOnlyLogo />
+                        : <FullWrittenLogo />
+                }
             </View>
             <View style={styles.sideContainer}>
                 {
@@ -58,6 +81,9 @@ const Header = ({history, leftAction, rightAction, ...props}) => {
 const BackArrow = ({onPress}) => (
     <Ionicons name="ios-arrow-round-back" size={Math.round(width * 0.12)} color={shuttleGrey} />
 );
+
+const FullWrittenLogo = () => <Image source={require("../../assets/images/kk-letters.png")} style={styles.img} />;
+const KkOnlyLogo = () => <Image source={require("../../assets/images/kk-nobg.png")} style={[styles.img, styles.smallLogo]} />;
 
 const styles = StyleSheet.create({
     mainContainer: {
@@ -79,6 +105,11 @@ const styles = StyleSheet.create({
     img: {
         width: width * 0.5,
         height: (width * 0.4)/256 * 41
+    },
+    smallLogo: {
+        resizeMode: 'contain',
+        height: 0.05 * height,
+        width: 0.05 * height
     }
 })
 

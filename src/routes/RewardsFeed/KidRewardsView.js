@@ -14,20 +14,16 @@ import FullPageWithModal from "../../common/FullPageWithModal";
 import EmptyState from "../../common/EmptyState";
 import {scaleRatio} from "../../configuration";
 import { DangerZone } from 'expo';
+import BigTextLabel from '../../common/BigTextLabel';
+import KidModalContent from "../../common/KidModalContent";
 let { Lottie } = DangerZone;
 
 const renderModalContents = (modalText, modalAccept, modalClose) => () => (
-    <Fragment>
-        <Text style={{color: shuttleGreyDark, textAlign: 'center', marginBottom: height * 0.05}}>{modalText}</Text>
-        <View style={{alignSelf: 'stretch', alignItems: 'center', marginBottom: height * 0.03, flexDirection: 'row', justifyContent: 'space-around'}}>
-            <TouchableOpacity style={[{borderColor: fountainBlue}]} onPress={modalAccept} >
-                <Ionicons style={{marginHorizontal: width * 0.02}} size={width * 0.15} color={fountainBlue} name={"ios-checkmark-circle-outline"} />
-            </TouchableOpacity>
-            <TouchableOpacity style={[{borderColor: shuttleGrey}]} onPress={modalClose} >
-                <Ionicons style={{marginHorizontal: width * 0.02}} size={width * 0.15} color={shuttleGrey} name={"ios-close-circle-outline"} />
-            </TouchableOpacity>
-        </View>
-    </Fragment>
+    <KidModalContent
+        modalText={modalText}
+        modalAccept={modalAccept}
+        modalClose={modalClose}
+    />
 );
 
 const getKreditScoreDisplay = currentKid => {
@@ -51,10 +47,10 @@ const KidRewardsView = ({
         renderModalContents={renderModalContents(modalText, modalAccept, modalClose)}
         modalClose={()=>modalClose(false)}
         style={{flex: 1, alignSelf: 'stretch', justifyContent: 'flex-start', alignItems: 'center'}}>
-        <Header leftAction={'avatarButton'}/>
+        <Header leftAction={'avatarButton'} lettersOnly={true} />
         <ScrollView style={{flex:1, alignSelf: 'stretch'}}>
-            <Text style={styles.smallLabel}>Bamboo Bucks balance:</Text>
-            <Text style={styles.bigText}>{getKreditScoreDisplay(currentKid)}</Text>
+            <Text semiBold={true} style={styles.smallLabel}>Bamboo Bucks balance:</Text>
+            <BigTextLabel>{getKreditScoreDisplay(currentKid)}</BigTextLabel>
             <Text style={styles.subHeading}>Redeemable Rewards:</Text>
             {
                 rewardsList.length === 0 ?
@@ -91,18 +87,14 @@ const styles = StyleSheet.create({
     },
     smallLabel: {
         color: shuttleGrey,
-        fontSize: 14.4 * scaleRatio,
-        textAlign: 'center'
-    },
-    bigText:{
-        color: fountainBlue,
-        fontSize: 72 * scaleRatio,
+        fontSize: 16.4 * scaleRatio,
         textAlign: 'center'
     },
     subHeading: {
         color: fountainBlue,
         fontSize: 18 * scaleRatio,
-        textAlign: 'center'
+        textAlign: 'center',
+        marginBottom: height * 0.02
     },
     animation: {
         position: 'absolute',

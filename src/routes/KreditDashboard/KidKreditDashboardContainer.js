@@ -22,7 +22,6 @@ class KidRewardsContainer extends React.Component {
             else
                 delete educationalInfo[prop];
         }
-
         if (currentKid)
             this.setState(() => ({
                 loading: false,

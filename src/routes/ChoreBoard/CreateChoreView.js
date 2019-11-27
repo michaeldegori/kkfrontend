@@ -24,6 +24,7 @@ import {Ionicons} from 'react-native-vector-icons';
 import AutoCompleteSuggestions from "../../common/AutoCompleteSuggestions";
 import PlatformDependentScrollingContainer from "../../common/PlatformDependentScrollingContainer";
 import {scaleRatio} from "../../configuration";
+import AdultModalContent from "../../common/AdultModalContent";
 
 const {width, height} = Dimensions.get('window');
 
@@ -75,21 +76,13 @@ const getNewChores = (oldChoreDays, tappedChoreIdx, choreFrequency) => {
 }
 
 const renderModalContents = (modalText, modalAccept, modalDeny) => () => (
-    <Fragment>
-        <Text style={{color: shuttleGreyDark, textAlign: 'center', marginBottom: height * 0.05}}>{modalText}</Text>
-        <View style={{alignSelf: 'stretch', alignItems: 'center', marginBottom: height * 0.03}}>
-            {
-                modalAccept && <TouchableOpacity style={[styles.modalBtn, {borderColor: fountainBlue}]} onPress={modalAccept} >
-                    <Ionicons style={{marginHorizontal: width * 0.02}} size={width * 0.1} color={fountainBlue} name={"ios-checkmark-circle-outline"} />
-                    <Text style={{color: fountainBlue, marginLeft: 8, flex:1}}>Add another chore</Text>
-                </TouchableOpacity>
-            }
-            <TouchableOpacity style={[styles.modalBtn, {borderColor: shuttleGrey}]} onPress={modalDeny} >
-                <Ionicons style={{marginHorizontal: width * 0.02}} size={width * 0.1} color={shuttleGrey} name={"ios-arrow-dropleft"} />
-                <Text style={{color: shuttleGrey, marginLeft: 8, flex:1}}>Back to Dashboard</Text>
-            </TouchableOpacity>
-        </View>
-    </Fragment>
+    <AdultModalContent
+        modalText={modalText}
+        modalAccept={modalAccept}
+        modalDeny={modalDeny}
+        acceptLabel={'Add another chore'}
+        denyLabel={'Back to Dashboard'}
+    />
 );
 
 const CreateChoreView = ({

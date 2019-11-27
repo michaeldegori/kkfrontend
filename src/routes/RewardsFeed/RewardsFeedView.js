@@ -13,6 +13,7 @@ import {Ionicons} from 'react-native-vector-icons';
 import EmptyState from "../../common/EmptyState";
 import {scaleRatio} from "../../configuration";
 
+// This modal is totally unique
 const renderModalContents = (modalText, modalAccept, kidsList=[], buttonsClickable=true) => () => (
     <Fragment>
         <Text style={{color: shuttleGreyDark, textAlign: 'center', marginBottom: height * 0.05}}>{modalText}</Text>

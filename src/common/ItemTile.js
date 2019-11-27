@@ -5,30 +5,44 @@ import {
     Dimensions,
     StyleSheet
 } from 'react-native';
-import {lightGrey, fountainBlue} from "../colors";
+import {lightGrey, fountainBlue, black} from "../colors";
 import PropTypes from 'prop-types';
 import {scaleRatio} from "../configuration";
+import ProgressBar from "./ProgressBar";
 
-const ItemTile = ({iconSrc, mainCaption, subCaption="", renderRightItem, disabled=false, dotColor }) => (
+const ItemTile = ({
+    iconSrc,
+    mainCaption,
+    subCaption='',
+    subCaptionType='string',
+    renderRightItem,
+    disabled=false,
+    dotColor }) => (
     <View style={styles.mainContainer}>
         <View style={styles.innerContainer}>
             {
-                typeof iconSrc === 'string' && iconSrc.length > 2 &&
+                typeof iconSrc === 'string' && iconSrc.length > 2 && !disabled &&
                 <View style={styles.imgContainer}>
 
                 </View>
             }
             <View style={styles.captionContainer}>
-                <Text style={styles.mainCaption}>{mainCaption}</Text>
-                <Text style={styles.subCaption}>{subCaption}</Text>
+                <Text style={[styles.mainCaption, disabled ? styles.disabledCaption : {}]}>{mainCaption}</Text>
+                {
+                    subCaptionType === 'string'
+                        ? <Text style={[styles.subCaption, disabled ? styles.disabledCaption : {}]}>{subCaption}</Text>
+                        : <View style={{flexDirection: 'row', alignSelf: 'stretch', alignItems: 'center'}}>
+                            <View style={{width:   width * .5, marginRight: width * 0.02}}>
+                                <ProgressBar completionPercent={computeCompletionPercent(subCaption)} color={fountainBlue} />
+                            </View>
+                            <Text style={[styles.subCaption, disabled ? styles.disabledCaption : {}]}>{subCaption}</Text>
+                        </View>
+                }
             </View>
             {
                 renderRightItem ? renderRightItem() : <View style={[styles.indicatorContainer, dotColor? {backgroundColor: dotColor} : {}]} />
             }
         </View>
-        {
-            disabled && <View style={styles.overlay}></View>
-        }
     </View>
 );
 
@@ -40,23 +54,30 @@ ItemTile.propTypes = {
     disabled: PropTypes.bool
 };
 
+function computeCompletionPercent(subCaptionFraction) {
+    const num = Number(subCaptionFraction.split('/')[0]);
+    const denom = Number(subCaptionFraction.split('/')[1]);
+    if (denom === 0) return 0;
+    return Math.round(10 * num / denom) * 10;
+}
+
 const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
     mainContainer: {
-        borderRadius: 10,
+        borderRadius: 15,
         alignSelf: 'stretch',
-        margin: width * 0.03,
-        padding: width * 0.03,
-        borderColor: lightGrey,
-        borderWidth: 1,
-        overflow: 'hidden'
-    },
-    overlay:{
-        backgroundColor: 'rgba(255,255,255,0.75)',
-        // backgroundColor: 'red',
-        position:'absolute',
-        width: width * 0.94,
-        height: height * 0.25
+        marginHorizontal: width * 0.035,
+        marginVertical:  height * 0.02,
+        padding: height * 0.02,
+        backgroundColor: 'white',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
     innerContainer: {
         flexDirection: 'row'
@@ -79,11 +100,17 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     mainCaption: {
-        fontSize: 14 * scaleRatio
+        fontSize: 14 * scaleRatio,
+        color: black
     },
     subCaption: {
         color: lightGrey,
-        fontSize: 11 * scaleRatio
+        fontSize: 11 * scaleRatio,
+        height: 17 * scaleRatio,
+    },
+    disabledCaption: {
+        color: lightGrey,
+        opacity: 0.5
     }
 });
 

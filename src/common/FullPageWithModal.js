@@ -1,20 +1,9 @@
 import React from 'react';
 import {Modal, StyleSheet, View, Dimensions, TouchableOpacity} from 'react-native';
 import FullPage from "./FullPage";
-import {lightGrey} from "../colors";
+import {black, fountainBlue, lightGrey} from "../colors";
 import PropTypes from 'prop-types';
 import {Ionicons} from 'react-native-vector-icons';
-
-/* OLD BUTTONS
-                    <TouchableOpacity onPress={modalAccept}>
-                        <Ionicons size={width * 0.15} color={fountainBlue} name={"ios-checkmark-circle-outline"} />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={modalDeny}>
-                        <Ionicons size={width * 0.15} color={shuttleGrey} name={"ios-remove-circle-outline"} />
-                    </TouchableOpacity>
-
-
- */
 
 const {width, height} = Dimensions.get("window");
 const FullPageWithModal = ({children, style, modalVisible, modalClose, renderModalContents=()=>null, ...props}) => (
@@ -27,6 +16,7 @@ const FullPageWithModal = ({children, style, modalVisible, modalClose, renderMod
             style={styles.modalTransparentPart}
             onRequestClose={() => console.log("close modal requested")}
         >
+            <View style={styles.modalBgOverlay}/>
             <View style={styles.modal}>
                 <TouchableOpacity onPress={modalClose} style={styles.closeBtn}>
                     <Ionicons size={width * 0.1} color={lightGrey} name={"ios-close"} />
@@ -44,9 +34,23 @@ FullPageWithModal.propTypes = {
 };
 
 const styles = StyleSheet.create({
-    modalTransparentPart: {flex:1, alignSelf: 'stretch', justifyContent: 'center', alignItems: 'center'},
+    modalTransparentPart: {
+        flex:1,
+        alignSelf: 'stretch',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalBgOverlay: {
+        width,
+        height,
+        position: 'absolute',
+        alignItems: 'center',
+        backgroundColor: black,
+        opacity: 0.3
+    },
     modal:  {
         backgroundColor: '#FFFFFE',
+        opacity: 1,
         width: width * 0.8,
         minHeight: height * 0.36,
         maxHeight: height * 0.66,
@@ -57,10 +61,11 @@ const styles = StyleSheet.create({
         elevation: 4,
         padding: 10,
         paddingTop: 0,
-        shadowColor: '#333',
-        shadowOffset: {width: 0, height: 1},
-        shadowOpacity: 0.5,
-        overflow: 'visible'
+        overflow: 'visible',
+        borderRadius: 25,
+        // shadowColor: '#333',
+        // shadowOffset: {width: 0, height: 1},
+        // shadowOpacity: 0.5
     },
     closeBtn:{
         padding: 6,

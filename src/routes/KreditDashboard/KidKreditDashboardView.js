@@ -13,6 +13,7 @@ import EmptyState from "../../common/EmptyState";
 import InfoIcon from "./InfoIcon";
 import EducationalModal from "../../common/EducationalModal";
 import {scaleRatio} from "../../configuration";
+import BigTextLabel from "../../common/BigTextLabel";
 
 const KidKreditDashboardView = ({
     loading,
@@ -23,36 +24,46 @@ const KidKreditDashboardView = ({
     educationalInfo={}
 }) => (
     <FullPage>
-        <Header leftAction={'avatarButton'}/>
-        <Text style={{color: fountainBlue, fontSize: 18*scaleRatio, textAlign: 'center'}}>Kredit Dashboard</Text>
+        <Header leftAction={'avatarButton'} lettersOnly={true} />
+        <Text style={styles.title}>Kredit Dashboard</Text>
         {
             loading ? <EmptyState loading={loading}/>
             :
                 <ScrollView>
                     <Text style={styles.smallLabel}>Your kredit score:</Text>
-                    <Text style={styles.bigText}>{getTotalScore(kreditInfo)}</Text>
-                    <Text style={styles.subHeading}>Kredit Breakdown</Text>
+                    <BigTextLabel>{getTotalScore(kreditInfo)}</BigTextLabel>
+                    <Text style={styles.subTitle} semiBold={true}>Kredit Breakdown</Text>
 
                     <ItemTile
                         mainCaption="Rewards Redemptions (Utilization)"
                         renderRightItem={() => <InfoIcon attributeName={'utilization'} onPress={()=>showModal('utilization')}/>}
-                        subCaption={buildSubtitleString(kreditInfo, 'utilization')} />
+                        subCaption={buildSubtitleElement(kreditInfo, 'utilization')}
+                        subCaptionType={'progressBar'}
+                    />
                     <ItemTile
                         mainCaption="Chore History (Payment History)"
                         renderRightItem={() => <InfoIcon attributeName={'paymentHistory'} onPress={()=>showModal('paymentHistory')}/>}
-                        subCaption={buildSubtitleString(kreditInfo, 'choreHistory')} />
+                        subCaption={buildSubtitleElement(kreditInfo, 'choreHistory')}
+                        subCaptionType={'progressBar'}
+                    />
                     <ItemTile
                         mainCaption="Average Age of Chores (Age of Accounts)"
                         renderRightItem={() => <InfoIcon attributeName={'accountAge'} onPress={()=>showModal('accountAge')}/>}
-                        subCaption={buildSubtitleString(kreditInfo, 'avgChoreAge')} />
+                        subCaption={buildSubtitleElement(kreditInfo, 'avgChoreAge')}
+                        subCaptionType={'progressBar'}
+                    />
                     <ItemTile
                         mainCaption="Total Chores (Number of Accounts)"
                         renderRightItem={() => <InfoIcon attributeName={'numAccounts'} onPress={()=>showModal('numAccounts')}/>}
-                        subCaption={buildSubtitleString(kreditInfo, 'totalChores')} />
+                        subCaption={buildSubtitleElement(kreditInfo, 'totalChores')}
+                        subCaptionType={'progressBar'}
+                    />
                     <ItemTile
                         mainCaption="Reward Requests (Credit Inquiries)"
                         renderRightItem={() => <InfoIcon attributeName={'creditInquiries'} onPress={()=>showModal('creditInquiries')}/>}
-                        subCaption={buildSubtitleString(kreditInfo, 'inquiries')} />
+                        subCaption={buildSubtitleElement(kreditInfo, 'inquiries')}
+                        subCaptionType={'progressBar'}
+                    />
                 </ScrollView>
         }
         <EducationalModal
@@ -63,7 +74,7 @@ const KidKreditDashboardView = ({
     </FullPage>
 );
 
-function buildSubtitleString(kreditInfo, key){
+function buildSubtitleElement(kreditInfo, key){
     const kreditInfoFraction = kreditInfo[key];
     if (!kreditInfoFraction || !kreditInfoFraction.numerator || !kreditInfoFraction.denominator) return '0/20';
 
@@ -91,16 +102,17 @@ const styles = StyleSheet.create({
         fontSize: 14.4 * scaleRatio,
         textAlign: 'center'
     },
-    bigText:{
-        color: fountainBlue,
-        fontSize: 72 * scaleRatio,
-        textAlign: 'center'
-    },
-    subHeading: {
-        color: fountainBlue,
+    title: {
+        color: shuttleGrey,
         fontSize: 25 * scaleRatio,
         textAlign: 'center'
     },
+    subTitle: {
+        color: fountainBlue,
+        fontSize: 18 * scaleRatio,
+        textAlign: 'center',
+        marginBottom: height * .036
+    }
 });
 
 export default KidKreditDashboardView;

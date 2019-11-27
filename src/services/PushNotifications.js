@@ -24,23 +24,27 @@ async function registerForPushNotificationsAsync({idToken, BROWSING_MODE, email}
         return;
     }
 
-    // Get the token that uniquely identifies this device
-    let token = await Notifications.getExpoPushTokenAsync();
+    try {
+        // Get the token that uniquely identifies this device
+        let token = await Notifications.getExpoPushTokenAsync();
 
-    // POST the token to your backend server from where you can retrieve it to send push notifications.
-    const notificationResult = await fetch(PUSH_ENDPOINT, {
-        method: 'PUT',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${idToken}`
-        },
-        body: JSON.stringify({
-            token,
-            browsingMode: BROWSING_MODE,
-            email
-        }),
-    });
+        // POST the token to your backend server from where you can retrieve it to send push notifications.
+        const notificationResult = await fetch(PUSH_ENDPOINT, {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${idToken}`
+            },
+            body: JSON.stringify({
+                token,
+                browsingMode: BROWSING_MODE,
+                email
+            }),
+        });
+    } catch(e) {
+        console.log('ERROR with retrieving token or with saving it', e);
+    }
 
 }
 

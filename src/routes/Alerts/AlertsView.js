@@ -13,21 +13,15 @@ import ItemTile from "../../common/ItemTile";
 import FullPageWithModal from "../../common/FullPageWithModal";
 import {fountainBlue, shuttleGrey, shuttleGreyDark} from "../../colors";
 import {scaleRatio} from "../../configuration";
-
+import AdultModalContent from "../../common/AdultModalContent";
 const renderModalContents = (modalText, modalAccept, modalDeny) => () => (
-    <Fragment>
-        <Text style={{color: shuttleGreyDark, textAlign: 'center', marginBottom: height * 0.05}}>{modalText}</Text>
-        <View style={{alignSelf: 'stretch', alignItems: 'center', marginBottom: height * 0.03}}>
-            <TouchableOpacity style={[styles.modalBtn, {borderColor: fountainBlue}]} onPress={modalAccept} >
-                <Ionicons style={{marginHorizontal: width * 0.02}} size={width * 0.1} color={fountainBlue} name={"ios-checkmark-circle-outline"} />
-                <Text style={{color: fountainBlue, marginLeft: 8, flex:1}}>Approve Chore</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.modalBtn, {borderColor: shuttleGrey}]} onPress={modalDeny} >
-                <Ionicons style={{marginHorizontal: width * 0.02}} size={width * 0.1} color={shuttleGrey} name={"ios-arrow-dropleft"} />
-                <Text style={{color: shuttleGrey, marginLeft: 8, flex:1}}>Deny Chore</Text>
-            </TouchableOpacity>
-        </View>
-    </Fragment>
+    <AdultModalContent
+        modalText={modalText}
+        modalAccept={modalAccept}
+        modalDeny={modalDeny}
+        acceptLabel={'Approve Chore'}
+        denyLabel={'Deny Chore'}
+    />
 );
 
 const{width, height} = Dimensions.get('window');

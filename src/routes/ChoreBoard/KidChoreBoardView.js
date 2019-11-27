@@ -18,21 +18,15 @@ import {Ionicons} from 'react-native-vector-icons';
 import EmptyState from "../../common/EmptyState";
 import {scaleRatio} from "../../configuration";
 import { DangerZone } from 'expo';
+import KidModalContent from "../../common/KidModalContent";
 let { Lottie } = DangerZone;
 
-const{width, height} = Dimensions.get('window');
 const renderModalContents = (modalText, modalAccept, modalClose) => () => (
-    <Fragment>
-        <Text style={{color: shuttleGreyDark, textAlign: 'center', marginBottom: height * 0.05}}>{modalText}</Text>
-        <View style={{alignSelf: 'stretch', alignItems: 'center', marginBottom: height * 0.03, flexDirection: 'row', justifyContent: 'space-around'}}>
-            <TouchableOpacity style={[{borderColor: fountainBlue}]} onPress={modalAccept} >
-                <Ionicons style={{marginHorizontal: width * 0.02}} size={width * 0.15} color={fountainBlue} name={"ios-checkmark-circle-outline"} />
-            </TouchableOpacity>
-            <TouchableOpacity style={[{borderColor: shuttleGrey}]} onPress={modalClose} >
-                <Ionicons style={{marginHorizontal: width * 0.02}} size={width * 0.15} color={shuttleGrey} name={"ios-close-circle-outline"} />
-            </TouchableOpacity>
-        </View>
-    </Fragment>
+    <KidModalContent
+        modalText={modalText}
+        modalAccept={modalAccept}
+        modalClose={modalClose}
+    />
 );
 
 class KidChoreBoardView extends React.PureComponent{
@@ -62,7 +56,7 @@ class KidChoreBoardView extends React.PureComponent{
                 renderModalContents={renderModalContents(modalText, modalAccept, modalClose)}
                 modalClose={modalClose}
                 style={{flex: 1, alignSelf: 'stretch', justifyContent: 'flex-start', alignItems: 'center'}}>
-                <Header leftAction={"avatarButton"} />
+                <Header leftAction={"avatarButton"} lettersOnly={true} />
                 <FlatList
                     style={{flex:1, alignSelf: 'stretch'}}
                     data={[
@@ -131,6 +125,7 @@ KidChoreBoardView.propTypes = {
     chores: PropTypes.array.isRequired,
 };
 
+const{width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
     animation: {
         width,

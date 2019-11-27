@@ -1,7 +1,6 @@
 import {observable} from 'mobx';
 import jwtDecode from 'jwt-decode';
 import {
-    Alert,
     AsyncStorage
 } from 'react-native';
 import {fetchJson} from "../services/Networking";

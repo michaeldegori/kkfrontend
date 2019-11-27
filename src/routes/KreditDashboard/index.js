@@ -21,7 +21,6 @@ class KreditDashboardContainer extends React.Component{
             else
                 delete educationalInfo[prop];
         }
-        console.log(educationalInfo);
         if (familyUnitRepository.kidsList)
             this.setState(() => ({
                 loading: false,

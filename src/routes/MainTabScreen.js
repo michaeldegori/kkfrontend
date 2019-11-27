@@ -35,6 +35,8 @@ import {Constants} from "expo";
 import NavBarPaddingView from "../common/NavBarPaddingView";
 import TermsOfUse from "./Settings/TermsOfUse";
 import PrivacyPolicy from "./Settings/PrivacyPolicy";
+import ProfileCompletion, {computeProfileCompletionPercent} from "./ProfileCompletion";
+import familyUnitRepository from "../stores/FamilyUnitDataStore";
 
 const icons = [
     color=> <EvilIcons color={color} name="bell" size={32}/>,
@@ -115,16 +117,21 @@ class MainTabScreen extends React.Component{
     render() {
         const {match, location:{pathname}} = this.props;
         let {BROWSING_MODE, redirectPath} = userRepository;
-        if (!redirectPath && BROWSING_MODE.toString() === 'parent') redirectPath =  '/maintabscreen/choreboard';
+        if (!redirectPath && BROWSING_MODE.toString() === 'parent')
+            redirectPath =  '/maintabscreen/choreboard';
         if (!redirectPath && BROWSING_MODE.toString() !== 'parent')
             redirectPath = '/maintabscreen/kid/choreboard';
 
+        if (computeProfileCompletionPercent(familyUnitRepository) < 66 && BROWSING_MODE.toString() === 'parent') {
+            redirectPath = '/maintabscreen/profilecompletion';
+        }
 
 
         return (
             <View style={[styles.mainContainer]}>
                 <NavBarPaddingView route={this.props.location.pathname}/>
                 <Switch>
+                    <Route path="/maintabscreen/profilecompletion" component={ProfileCompletion} />
                     <Route path="/maintabscreen/alerts" component={AlertsContainer} />
                     <Route path="/maintabscreen/choreboard" component={ChoreBoard} />
                     <Route path="/maintabscreen/rewardsfeed" component={RewardsFeed} />

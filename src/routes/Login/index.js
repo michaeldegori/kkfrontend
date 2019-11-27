@@ -21,14 +21,15 @@ class LoginContainer extends React.Component{
             console.log("something went wrong with retrieving the email address from asyncstorage");
         }
     }
-    handleTextInput = (key, newValue) => this.setState(() => ({[key]: newValue}))
+    handleTextInput = (key, newValue) => this.setState(() => ({[key]: (newValue||'').trim()}))
     triggerPWResetWithAuth0 = async () => {
         this.setState({submitting:true});
-        const {username:email} = this.state;
+        let {username:email} = this.state;
         if (!email){
             Alert.alert("Please input email", "Please enter your email address so we know whose password to reset.")
             return this.setState({submitting:false});
         }
+        if (email.trim) email = email.trim();
         if (!email.match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/)){
             Alert.alert("Invalid email", "That doesn't look like a valid email. Please enter a valid email address.");
             return this.setState({submitting:false});
@@ -47,7 +48,7 @@ class LoginContainer extends React.Component{
         if (!loginResult){
             Alert.alert("Login error", "Username or password incorrect");
             this.setState({submitting:false});
-            return;
+            //don't need to setState to notsubmitting if succeeded, should already be unmounted
         }
     }
     render() {

@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Text} from "react-native";
-import {globalFontFamily, globalFontFamilySemiBold, globalFontFamilyBold} from '../configuration';
+import {globalFontFamily, globalFontFamilySemiBold} from '../configuration';
 import PropTypes from 'prop-types';
 
 export default class KKText extends Component{
@@ -11,10 +11,13 @@ export default class KKText extends Component{
     render(){
         let {style, ...props} = this.props;
         let fontFamily =  globalFontFamily;
-        if (props.semiBold) fontFamily = globalFontFamilySemiBold;
-        if (props.bold) fontFamily = globalFontFamilyBold;
+        let overrideStyle = {fontFamily};
+        if (props.semiBold) {
+            overrideStyle.fontFamily = globalFontFamilySemiBold;
+            overrideStyle.letterSpacing = 2;
+        }
         return (
-            <Text style={[{fontFamily}, style]} ref={r=>this._root=r} {...props} >
+            <Text style={[overrideStyle, style]} ref={r=>this._root=r} {...props} >
                 {props.children}
             </Text>
         );

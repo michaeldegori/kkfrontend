@@ -14,6 +14,9 @@ export function toQueryString(params) {
 
 
 const loginWithAuth0 = (startingPage) => async (username, password) => {
+    if (typeof username === 'string') {
+        username = username.trim().toLowerCase()
+    }
     let loginResult = await fetch(auth0Domain + '/oauth/token', {
         headers: {'Content-Type': 'application/json', Accept: 'application/json'},
         body: JSON.stringify({
@@ -40,6 +43,9 @@ const loginWithAuth0 = (startingPage) => async (username, password) => {
 
 //email, password, firstName, lastName, userSubType-['mother', 'father', 'male_guardian', 'female_guardian']
 async function registerWithAuth0(email, password, firstName, lastName, parent_type){
+    if (typeof email === 'string') {
+        email = email.trim().toLowerCase();
+    }
     let result = await fetch(auth0Domain + '/dbconnections/signup', {
         headers: {'Content-Type': 'application/json', Accept: 'application/json'},
         body: JSON.stringify({

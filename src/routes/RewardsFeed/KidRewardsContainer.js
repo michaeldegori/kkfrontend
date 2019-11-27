@@ -74,8 +74,8 @@ class KidRewardsContainer extends React.Component {
                 currentKid={currentKid}
                 onRequestRedeemReward={this.requestRedeemReward}
                 modalAccept={this.redeemReward}
-                modalClose={this.cancelModal}
-                modalDeny={this.cancelModal}
+                modalClose={() => this.cancelModal(false)}
+                modalDeny={() => this.cancelModal(false)}
                 rewardsList={familyUnitRepository.existingRewards.filter(reward => currentKid.eligibleRewards.includes(reward._id))}
                 setAnimationRef={this.setAnimationRef}
                 hideAnimation={this.hideAnimation}

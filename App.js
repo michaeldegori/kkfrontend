@@ -21,9 +21,8 @@ class App extends React.Component {
     }
     async componentDidMount(){
         await Font.loadAsync({
-            "Poppins": require("./assets/fonts/poppins-regular.ttf"),
-            "Poppins SemiBold": require("./assets/fonts/poppins-semibold.ttf"),
-            "Poppins Bold": require("./assets/fonts/poppins-bold.ttf"),
+            "Montserrat": require("./assets/fonts/monstserrat-regular.ttf"),
+            "Montserrat Medium": require("./assets/fonts/monstserrat-medium.ttf"),
         });
         try {
             await userRepository.checkIfLoggedIn();
@@ -65,9 +64,6 @@ class App extends React.Component {
 }
 
 class PrivateRoute extends React.Component{
-    componentDidUpdate(){
-        console.log("#########privateroute updated");
-    }
     render(){
         const {component: TabNavComponent, ...rest} = this.props;
         const {isLoggedIn, hasSeenCaroussel} = userRepository;
