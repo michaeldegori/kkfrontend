@@ -148,3 +148,52 @@ const styles = StyleSheet.create({
   ],
 }
  */
+
+function levelOrder(root, processor = (node) => console.log(node.value)){
+    if (!root) return;
+    const queue = [root];
+    while (queue.length > 0){
+        const curr = queue.shift();
+        processor(curr);
+        if (curr.left) queue.push(curr.left);
+        if (curr.right) queue.push(curr.right);
+    }
+}
+
+const tree ={
+    value: 10,
+    left: {
+        value: 5,
+        left: {
+            value: 3,
+            left:null,
+            right: null
+        },
+        right: {
+            value: 7,
+            left: {
+                value: 6,
+                left: null,
+                right: {
+                    value: 7,
+                    left: null,
+                    right: null
+                }
+            },
+            right: null
+        }
+    },
+    right: {
+        value: 15,
+        left: {
+            value: 12,
+            left:null,
+            right: null
+        },
+        right: {
+            value: 17,
+            left:null,
+            right: null
+        }
+    }
+}
