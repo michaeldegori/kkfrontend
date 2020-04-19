@@ -1,6 +1,6 @@
 import React from "react";
 import {Platform, StyleSheet, View} from "react-native";
-import {Constants} from "expo";
+import * as Constants from "expo-constants";
 import {fountainBlue} from "../colors";
 
 export default function NavBarPaddingView({route}){

@@ -1,6 +1,5 @@
 {
   "expo": {
-    "sdkVersion": "33.0.0",
     "assetBundlePatterns": [
       "assets/images/*",
       "assets/fonts/*"

@@ -31,7 +31,6 @@ import ChooseAvatar from "./RegistrationFlow/ChooseAvatar";
 import AddFamilyAdminContainer from "./AddFamilyAdmin";
 import PostRegOnboarding2 from "./onboarding/PostRegOnboarding2";
 import PostRegOnboarding1 from "./onboarding/PostRegOnboarding1";
-import {Constants} from "expo";
 import NavBarPaddingView from "../common/NavBarPaddingView";
 import TermsOfUse from "./Settings/TermsOfUse";
 import PrivacyPolicy from "./Settings/PrivacyPolicy";

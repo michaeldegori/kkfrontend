@@ -1,13 +1,14 @@
 import React from 'react';
-import {AppLoading, Font, Constants, Updates} from 'expo';
-import {YellowBox, Platform, View} from 'react-native';
-import {NativeRouter, Router, Route, Switch, Redirect} from 'react-router-native';
+import * as Font from 'expo-font';
+import * as Updates from 'expo-updates';
+import {AppLoading} from 'expo';
+import {YellowBox} from 'react-native';
+import {NativeRouter, Route, Switch, Redirect} from 'react-router-native';
 import NonAuthStackNavigator from './src/routes/NonAuthStackNavigator';
 import MainTabScreen from './src/routes/MainTabScreen';
 import {observer} from "mobx-react";
 import FullPage from "./src/common/FullPage";
 import userRepository from "./src/stores/UserDataStore";
-import familyUnitRepository from "./src/stores/FamilyUnitDataStore";
 import {bundleReloadErrorEvent} from "./src/services/MixPanel";
 
 

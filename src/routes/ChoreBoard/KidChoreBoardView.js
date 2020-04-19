@@ -5,7 +5,6 @@ import {
     Platform,
     StyleSheet,
     TouchableOpacity,
-    View,
     FlatList,
     ImageBackground,
 } from "react-native";
@@ -14,12 +13,10 @@ import Header from "../../common/Header";
 import FullPageWithModal from "../../common/FullPageWithModal";
 import Text from "../../common/KKText";
 import {fountainBlue, fountainBlueDark, shuttleGrey, shuttleGreyDark} from "../../colors";
-import {Ionicons} from 'react-native-vector-icons';
 import EmptyState from "../../common/EmptyState";
 import {scaleRatio} from "../../configuration";
-import { DangerZone } from 'expo';
 import KidModalContent from "../../common/KidModalContent";
-let { Lottie } = DangerZone;
+import LottieView from "lottie-react-native";
 
 const renderModalContents = (modalText, modalAccept, modalClose) => () => (
     <KidModalContent
@@ -70,7 +67,7 @@ class KidChoreBoardView extends React.PureComponent{
                 />
                 {
                     chores.length === 1 && chores[0].img === 'success' && !this.state.shouldHideAnimation &&
-                    <Lottie
+                    <LottieView
                         ref={r => this.animation = r}
                         style={styles.animation}
                         loop={false}

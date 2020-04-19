@@ -1,4 +1,4 @@
-import ExpoMixpanelAnalytics from 'expo-mixpanel-analytics';
+import ExpoMixpanelAnalytics from '@benawad/expo-mixpanel-analytics';
 const analytics = new ExpoMixpanelAnalytics("176fc395d5d56e92e530dbe4e32a0fac");
 
 function getInternalChildName(kid){

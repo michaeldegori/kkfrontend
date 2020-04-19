@@ -7,16 +7,14 @@ import {
 } from 'react-native';
 import Text from '../../common/KKText';
 import Header from "../../common/Header";
-import {Ionicons} from 'react-native-vector-icons';
 import ItemTile from "../../common/ItemTile";
-import {fountainBlue, shuttleGrey, shuttleGreyDark} from "../../colors";
+import {fountainBlue, shuttleGrey } from "../../colors";
 import FullPageWithModal from "../../common/FullPageWithModal";
 import EmptyState from "../../common/EmptyState";
 import {scaleRatio} from "../../configuration";
-import { DangerZone } from 'expo';
 import BigTextLabel from '../../common/BigTextLabel';
 import KidModalContent from "../../common/KidModalContent";
-let { Lottie } = DangerZone;
+import LottieView from "lottie-react-native";
 
 const renderModalContents = (modalText, modalAccept, modalClose) => () => (
     <KidModalContent
@@ -68,7 +66,7 @@ const KidRewardsView = ({
         </ScrollView>
         {
             showAnimation &&
-            <Lottie
+            <LottieView
                 ref={setAnimationRef}
                 style={styles.animation}
                 loop={false}
