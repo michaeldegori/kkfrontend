@@ -4,7 +4,7 @@ import {
     View,
     Dimensions,
     TouchableOpacity,
-    Keyboard, Platform,
+    Keyboard,
 } from 'react-native';
 import {Switch, Route, Redirect, Link} from 'react-router-native';
 import { EvilIcons, Ionicons, Octicons } from '@expo/vector-icons';
