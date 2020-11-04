@@ -22,7 +22,7 @@ class CreateChoreContainer extends React.Component{
         modalVisible: false,
         modalText: "Success"
     }
-    componentWillMount(){
+    componentDidMount(){
         choresRepository.loadChoresFromApi(userRepository.idToken);
     }
     updateForm = (field, newVal) => this.setState({ [field]: newVal } )

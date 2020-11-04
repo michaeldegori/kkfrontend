@@ -24,17 +24,28 @@
     },
     "ios": {
       "bundleIdentifier": "com.kiddiekredit.app",
-      "buildNumber": "21",
+      "buildNumber": "23",
       "supportsTablet": true,
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "permissions": ["NSLocationWhenInUseUsageDescritption", "NSLocationAlwaysAndWhenInUseUsageDescription"],
+        "NSAppTransportSecurity": {
+          "NSAllowsLocalNetworking": true,
+          "NSAllowsArbitraryLoads": true,
+          "NSExceptionDomains": {
+            "localhost": {
+              "NSIncludesSubdomains": true,
+              "NSExceptionAllowsInsecureHTTPLoads": true
+            }
+          }
+        }
       }
     },
     "android": {
       "package": "com.kiddiekredit.app",
-      "versionCode": 21,
-      "permissions": []
+      "versionCode": 22,
+      "permissions": ["ACCESS_COURSE_LOCATION", "ACCESS_FINE_LOCATION"]
     },
-    "version": "1.1.1"
+    "version": "1.2.0"
   }
 }

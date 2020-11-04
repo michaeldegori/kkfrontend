@@ -4,6 +4,7 @@ import SettingsView from './SettingsView';
 import familyUnitRepository from "../../stores/FamilyUnitDataStore";
 import {observer} from "mobx-react";
 import userRepository from "../../stores/UserDataStore";
+import { loadAdvertFromApi } from "../../services/Advert"
 
 @observer
 class SettingsContainer extends React.Component {
@@ -13,6 +14,9 @@ class SettingsContainer extends React.Component {
             allowanceSliderValue: -1,
             savingsSliderValue: -1
         }
+    }
+    async componentDidMount() {
+        await loadAdvertFromApi();
     }
     onChangeSlider = (property, childId)=> (v)=> {
         //familyUnitRepository.updateChildSettings(childId, { [property]: v }, userRepository.idToken);

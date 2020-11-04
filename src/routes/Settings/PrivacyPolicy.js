@@ -1,5 +1,6 @@
 import React from 'react';
-import {WebView, Dimensions, ActivityIndicator, View} from 'react-native';
+import {Dimensions, ActivityIndicator, View} from 'react-native';
+import WebView from 'react-native-webview';
 import FullPage from "../../common/FullPage";
 import Header from "../../common/Header";
 import {fountainBlue} from "../../colors";
