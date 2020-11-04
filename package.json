@@ -5,8 +5,8 @@
   "devDependencies": {
     "babel-core": "7.0.0-bridge.0",
     "babel-plugin-transform-remove-console": "^6.8.5",
-    "babel-preset-expo": "^7.0.0",
-    "jest-expo": "^35.0.0",
+    "babel-preset-expo": "^8.1.0",
+    "jest-expo": "^37.0.0",
     "react-native-scripts": "1.14.0",
     "react-test-renderer": "16.3.1"
   },
@@ -23,18 +23,19 @@
   },
   "dependencies": {
     "@benawad/expo-mixpanel-analytics": "^0.1.7",
-    "expo": "^35.0.0",
-    "expo-constants": "~7.0.0",
-    "expo-font": "~7.0.0",
-    "expo-permissions": "~7.0.0",
-    "expo-updates": "~0.0.1-rc.0",
+    "expo": "^37.0.0",
+    "expo-constants": "~9.0.0",
+    "expo-font": "~8.1.0",
+    "expo-permissions": "~8.1.0",
+    "expo-updates": "~0.1.2",
     "jwt-decode": "^2.2.0",
     "lottie-react-native": "~2.6.1",
     "mobx": "4.4.1",
     "mobx-react": "5.2.8",
     "mobx-react-router": "^4.0.5",
-    "react": "16.8.3",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
+    "react": "16.9.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.0.tar.gz",
+    "react-native-webview": "8.1.1",
     "react-router-native": "^4.3.0",
     "rrule": "^2.5.6"
   }

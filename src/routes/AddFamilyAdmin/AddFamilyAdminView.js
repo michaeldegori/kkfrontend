@@ -45,12 +45,12 @@ const AddFamilyAdminView = ({
         <Header/>
         <View style={{flex:1, alignSelf: 'stretch', alignItems: 'center', justifyContent: 'space-around'}}>
             <Text style={{color: fountainBlue,fontSize: 18 * scaleRatio, textAlign: 'center'}}>Add Family Admin</Text>
+            <KKTextInput keyboardType={'email-address'} value={email} placeholder={"Enter email address of new admin"} onChangeText={updateForm} style={styles.input}/>
             <Text style={{color: shuttleGrey,fontSize: 15 * scaleRatio, textAlign: 'center', marginHorizontal: 10*scaleRatio}}>
                 Important note: you can only add a family admin if they don't already have a Kiddie Kredit account under that
                 email (the operation will fail). You can add them under another email they haven't yet registered, and they
                 can then complete the registration process with that email.
             </Text>
-            <KKTextInput keyboardType={'email-address'} value={email} placeholder={"Enter email address of new admin"} onChangeText={updateForm} style={styles.input}/>
             <KKButton type={"primary"} onPress={submitAddAdmin}>Submit!</KKButton>
         </View>
     </FullPageWithModal>

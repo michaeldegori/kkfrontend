@@ -1,8 +1,9 @@
 import React from 'react';
-import {ActivityIndicator, Dimensions, View, WebView} from 'react-native';
-import FullPage from "../../common/FullPage";
-import Header from "../../common/Header";
-import {fountainBlue} from "../../colors";
+import {ActivityIndicator, Dimensions, View} from 'react-native';
+import WebView from 'react-native-webview';
+import FullPage from '../../common/FullPage';
+import Header from '../../common/Header';
+import {fountainBlue} from '../../colors';
 
 const {width, height} = Dimensions.get('window');
 export default class TermsOfUse extends React.Component{
@@ -22,7 +23,7 @@ export default class TermsOfUse extends React.Component{
                 {
                     this.state.loading &&
                     <View style={{justifyContent: 'center', alignItems: 'center', height: height*.7, width, backgroundColor: 'white', position: 'absolute', bottom:0, left:0}}>
-                        <ActivityIndicator size={"large"} color={fountainBlue}/>
+                        <ActivityIndicator size={'large'} color={fountainBlue}/>
                     </View>
                 }
             </FullPage>
