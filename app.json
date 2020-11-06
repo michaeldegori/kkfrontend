@@ -27,13 +27,14 @@
       "buildNumber": "23",
       "supportsTablet": true,
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "permissions": ["NSLocationWhenInUseUsageDescritption"]
       }
     },
     "android": {
       "package": "com.kiddiekredit.app",
       "versionCode": 22,
-      "permissions": []
+      "permissions": ["ACCESS_COURSE_LOCATION", "ACCESS_FINE_LOCATION"]
     },
     "version": "1.2.0"
   }
