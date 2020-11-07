@@ -8,9 +8,11 @@ class LoginContainer extends React.Component{
     state = {
         username: '',
         password: '',
+        location: null,
         submitting: false
     }
     async componentDidMount(){
+        this.getLocationOnLoginAsync();
         this.setState({submitting:false});
         try{
             const userEmailLastLoggedIn = await AsyncStorage.getItem("@kiddiekredit:email");
@@ -51,6 +53,20 @@ class LoginContainer extends React.Component{
             //don't need to setState to notsubmitting if succeeded, should already be unmounted
         }
     }
+    getLocationOnLoginAsync = async () => {
+        let { status } = await Permissions.askAsync(Permissions.LOCATION);
+        if (status !== 'granted') {
+            this.setState({
+            errorMessage: 'Permission to access location was denied',
+            });
+        }
+
+        let location = await Location.getCurrentPositionAsync({});
+        
+        this.setState({ location });
+    }
+
+
     render() {
         return (
             <LoginView
