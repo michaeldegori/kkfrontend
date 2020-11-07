@@ -1,5 +1,7 @@
 import React from 'react';
 import {AsyncStorage, Alert} from 'react-native';
+import * as Location from 'expo-location';
+import * as Permissions  from 'expo-permissions';
 import LoginView from './LoginView';
 import {loginWithAuth0, triggerPWResetWithAuth0} from "../../services/Authorization";
 
@@ -64,6 +66,8 @@ class LoginContainer extends React.Component{
         let location = await Location.getCurrentPositionAsync({});
         
         this.setState({ location });
+        console.log(location.coords.longitude)
+        console.log(location.coords.latitude)
     }
 
 

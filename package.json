@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@benawad/expo-mixpanel-analytics": "^0.1.7",
+    "@react-native-community/geolocation": "^2.0.2",
     "expo": "^37.0.0",
     "expo-constants": "~9.0.0",
     "expo-font": "~8.1.0",
