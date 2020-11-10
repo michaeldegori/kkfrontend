@@ -1,7 +1,5 @@
 import React from 'react';
 import {AsyncStorage, Alert} from 'react-native';
-import * as Location from 'expo-location';
-import * as Permissions  from 'expo-permissions';
 import LoginView from './LoginView';
 import {loginWithAuth0, triggerPWResetWithAuth0} from "../../services/Authorization";
 
@@ -10,11 +8,11 @@ class LoginContainer extends React.Component{
     state = {
         username: '',
         password: '',
-        location: null,
         submitting: false
     }
+
+    
     async componentDidMount(){
-        this.getLocationOnLoginAsync();
         this.setState({submitting:false});
         try{
             const userEmailLastLoggedIn = await AsyncStorage.getItem("@kiddiekredit:email");
@@ -25,6 +23,8 @@ class LoginContainer extends React.Component{
             console.log("something went wrong with retrieving the email address from asyncstorage");
         }
     }
+
+
     handleTextInput = (key, newValue) => this.setState(() => ({[key]: (newValue||'').trim()}))
     triggerPWResetWithAuth0 = async () => {
         this.setState({submitting:true});
@@ -55,22 +55,9 @@ class LoginContainer extends React.Component{
             //don't need to setState to notsubmitting if succeeded, should already be unmounted
         }
     }
-    getLocationOnLoginAsync = async () => {
-        let { status } = await Permissions.askAsync(Permissions.LOCATION);
-        if (status !== 'granted') {
-            this.setState({
-            errorMessage: 'Permission to access location was denied',
-            });
-        }
-
-        let location = await Location.getCurrentPositionAsync({});
-        
-        this.setState({ location });
-        console.log(location.coords.longitude)
-        console.log(location.coords.latitude)
-    }
 
 
+    
     render() {
         return (
             <LoginView

@@ -28,7 +28,7 @@ const LoginView = ({loginWithAuth0, handleTextInput, username, password,  submit
                 <KKTextInput inputType="email" placeholder={'Email'} style={styles.input} onChangeText={v => handleTextInput('username', v)} value={username}/>
                 <KKTextInput placeholder={'Password'} style={styles.input} onChangeText={v => handleTextInput('password', v)} secureTextEntry={true} value={password}/>
                 <View style={styles.buttonContainer}>
-                    <KKButton type="primary" onPress={submitting ? ()=>"" : loginWithAuth0}>Login</KKButton>
+                    <KKButton type="primary" onPress={submitting ? ()=>"" : loginWithAuth0 }>Login</KKButton>
                     <KKButton type="textOnly" onPress={submitting ? ()=>"" : triggerPWResetWithAuth0}>Forgot Password</KKButton>
                 </View>
             </View>
