@@ -27,6 +27,7 @@ import KidRewardsContainer from "./RewardsFeed/KidRewardsContainer";
 import KidKreditDashboardContainer from "./KreditDashboard/KidKreditDashboardContainer";
 import userRepository from "../stores/UserDataStore";
 import registerForPushNotificationsAsync, {scheduleLocalPushNotification} from "../services/PushNotifications";
+import { getLocationAsync } from "../services/LocationService"
 import ChooseAvatar from "./RegistrationFlow/ChooseAvatar";
 import AddFamilyAdminContainer from "./AddFamilyAdmin";
 import PostRegOnboarding2 from "./onboarding/PostRegOnboarding2";
@@ -80,8 +81,11 @@ class MainTabScreen extends React.Component{
         this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
         await registerForPushNotificationsAsync(userRepository);
+        await getLocationAsync();
         scheduleLocalPushNotification();
+        
     }
+
 
     componentWillUnmount () {
         this.keyboardDidShowListener.remove();
@@ -135,7 +139,7 @@ class MainTabScreen extends React.Component{
                     <Route path="/maintabscreen/choreboard" component={ChoreBoard} />
                     <Route path="/maintabscreen/rewardsfeed" component={RewardsFeed} />
                     <Route path="/maintabscreen/settings" component={Settings} />
-                    <Route path="/maintabscreen/kreditdashboard" component={KreditDashboard} />
+                    <Route path="/maintabscreen/kreditdashboard" component={KreditDashboard}/>
                     <Route path="/maintabscreen/accountmanager" component={AccountManager} />
                     <Route path="/maintabscreen/postregonboarding/1" component={PostRegOnboarding1} />
                     <Route path="/maintabscreen/postregonboarding/2" component={PostRegOnboarding2} />

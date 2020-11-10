@@ -28,7 +28,7 @@
       "supportsTablet": true,
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
-        "permissions": ["NSLocationWhenInUseUsageDescritption"]
+        "permissions": ["NSLocationWhenInUseUsageDescritption", "NSLocationAlwaysAndWhenInUseUsageDescription"]
       }
     },
     "android": {
